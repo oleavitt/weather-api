@@ -11,10 +11,11 @@ import XCTest
 final class EndpointTests: XCTestCase {
 
     func testCurrent() {
-        let endpoint: Endpoint = .current(key: "1234abcd", query: "Dallas", aqi: true)
-        XCTAssertEqual(endpoint.url, "https://api.weatherapi.com/v1/current.json?key=1234abcd&q=Dallas&aqi=yes")
+        apiKey = "1234abcd"
+        let endpoint = Endpoint.current(query: "Dallas", aqi: true).url
+        XCTAssertEqual(endpoint?.absoluteString, "https://api.weatherapi.com/v1/current.json?key=1234abcd&q=Dallas&aqi=yes")
         
-        let endpointNoAqi: Endpoint = .current(key: "1234abcd", query: "Dallas", aqi: false)
-        XCTAssertEqual(endpointNoAqi.url, "https://api.weatherapi.com/v1/current.json?key=1234abcd&q=Dallas&aqi=no")
+        let endpointNoAqi = Endpoint.current(query: "Dallas", aqi: false).url
+        XCTAssertEqual(endpointNoAqi?.absoluteString, "https://api.weatherapi.com/v1/current.json?key=1234abcd&q=Dallas&aqi=no")
     }
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 protocol WeatherApiFetcher {
-    
+    func getCurrent() async throws -> String
 }

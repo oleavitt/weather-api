@@ -7,18 +7,26 @@
 
 import Foundation
 
-private let baseUrl = "https://api.weatherapi.com/v1/"
+var apiKey = ""
+private let apiHost = "api.weatherapi.com"
 
 enum Endpoint {
-    case current(key: String, query: String, aqi: Bool)
+    case current(query: String, aqi: Bool)
     
-    var  url: String {
+    var  url: URL? {
         switch self {
-        case .current(let key, let query, let aqi):
-            return baseUrl + "current.json" +
-                "?key=" + key +
-                "&q=" + query +
-                "&aqi=" + (aqi ? "yes" : "no")
+        case .current(let query, let aqi):
+            var components = URLComponents()
+            components.scheme = "https"
+            components.host = apiHost
+            components.path = "/v1/current.json"
+            components.queryItems = [
+                URLQueryItem(name: "key", value: apiKey),
+                URLQueryItem(name: "q", value: query),
+                URLQueryItem(name: "aqi", value: aqi ? "yes" : "no")
+            ]
+
+            return components.url
         }
     }
 }
