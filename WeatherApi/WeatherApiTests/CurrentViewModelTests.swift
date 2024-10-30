@@ -32,6 +32,26 @@ final class CurrentViewModelTests: XCTestCase {
             XCTAssertEqual(currentWeather.location.region, "Texas")
             XCTAssertEqual(currentWeather.location.country, "United States of America")
             XCTAssertFalse(currentWeather.location.localtime.isEmpty)
+            
+            XCTAssertFalse(currentWeather.current.lastUpdated.isEmpty)
+            XCTAssertNil(currentWeather.current.airQuality)
+        }
+    }
+
+    func testGetCurrentWithAqi() async throws {
+        viewModel.showAirQuality = true
+        await viewModel.getCurrentWeather()
+        
+        XCTAssertEqual(viewModel.state, .loaded)
+        XCTAssertNotNil(viewModel.currentWeather)
+        if let currentWeather = viewModel.currentWeather {
+            XCTAssertEqual(currentWeather.location.name, "Dallas")
+            XCTAssertEqual(currentWeather.location.region, "Texas")
+            XCTAssertEqual(currentWeather.location.country, "United States of America")
+            XCTAssertFalse(currentWeather.location.localtime.isEmpty)
+            
+            XCTAssertFalse(currentWeather.current.lastUpdated.isEmpty)
+            XCTAssertNotNil(currentWeather.current.airQuality)
         }
     }
 }

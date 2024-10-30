@@ -17,10 +17,12 @@ class CurrentViewModel: ObservableObject {
     
     @Published var state: State = .empty
     
+    var showAirQuality = false
+    
     @MainActor
     func getCurrentWeather() async {
         guard let url = Endpoint.current(query: "Dallas",
-                                         aqi: false).url else {
+                                         aqi: showAirQuality).url else {
             return
         }
 #if DEBUG
