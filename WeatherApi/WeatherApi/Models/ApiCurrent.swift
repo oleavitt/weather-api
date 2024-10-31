@@ -8,8 +8,9 @@
 import Foundation
 
 struct ApiCurrent: Decodable {
-    var location: Location
-    var current: Current
+    var location: Location?
+    var current: Current?
+    var error: ApiError?
 }
 
 struct Location: Decodable {
@@ -132,4 +133,9 @@ struct AirQuality: Decodable {
         case usEpaIndex = "us-epa-index"
         case gbDefraIndex = "gb-defra-index"
     }
+}
+
+struct ApiError: Decodable {
+    var code: Int
+    var message: String
 }

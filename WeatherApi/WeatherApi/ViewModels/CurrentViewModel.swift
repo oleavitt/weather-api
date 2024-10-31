@@ -17,11 +17,12 @@ class CurrentViewModel: ObservableObject {
     
     @Published var state: State = .empty
     
+    var locationQuery = ""
     var showAirQuality = false
-    
+
     @MainActor
     func getCurrentWeather() async {
-        guard let url = Endpoint.current(query: "Dallas",
+        guard let url = Endpoint.current(query: locationQuery,
                                          aqi: showAirQuality).url else {
             return
         }
@@ -40,6 +41,7 @@ class CurrentViewModel: ObservableObject {
                 print(String(decoding: jsonData, as: UTF8.self))
             } else {
                 print("json data malformed")
+                print(String(decoding: data, as: UTF8.self))
             }
 #endif
 
