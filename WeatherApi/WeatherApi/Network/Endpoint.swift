@@ -13,7 +13,7 @@ private let apiHost = "api.weatherapi.com"
 enum Endpoint {
     case current(query: String, aqi: Bool)
     
-    var  url: URL? {
+    var url: URL? {
         switch self {
         case .current(let query, let aqi):
             var components = URLComponents()
@@ -28,5 +28,12 @@ enum Endpoint {
 
             return components.url
         }
+    }
+    
+    var request: URLRequest? {
+        guard let url else {
+            return nil
+        }
+        return URLRequest(url: url)
     }
 }

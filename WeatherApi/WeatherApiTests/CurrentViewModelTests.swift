@@ -14,7 +14,7 @@ final class CurrentViewModelTests: XCTestCase {
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        apiKey = "1acc718898fc4d0e87050925242310"
+        apiKey = "YOUR_API_KEY"
         viewModel = CurrentViewModel()
     }
 

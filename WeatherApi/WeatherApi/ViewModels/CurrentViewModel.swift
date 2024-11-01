@@ -20,33 +20,18 @@ class CurrentViewModel: ObservableObject {
     var locationQuery = ""
     var showAirQuality = false
 
+    let networkLayer = NetworkLayer()
+
     @MainActor
     func getCurrentWeather() async {
-        guard let url = Endpoint.current(query: locationQuery,
-                                         aqi: showAirQuality).url else {
+        guard let request = Endpoint.current(query: locationQuery,
+                                             aqi: showAirQuality).request else {
             return
         }
-#if DEBUG
-        print(url.absoluteString)
-#endif
 
         state = .loading
         do {
-            let response = try await URLSession.shared.data(from: url)
-            let data = response.0
-            
-#if DEBUG
-            if let json = try? JSONSerialization.jsonObject(with: data),
-               let jsonData = try? JSONSerialization.data(withJSONObject: json, options: .prettyPrinted) {
-                print(String(decoding: jsonData, as: UTF8.self))
-            } else {
-                print("json data malformed")
-                print(String(decoding: data, as: UTF8.self))
-            }
-#endif
-
-            let decoder = JSONDecoder()
-            currentWeather = try decoder.decode(ApiCurrent.self, from: data)
+            currentWeather = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
             state = .loaded
         } catch {
             state = .error
