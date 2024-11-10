@@ -9,13 +9,7 @@ import Foundation
 
 class CurrentViewModel: ObservableObject {
     
-    @Published var currentWeather: ApiCurrent?
-    
-    enum State {
-        case empty, loading, loaded, error
-    }
-    
-    @Published var state: State = .empty
+    @Published var state: LoadingState<ApiCurrent> = .empty
     
     var locationQuery = ""
     var showAirQuality = false
@@ -31,10 +25,10 @@ class CurrentViewModel: ObservableObject {
 
         state = .loading
         do {
-            currentWeather = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
-            state = .loaded
+            let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
+            state = .success(current)
         } catch {
-            state = .error
+            state = .failure(error)
             print(error)
         }
     }

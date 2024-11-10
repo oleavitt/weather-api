@@ -26,24 +26,25 @@ final class CurrentViewModelTests: XCTestCase {
         viewModel.locationQuery = "Dallas"
         await viewModel.getCurrentWeather()
         
-        XCTAssertEqual(viewModel.state, .loaded)
-        
-        XCTAssertNotNil(viewModel.currentWeather)
-        XCTAssertNotNil(viewModel.currentWeather?.location)
-        if let location = viewModel.currentWeather?.location {
-            XCTAssertEqual(location.name, "Dallas")
-            XCTAssertEqual(location.region, "Texas")
-            XCTAssertEqual(location.country, "United States of America")
-            XCTAssertFalse(location.localtime.isEmpty)
+        if case let .success(current) = viewModel.state {
+            XCTAssertNotNil(current.location)
+            if let location = current.location {
+                XCTAssertEqual(location.name, "Dallas")
+                XCTAssertEqual(location.region, "Texas")
+                XCTAssertEqual(location.country, "United States of America")
+                XCTAssertFalse(location.localtime.isEmpty)
+            }
+            
+            XCTAssertNotNil(current.current)
+            if let current = current.current {
+                XCTAssertFalse(current.lastUpdated.isEmpty)
+                XCTAssertNil(current.airQuality)
+            }
+            
+            XCTAssertNil(current.error)
+        } else {
+            XCTFail("View model state is not successful")
         }
-        
-        XCTAssertNotNil(viewModel.currentWeather?.current)
-        if let current = viewModel.currentWeather?.current {
-            XCTAssertFalse(current.lastUpdated.isEmpty)
-            XCTAssertNil(current.airQuality)
-        }
-        
-        XCTAssertNil(viewModel.currentWeather?.error)
     }
 
     func testGetCurrentWithAqi() async throws {
@@ -51,39 +52,41 @@ final class CurrentViewModelTests: XCTestCase {
         viewModel.showAirQuality = true
         await viewModel.getCurrentWeather()
         
-        XCTAssertEqual(viewModel.state, .loaded)
-        
-        XCTAssertNotNil(viewModel.currentWeather)
-        XCTAssertNotNil(viewModel.currentWeather?.location)
-        if let location = viewModel.currentWeather?.location {
-            XCTAssertEqual(location.name, "Dallas")
-            XCTAssertEqual(location.region, "Texas")
-            XCTAssertEqual(location.country, "United States of America")
-            XCTAssertFalse(location.localtime.isEmpty)
+        if case let .success(current) = viewModel.state {
+            XCTAssertNotNil(current.location)
+            if let location = current.location {
+                XCTAssertEqual(location.name, "Dallas")
+                XCTAssertEqual(location.region, "Texas")
+                XCTAssertEqual(location.country, "United States of America")
+                XCTAssertFalse(location.localtime.isEmpty)
+            }
+            
+            XCTAssertNotNil(current.current)
+            if let current = current.current {
+                XCTAssertFalse(current.lastUpdated.isEmpty)
+                XCTAssertNotNil(current.airQuality)
+            }
+            
+            XCTAssertNil(current.error)
+        } else {
+            XCTFail("View model state is not successful")
         }
-        
-        XCTAssertNotNil(viewModel.currentWeather?.current)
-        if let current = viewModel.currentWeather?.current {
-            XCTAssertFalse(current.lastUpdated.isEmpty)
-            XCTAssertNotNil(current.airQuality)
-        }
-
-        XCTAssertNil(viewModel.currentWeather?.error)
     }
     
     func testGetCurrentErrorNoMatch() async throws {
         viewModel.locationQuery = "D"
         await viewModel.getCurrentWeather()
         
-        XCTAssertEqual(viewModel.state, .loaded)
-        
-        XCTAssertNotNil(viewModel.currentWeather)
-        XCTAssertNil(viewModel.currentWeather?.location)
-        XCTAssertNil(viewModel.currentWeather?.current)
-        XCTAssertNotNil(viewModel.currentWeather?.error)
-        if let apiError = viewModel.currentWeather?.error {
-            XCTAssertEqual(apiError.code, 1006)
-            XCTAssertFalse(apiError.message.isEmpty)
+        if case let .success(current) = viewModel.state {
+            XCTAssertNil(current.location)
+            XCTAssertNil(current.current)
+            XCTAssertNotNil(current.error)
+            if let apiError = current.error {
+                XCTAssertEqual(apiError.code, 1006)
+                XCTAssertFalse(apiError.message.isEmpty)
+            }
+        } else {
+            XCTFail("View model state is not successful")
         }
     }
     
@@ -91,15 +94,16 @@ final class CurrentViewModelTests: XCTestCase {
         viewModel.locationQuery = ""
         await viewModel.getCurrentWeather()
         
-        XCTAssertEqual(viewModel.state, .loaded)
-        
-        XCTAssertNotNil(viewModel.currentWeather)
-        XCTAssertNil(viewModel.currentWeather?.location)
-        XCTAssertNil(viewModel.currentWeather?.current)
-        XCTAssertNotNil(viewModel.currentWeather?.error)
-        if let apiError = viewModel.currentWeather?.error {
-            XCTAssertEqual(apiError.code, 1003)
-            XCTAssertFalse(apiError.message.isEmpty)
+        if case let .success(current) = viewModel.state {
+            XCTAssertNil(current.location)
+            XCTAssertNil(current.current)
+            XCTAssertNotNil(current.error)
+            if let apiError = current.error {
+                XCTAssertEqual(apiError.code, 1003)
+                XCTAssertFalse(apiError.message.isEmpty)
+            }
+        } else {
+            XCTFail("View model state is not successful")
         }
     }
 }
