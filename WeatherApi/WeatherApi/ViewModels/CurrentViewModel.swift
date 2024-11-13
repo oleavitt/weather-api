@@ -31,14 +31,7 @@ class CurrentViewModel: ObservableObject {
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
             if let errorResponse = current.error {
-                switch errorResponse.code {
-                case 1003:
-                    state = .failure(ApiErrorType.emptySearch)
-                case 1006:
-                    state = .failure(ApiErrorType.noMatch)
-                default:
-                    state = .failure(ApiErrorType.genericError)
-                }
+                state = .failure(ApiErrorType.fromErrorCode(code: errorResponse.code))
             } else {
                 state = .success(current)
             }

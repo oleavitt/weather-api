@@ -11,6 +11,14 @@ enum ApiErrorType: Error {
     case noMatch
     case emptySearch
     case genericError
+    
+    static func fromErrorCode(code: Int) -> ApiErrorType {
+        switch code {
+        case 1003: return .emptySearch
+        case 1006: return .noMatch
+        default: return .genericError
+        }
+    }
 }
 
 extension ApiErrorType: LocalizedError {
