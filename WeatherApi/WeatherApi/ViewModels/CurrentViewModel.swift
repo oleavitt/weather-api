@@ -11,10 +11,14 @@ class CurrentViewModel: ObservableObject {
     
     @Published var state: LoadingState<ApiCurrent> = .empty
     
-    var locationQuery = ""
+    var locationQuery = "Dallas"
     var showAirQuality = false
 
-    let networkLayer = NetworkLayer()
+    let networkLayer: NetworkLayer
+    
+    public init(_ networkLayer: NetworkLayer) {
+        self.networkLayer = networkLayer
+    }
 
     @MainActor
     func getCurrentWeather() async {
@@ -26,7 +30,18 @@ class CurrentViewModel: ObservableObject {
         state = .loading
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
-            state = .success(current)
+            if let errorResponse = current.error {
+                switch errorResponse.code {
+                case 1003:
+                    state = .failure(ApiErrorType.emptySearch)
+                case 1006:
+                    state = .failure(ApiErrorType.noMatch)
+                default:
+                    state = .failure(ApiErrorType.genericError)
+                }
+            } else {
+                state = .success(current)
+            }
         } catch {
             state = .failure(error)
             print(error)

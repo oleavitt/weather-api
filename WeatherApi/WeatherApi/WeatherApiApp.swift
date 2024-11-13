@@ -11,7 +11,7 @@ import SwiftUI
 struct WeatherApiApp: App {
     var body: some Scene {
         WindowGroup {
-            CurrentView()
+            CurrentView(viewModel: CurrentViewModel(NetworkLayerImpl()))
         }
     }
 }

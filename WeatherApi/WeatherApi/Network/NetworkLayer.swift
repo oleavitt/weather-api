@@ -8,7 +8,11 @@
 import Foundation
 import Combine
 
-class NetworkLayer {
+protocol NetworkLayer {
+    func fetchJsonData<T: Decodable>(request: URLRequest, type: T.Type) async throws -> T
+}
+
+class NetworkLayerImpl: NetworkLayer {
     
     var cancellables = Set<AnyCancellable>()
     

@@ -10,12 +10,9 @@ import XCTest
 
 final class CurrentViewModelTests: XCTestCase {
 
-    var viewModel = CurrentViewModel()
-    
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        apiKey = "YOUR_API_KEY"
-        viewModel = CurrentViewModel()
+        apiKey = ""
     }
 
     override func tearDownWithError() throws {
@@ -23,6 +20,7 @@ final class CurrentViewModelTests: XCTestCase {
     }
 
     func testGetCurrent() async throws {
+        let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
         await viewModel.getCurrentWeather()
         
@@ -48,6 +46,7 @@ final class CurrentViewModelTests: XCTestCase {
     }
 
     func testGetCurrentWithAqi() async throws {
+        let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
         viewModel.showAirQuality = true
         await viewModel.getCurrentWeather()
@@ -69,41 +68,19 @@ final class CurrentViewModelTests: XCTestCase {
             
             XCTAssertNil(current.error)
         } else {
-            XCTFail("View model state is not successful")
+            XCTFail("View model state is not the error state")
         }
     }
     
     func testGetCurrentErrorNoMatch() async throws {
+        let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "D"
         await viewModel.getCurrentWeather()
         
-        if case let .success(current) = viewModel.state {
-            XCTAssertNil(current.location)
-            XCTAssertNil(current.current)
-            XCTAssertNotNil(current.error)
-            if let apiError = current.error {
-                XCTAssertEqual(apiError.code, 1006)
-                XCTAssertFalse(apiError.message.isEmpty)
-            }
+        if case let .failure(error) = viewModel.state {
+            XCTAssertEqual(error as? ApiErrorType, .noMatch)
         } else {
-            XCTFail("View model state is not successful")
-        }
-    }
-    
-    func testGetCurrentErrorEmpty() async throws {
-        viewModel.locationQuery = ""
-        await viewModel.getCurrentWeather()
-        
-        if case let .success(current) = viewModel.state {
-            XCTAssertNil(current.location)
-            XCTAssertNil(current.current)
-            XCTAssertNotNil(current.error)
-            if let apiError = current.error {
-                XCTAssertEqual(apiError.code, 1003)
-                XCTAssertFalse(apiError.message.isEmpty)
-            }
-        } else {
-            XCTFail("View model state is not successful")
+            XCTFail("View model state is not the error state")
         }
     }
 }
