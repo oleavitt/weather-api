@@ -80,12 +80,16 @@ class CurrentViewModel: ObservableObject {
         (showImperial ? apiCurrent?.current?.windMph : apiCurrent?.current?.windKph)?.formatted() ?? "--"
     }
     
+    var gustSpeed: String {
+        (showImperial ? apiCurrent?.current?.gustMph : apiCurrent?.current?.gustKph)?.formatted() ?? "--"
+    }
+    
     var speedUnits: String {
         String(localized: showImperial ? "mph" : "kph")
     }
     
     var windSummary: String {
-        "\(windDir) \(windSpeed) \(speedUnits)"
+        String(localized: "Wind \(windDir) \(windSpeed) \(speedUnits), gusts \(gustSpeed) \(speedUnits)")
     }
     
     var isDay: Bool {

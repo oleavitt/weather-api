@@ -61,7 +61,6 @@ struct CurrentView: View {
                     .fontWeight(.medium)
             }
             HStack {
-                Text("wind")
                 Text(viewModel.windSummary)
             }
             .font(.system(size: 18))

@@ -90,11 +90,22 @@
       }
     },
     "wind" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wind"
+          }
+        }
+      }
+    },
+    "Wind %@ %@ %@, gusts %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Wind %1$@ %2$@ %3$@, gusts %4$@ %5$@"
           }
         }
       }
