@@ -49,12 +49,29 @@ struct CurrentView: View {
     func currentView(current: ApiCurrent) -> some View {
         VStack {
             HStack {
-                Text(current.location?.name ?? "--")
+                Text(viewModel.locationName)
+                    .font(.system(size: 24))
+                    .fontWeight(.light)
             }
             .frame(maxWidth: .infinity)
             temperatureView(current: current)
+            HStack {
+                Text(viewModel.condition)
+                    .font(.system(size: 18))
+                    .fontWeight(.medium)
+            }
+            HStack {
+                Text("wind")
+                Text(viewModel.windSummary)
+            }
+            .font(.system(size: 18))
+            .fontWeight(.light)
             Spacer()
         }
+        .background {
+            viewModel.isDay ? Color.cyan : Color.black
+        }
+        .foregroundColor(.white)
     }
 
     func errorView(error: Error) -> some View {
@@ -69,10 +86,10 @@ struct CurrentView: View {
     }
     
     func temperatureView(current: ApiCurrent) -> some View {
-        HStack {
-            if let temp = current.current?.tempF {
-                Text(temp.formatted() + String(localized: "deg_f"))
-            }
+        HStack(alignment: .lastTextBaseline, spacing: 0) {
+            Text(viewModel.tempString)
+                .font(.system(size: 80))
+                .fontWeight(.ultraLight)
         }
     }
 }
@@ -84,5 +101,6 @@ struct CurrentView: View {
         .onAppear {
             viewModel.locationQuery = "Dallas"
             viewModel.showAirQuality = true
+            viewModel.showFahrenheit = true
         }
 }

@@ -8,7 +8,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "°C"
+            "value" : "C"
           }
         }
       }
@@ -20,7 +20,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "°F"
+            "value" : "F"
           }
         }
       }
@@ -61,6 +61,40 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "An error occurred ."
+          }
+        }
+      }
+    },
+    "kph" : {
+      "comment" : "Units kilometers per hour",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "kph"
+          }
+        }
+      }
+    },
+    "mph" : {
+      "comment" : "Units miles per hour",
+      "extractionState" : "manual",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mph"
+          }
+        }
+      }
+    },
+    "wind" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind"
           }
         }
       }
