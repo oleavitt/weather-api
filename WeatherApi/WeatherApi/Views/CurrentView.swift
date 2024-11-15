@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CurrentView: View {
     
-    @StateObject var viewModel: CurrentViewModel
+    @ObservedObject var viewModel: CurrentViewModel
     
     var body: some View {
         Group {
