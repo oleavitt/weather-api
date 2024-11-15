@@ -60,17 +60,17 @@ struct CurrentView: View {
                     .font(.system(size: 18))
                     .fontWeight(.medium)
             }
-            HStack {
-                Text(viewModel.windSummary)
-            }
-            .font(.system(size: 18))
-            .fontWeight(.light)
+            .padding(.bottom)
+            Text(viewModel.feelsLike)
+            Text(viewModel.windSummary)
             Spacer()
         }
         .background {
             viewModel.isDay ? Color.cyan : Color.black
         }
         .foregroundColor(.white)
+        .font(.system(size: 18))
+        .fontWeight(.light)
     }
 
     func errorView(error: Error) -> some View {

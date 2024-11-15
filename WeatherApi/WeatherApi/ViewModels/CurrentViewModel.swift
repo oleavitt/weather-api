@@ -72,6 +72,13 @@ class CurrentViewModel: ObservableObject {
         apiCurrent?.current?.condition.text ?? "--"
     }
     
+    var feelsLike: String {
+        if let temp = showFahrenheit ? apiCurrent?.current?.feelslikeF : apiCurrent?.current?.feelslikeC {
+            return String(localized: "feels_like \(temp.formatted())")
+        }
+        return "--"
+    }
+    
     var windDir: String {
         apiCurrent?.current?.windDir ?? "--"
     }
