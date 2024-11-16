@@ -18,14 +18,29 @@ class CurrentViewModel: ObservableObject {
 
     let networkLayer: NetworkLayer
     
+    private var lastUpdated: Date?
+    
     public init(_ networkLayer: NetworkLayer) {
         self.networkLayer = networkLayer
+        print("Init")
     }
 
+    deinit {
+        print("Deinit")
+    }
+    
     private var apiCurrent: ApiCurrent?
     
     @MainActor
     func getCurrentWeather() async {
+        if let lastUpdated {
+            let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
+            print("Time since last update: \(timeElapsed)")
+            if timeElapsed < 60 {
+                return
+            }
+        }
+        
         guard let request = Endpoint.current(query: locationQuery,
                                              aqi: showAirQuality).request else {
             return
@@ -35,6 +50,7 @@ class CurrentViewModel: ObservableObject {
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
             apiCurrent = current
+            lastUpdated = Date.now
             if let errorResponse = current.error {
                 state = .failure(ApiErrorType.fromErrorCode(code: errorResponse.code))
             } else {

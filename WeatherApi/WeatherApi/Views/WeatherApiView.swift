@@ -10,7 +10,10 @@ import SwiftUI
 struct WeatherApiView: View {
     
     @StateObject var currentViewModel = CurrentViewModel(NetworkLayerImpl())
-    
+    @StateObject private var locationManager = LocationManager()
+
+    private let networkLayer = NetworkLayerImpl()
+
     var body: some View {
         TabView {
             CurrentView(viewModel: currentViewModel)
@@ -26,5 +29,9 @@ struct WeatherApiView: View {
                     Label("map", systemImage: "map")
                 }
         }
+        .onAppear {
+            locationManager.requestAuthorization()
+        }
+        .environmentObject(locationManager)
     }
 }
