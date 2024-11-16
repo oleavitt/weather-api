@@ -24,8 +24,10 @@ struct CurrentView: View {
                 errorView(error: error)
             }
         }
-        .task {
-            await viewModel.getCurrentWeather()
+        .onAppear {
+            Task {
+                await viewModel.getCurrentWeather()
+            }
         }
     }
     

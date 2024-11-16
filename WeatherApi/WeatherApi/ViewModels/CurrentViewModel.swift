@@ -33,6 +33,7 @@ class CurrentViewModel: ObservableObject {
     
     @MainActor
     func getCurrentWeather() async {
+        if case LoadingState<ApiCurrent>.loading = state { return }
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
             print("Time since last update: \(timeElapsed)")
