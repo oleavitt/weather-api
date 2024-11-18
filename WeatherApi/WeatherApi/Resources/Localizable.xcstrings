@@ -132,6 +132,19 @@
         }
       }
     },
+    "settings" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Settings"
+          }
+        }
+      }
+    },
+    "Settings View" : {
+
+    },
     "Wind %@ %@ %@, gusts %@ %@" : {
       "localizations" : {
         "en" : {

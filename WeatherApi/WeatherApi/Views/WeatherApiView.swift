@@ -26,6 +26,10 @@ struct WeatherApiView: View {
                 .tabItem {
                     Label("map", systemImage: "map")
                 }
+            SettingsView()
+                .tabItem {
+                    Label("settings", systemImage: "gearshape")
+                }
         }
         .onAppear {
             locationManager.requestAuthorization()

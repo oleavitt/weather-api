@@ -22,11 +22,6 @@ class CurrentViewModel: ObservableObject {
     
     public init(_ networkLayer: NetworkLayer) {
         self.networkLayer = networkLayer
-        print("Init")
-    }
-
-    deinit {
-        print("Deinit")
     }
     
     private var apiCurrent: ApiCurrent?
