@@ -9,13 +9,13 @@ import SwiftUI
 
 struct WeatherApiView: View {
     
-    @StateObject var currentViewModel = CurrentViewModel(NetworkLayerImpl())
+    @StateObject var viewModel = CurrentViewModel(NetworkLayerImpl())
     @StateObject private var locationManager = LocationManager()
 
     var body: some View {
         NavigationStack {
             TabView {
-                CurrentView(viewModel: currentViewModel)
+                CurrentView(viewModel: viewModel)
                     .tabItem {
                         Label("here-and-now", systemImage: "house")
                     }
@@ -35,13 +35,13 @@ struct WeatherApiView: View {
             .onAppear {
                 locationManager.requestAuthorization()
             }
-        }
-        .environmentObject(locationManager)
-        .searchable(text: $currentViewModel.locationQuery, prompt: "search_location")
-        .onSubmit(of: .search) {
-            Task {
-                await currentViewModel.getCurrentWeather()
+            .searchable(text: $viewModel.locationQuery, prompt: "search_location")
+            .onSubmit(of: .search) {
+                Task {
+                    await viewModel.getCurrentWeather()
+                }
             }
         }
+        .environmentObject(locationManager)
     }
 }

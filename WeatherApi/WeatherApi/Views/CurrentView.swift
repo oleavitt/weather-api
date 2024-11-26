@@ -12,21 +12,23 @@ struct CurrentView: View {
     @ObservedObject var viewModel: CurrentViewModel
     
     var body: some View {
-        Group {
-            switch viewModel.state {
-            case .empty:
-                emptyView()
-            case .loading:
-                loadingView()
-            case .success(let current):
-                currentView(current: current)
-            case .failure(let error):
-                errorView(error: error)
+        GeometryReader { proxy in
+            VStack {
+                switch viewModel.state {
+                case .empty:
+                    emptyView()
+                case .loading:
+                    loadingView()
+                case .success(let current):
+                    currentView(current: current)
+                case .failure(let error):
+                    errorView(error: error)
+                }
             }
-        }
-        .onAppear {
-            Task {
-                await viewModel.getCurrentWeather()
+            .onAppear {
+                Task {
+                    await viewModel.getCurrentWeather()
+                }
             }
         }
     }
@@ -49,39 +51,45 @@ struct CurrentView: View {
     }
     
     func currentView(current: ApiCurrent) -> some View {
-        VStack {
-            CachedAsyncImage(url: viewModel.conditionsIconUrl) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                default:
-                    placeHolderImage
+        GeometryReader { proxy in
+            VStack {
+                VStack {
+                    CachedAsyncImage(url: viewModel.conditionsIconUrl) { phase in
+                        switch phase {
+                        case .success(let image):
+                            image
+                        default:
+                            placeHolderImage
+                        }
+                    }
+                    HStack {
+                        Text(viewModel.locationName)
+                            .font(.system(size: 24))
+                            .fontWeight(.light)
+                    }
+                    .frame(maxWidth: .infinity)
+                    temperatureView(current: current)
+                    HStack {
+                        Text(viewModel.condition)
+                            .font(.system(size: 18))
+                            .fontWeight(.medium)
+                    }
+                    .padding(.bottom)
+                    Text(viewModel.feelsLike)
+                    Text(viewModel.windSummary)
+                    Spacer()
                 }
+               .padding(.top, proxy.safeAreaInsets.top)
             }
-            HStack {
-                Text(viewModel.locationName)
-                    .font(.system(size: 24))
-                    .fontWeight(.light)
+            .background {
+                let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
+                LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
             }
-            .frame(maxWidth: .infinity)
-            temperatureView(current: current)
-            HStack {
-                Text(viewModel.condition)
-                    .font(.system(size: 18))
-                    .fontWeight(.medium)
-            }
-            .padding(.bottom)
-            Text(viewModel.feelsLike)
-            Text(viewModel.windSummary)
-            Spacer()
+            .foregroundColor(.white)
+            .font(.system(size: 18))
+            .fontWeight(.light)
+            .ignoresSafeArea(edges: .top)
         }
-        .background {
-            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
-        }
-        .foregroundColor(.white)
-        .font(.system(size: 18))
-        .fontWeight(.light)
     }
 
     func errorView(error: Error) -> some View {

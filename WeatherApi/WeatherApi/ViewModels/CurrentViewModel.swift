@@ -53,10 +53,10 @@ class CurrentViewModel: ObservableObject {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
             apiCurrent = current
             lastUpdated = Date.now
+            lastLocationQuery = locationQuery
             if let errorResponse = current.error {
                 state = .failure(ApiErrorType.fromErrorCode(code: errorResponse.code))
             } else {
-                lastLocationQuery = locationQuery
                 state = .success(current)
             }
         } catch {
