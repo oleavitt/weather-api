@@ -1,5 +1,5 @@
 //
-//  DetailView.swift
+//  ForecastView.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 11/15/24.
@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct DetailView: View {
+struct ForecastView: View {
     var body: some View {
-        Text("Detailed weather info")
+        Text("Forecasted weather")
     }
 }
 
 #Preview {
-    DetailView()
+    ForecastView()
 }

@@ -50,6 +50,14 @@ struct CurrentView: View {
     
     func currentView(current: ApiCurrent) -> some View {
         VStack {
+            CachedAsyncImage(url: viewModel.conditionsIconUrl) { phase in
+                switch phase {
+                case .success(let image):
+                    image
+                default:
+                    placeHolderImage
+                }
+            }
             HStack {
                 Text(viewModel.locationName)
                     .font(.system(size: 24))
@@ -68,7 +76,8 @@ struct CurrentView: View {
             Spacer()
         }
         .background {
-            viewModel.isDay ? Color.cyan : Color.black
+            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
+            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
         }
         .foregroundColor(.white)
         .font(.system(size: 18))
@@ -92,6 +101,12 @@ struct CurrentView: View {
                 .font(.system(size: 80))
                 .fontWeight(.ultraLight)
         }
+    }
+    
+    var placeHolderImage: some View {
+        Image(systemName: "photo")
+            .font(.title)
+            .foregroundStyle(.placeholder)
     }
 }
 

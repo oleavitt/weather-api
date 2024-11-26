@@ -1,16 +1,6 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
-    "current" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Current"
-          }
-        }
-      }
-    },
     "deg_c" : {
       "comment" : "Units Celsius",
       "extractionState" : "manual",
@@ -35,19 +25,6 @@
         }
       }
     },
-    "Detailed weather info" : {
-
-    },
-    "details" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Details"
-          }
-        }
-      }
-    },
     "empty-search-message" : {
       "localizations" : {
         "en" : {
@@ -67,6 +44,9 @@
           }
         }
       }
+    },
+    "error-network" : {
+
     },
     "error-no-match" : {
       "localizations" : {
@@ -94,6 +74,29 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Feels like %@°"
+          }
+        }
+      }
+    },
+    "forecast" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Forecast"
+          }
+        }
+      }
+    },
+    "Forecasted weather" : {
+
+    },
+    "here-and-now" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Here & Now"
           }
         }
       }
@@ -128,6 +131,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mph"
+          }
+        }
+      }
+    },
+    "search_location" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a location"
           }
         }
       }

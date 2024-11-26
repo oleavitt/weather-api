@@ -5,20 +5,21 @@
 //  Created by Oren Leavitt on 10/23/24.
 //
 
-import Foundation
+import SwiftUI
 
 class CurrentViewModel: ObservableObject {
     
     @Published var state: LoadingState<ApiCurrent> = .empty
     
-    var locationQuery = "Dallas"
+    var locationQuery = ""
     var showAirQuality = false
     var showFahrenheit = true
     var showImperial = true
-
+    
     let networkLayer: NetworkLayer
     
     private var lastUpdated: Date?
+    private var lastLocationQuery: String?
     
     public init(_ networkLayer: NetworkLayer) {
         self.networkLayer = networkLayer
@@ -28,11 +29,16 @@ class CurrentViewModel: ObservableObject {
     
     @MainActor
     func getCurrentWeather() async {
+        locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        if locationQuery.isEmpty {
+            locationQuery = "auto:ip"
+        }
+        
         if case LoadingState<ApiCurrent>.loading = state { return }
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
             print("Time since last update: \(timeElapsed)")
-            if timeElapsed < 60 {
+            if timeElapsed < 60 && lastLocationQuery == locationQuery {
                 return
             }
         }
@@ -41,7 +47,7 @@ class CurrentViewModel: ObservableObject {
                                              aqi: showAirQuality).request else {
             return
         }
-
+        
         state = .loading
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
@@ -50,12 +56,25 @@ class CurrentViewModel: ObservableObject {
             if let errorResponse = current.error {
                 state = .failure(ApiErrorType.fromErrorCode(code: errorResponse.code))
             } else {
+                lastLocationQuery = locationQuery
                 state = .success(current)
             }
         } catch {
             state = .failure(error)
             print(error)
         }
+    }
+}
+
+extension CurrentViewModel {
+    
+    var conditionsIconUrl: URL? {
+        guard let path = apiCurrent?.current?.condition.icon,
+              var components = URLComponents(string: path) else {
+            return nil
+        }
+        components.scheme = "https"
+        return components.url
     }
     
     var tempString: String {

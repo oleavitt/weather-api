@@ -10,6 +10,7 @@ import Foundation
 enum ApiErrorType: Error {
     case noMatch
     case emptySearch
+    case networkError
     case genericError
     
     static func fromErrorCode(code: Int) -> ApiErrorType {
@@ -28,6 +29,8 @@ extension ApiErrorType: LocalizedError {
             return NSLocalizedString("error-no-match", comment: "")
         case .emptySearch:
             return NSLocalizedString("error-empty-search", comment: "")
+        case .networkError:
+            return NSLocalizedString("error-network", comment: "")
         case .genericError:
             return NSLocalizedString("error-unknown", comment: "")
         }

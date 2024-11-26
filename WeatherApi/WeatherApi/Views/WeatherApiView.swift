@@ -13,27 +13,35 @@ struct WeatherApiView: View {
     @StateObject private var locationManager = LocationManager()
 
     var body: some View {
-        TabView {
-            CurrentView(viewModel: currentViewModel)
-                .tabItem {
-                    Label("current", systemImage: "cloud.sun")
-                }
-            DetailView()
-                .tabItem {
-                    Label("details", systemImage: "list.bullet.rectangle")
-                }
-            MapView()
-                .tabItem {
-                    Label("map", systemImage: "map")
-                }
-            SettingsView()
-                .tabItem {
-                    Label("settings", systemImage: "gearshape")
-                }
-        }
-        .onAppear {
-            locationManager.requestAuthorization()
+        NavigationStack {
+            TabView {
+                CurrentView(viewModel: currentViewModel)
+                    .tabItem {
+                        Label("here-and-now", systemImage: "house")
+                    }
+                ForecastView()
+                    .tabItem {
+                        Label("forecast", systemImage: "clock")
+                    }
+                MapView()
+                    .tabItem {
+                        Label("map", systemImage: "mappin.and.ellipse")
+                    }
+                SettingsView()
+                    .tabItem {
+                        Label("settings", systemImage: "gearshape")
+                    }
+            }
+            .onAppear {
+                locationManager.requestAuthorization()
+            }
         }
         .environmentObject(locationManager)
+        .searchable(text: $currentViewModel.locationQuery, prompt: "search_location")
+        .onSubmit(of: .search) {
+            Task {
+                await currentViewModel.getCurrentWeather()
+            }
+        }
     }
 }
