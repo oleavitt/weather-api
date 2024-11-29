@@ -10,6 +10,7 @@ import SwiftUI
 struct CurrentView: View {
     
     @ObservedObject var viewModel: CurrentViewModel
+    @StateObject var locationManager = LocationManager()
     
     var body: some View {
         GeometryReader { proxy in
@@ -26,8 +27,11 @@ struct CurrentView: View {
                 }
             }
             .onAppear {
-                Task {
-                    await viewModel.getCurrentWeather()
+                locationManager.requestLocation() {
+                    viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
+                    Task {
+                        await viewModel.getCurrentWeather()
+                    }
                 }
             }
         }
@@ -54,6 +58,9 @@ struct CurrentView: View {
         GeometryReader { proxy in
             VStack {
                 VStack {
+                    if let location = locationManager.location {
+                        Text("Your location: \(location.latitude), \(location.longitude)")
+                    }
                     CachedAsyncImage(url: viewModel.conditionsIconUrl) { phase in
                         switch phase {
                         case .success(let image):
@@ -88,7 +95,7 @@ struct CurrentView: View {
             .foregroundColor(.white)
             .font(.system(size: 18))
             .fontWeight(.light)
-            .ignoresSafeArea(edges: .top)
+            .ignoresSafeArea(edges: [.top, .horizontal])
         }
     }
 

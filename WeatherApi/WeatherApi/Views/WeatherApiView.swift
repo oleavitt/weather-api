@@ -10,7 +10,6 @@ import SwiftUI
 struct WeatherApiView: View {
     
     @StateObject var viewModel = CurrentViewModel(NetworkLayerImpl())
-    @StateObject private var locationManager = LocationManager()
 
     var body: some View {
         NavigationStack {
@@ -32,16 +31,12 @@ struct WeatherApiView: View {
                         Label("settings", systemImage: "gearshape")
                     }
             }
-            .onAppear {
-                locationManager.requestAuthorization()
-            }
-            .searchable(text: $viewModel.locationQuery, prompt: "search_location")
-            .onSubmit(of: .search) {
-                Task {
-                    await viewModel.getCurrentWeather()
-                }
-            }
+//            .searchable(text: $viewModel.locationQuery, prompt: "search_location")
+//            .onSubmit(of: .search) {
+//                Task {
+//                    await viewModel.getCurrentWeather()
+//                }
+//            }
         }
-        .environmentObject(locationManager)
     }
 }

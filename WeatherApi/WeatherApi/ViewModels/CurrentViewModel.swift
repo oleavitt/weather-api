@@ -31,7 +31,8 @@ class CurrentViewModel: ObservableObject {
     func getCurrentWeather() async {
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         if locationQuery.isEmpty {
-            locationQuery = "auto:ip"
+            state = .empty
+            return
         }
         
         if case LoadingState<ApiCurrent>.loading = state { return }

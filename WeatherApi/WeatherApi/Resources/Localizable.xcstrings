@@ -136,6 +136,7 @@
       }
     },
     "search_location" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -164,6 +165,16 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "Wind %1$@ %2$@ %3$@, gusts %4$@ %5$@"
+          }
+        }
+      }
+    },
+    "Your location: %lf, %lf" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "Your location: %1$lf, %2$lf"
           }
         }
       }
