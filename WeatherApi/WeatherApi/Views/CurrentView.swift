@@ -30,7 +30,7 @@ struct CurrentView: View {
                 locationManager.requestLocation() {
                     viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
                     Task {
-                        await viewModel.getCurrentWeather()
+                        await viewModel.getCurrentAndForecastWeather()
                     }
                 }
             }
@@ -54,7 +54,7 @@ struct CurrentView: View {
         }
     }
     
-    func currentView(current: ApiCurrent) -> some View {
+    func currentView(current: ApiModel) -> some View {
         GeometryReader { proxy in
             VStack {
                 VStack {
@@ -120,7 +120,7 @@ struct CurrentView: View {
         }
     }
     
-    func temperatureView(current: ApiCurrent) -> some View {
+    func temperatureView(current: ApiModel) -> some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
             Text(viewModel.tempString)
                 .font(.system(size: 80))

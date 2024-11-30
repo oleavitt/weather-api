@@ -9,7 +9,7 @@ import SwiftUI
 
 class CurrentViewModel: ObservableObject {
     
-    @Published var state: LoadingState<ApiCurrent> = .empty
+    @Published var state: LoadingState<ApiModel> = .empty
     
     var locationQuery = ""
     var showAirQuality = false
@@ -25,17 +25,17 @@ class CurrentViewModel: ObservableObject {
         self.networkLayer = networkLayer
     }
     
-    private var apiCurrent: ApiCurrent?
+    private var apiModel: ApiModel?
     
     @MainActor
-    func getCurrentWeather() async {
+    func getCurrentAndForecastWeather() async {
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         if locationQuery.isEmpty {
             state = .empty
             return
         }
         
-        if case LoadingState<ApiCurrent>.loading = state { return }
+        if case LoadingState<ApiModel>.loading = state { return }
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
             print("Time since last update: \(timeElapsed)")
@@ -44,15 +44,15 @@ class CurrentViewModel: ObservableObject {
             }
         }
         
-        guard let request = Endpoint.current(query: locationQuery,
+        guard let request = Endpoint.currentForecast(query: locationQuery,
                                              aqi: showAirQuality).request else {
             return
         }
         
         state = .loading
         do {
-            let current = try await networkLayer.fetchJsonData(request: request, type: ApiCurrent.self)
-            apiCurrent = current
+            let current = try await networkLayer.fetchJsonData(request: request, type: ApiModel.self)
+            apiModel = current
             lastUpdated = Date.now
             lastLocationQuery = locationQuery
             if let errorResponse = current.error {
@@ -70,7 +70,7 @@ class CurrentViewModel: ObservableObject {
 extension CurrentViewModel {
     
     var conditionsIconUrl: URL? {
-        guard let path = apiCurrent?.current?.condition.icon,
+        guard let path = apiModel?.current?.condition.icon,
               var components = URLComponents(string: path) else {
             return nil
         }
@@ -79,7 +79,7 @@ extension CurrentViewModel {
     }
     
     var tempString: String {
-        if let temp = showFahrenheit ? apiCurrent?.current?.tempF : apiCurrent?.current?.tempC {
+        if let temp = showFahrenheit ? apiModel?.current?.tempF : apiModel?.current?.tempC {
             return temp.formatted() + "°"
         }
         return "--"
@@ -90,9 +90,9 @@ extension CurrentViewModel {
     }
     
     var locationName: String {
-        if let city = apiCurrent?.location?.name {
+        if let city = apiModel?.location?.name {
             var locationName = city
-            if let state = apiCurrent?.location?.region {
+            if let state = apiModel?.location?.region {
                 locationName += ", " + state
             }
             return locationName
@@ -101,26 +101,26 @@ extension CurrentViewModel {
     }
     
     var condition: String {
-        apiCurrent?.current?.condition.text ?? "--"
+        apiModel?.current?.condition.text ?? "--"
     }
     
     var feelsLike: String {
-        if let temp = showFahrenheit ? apiCurrent?.current?.feelslikeF : apiCurrent?.current?.feelslikeC {
+        if let temp = showFahrenheit ? apiModel?.current?.feelslikeF : apiModel?.current?.feelslikeC {
             return String(localized: "feels_like \(temp.formatted())")
         }
         return "--"
     }
     
     var windDir: String {
-        apiCurrent?.current?.windDir ?? "--"
+        apiModel?.current?.windDir ?? "--"
     }
     
     var windSpeed: String {
-        (showImperial ? apiCurrent?.current?.windMph : apiCurrent?.current?.windKph)?.formatted() ?? "--"
+        (showImperial ? apiModel?.current?.windMph : apiModel?.current?.windKph)?.formatted() ?? "--"
     }
     
     var gustSpeed: String {
-        (showImperial ? apiCurrent?.current?.gustMph : apiCurrent?.current?.gustKph)?.formatted() ?? "--"
+        (showImperial ? apiModel?.current?.gustMph : apiModel?.current?.gustKph)?.formatted() ?? "--"
     }
     
     var speedUnits: String {
@@ -136,6 +136,6 @@ extension CurrentViewModel {
     }
     
     var isDay: Bool {
-        (apiCurrent?.current?.isDay ?? 0) > 0
+        (apiModel?.current?.isDay ?? 0) > 0
     }
 }

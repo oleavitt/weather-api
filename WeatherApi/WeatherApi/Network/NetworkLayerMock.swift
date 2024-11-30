@@ -26,7 +26,7 @@ class NetworkLayerMock: NetworkLayer {
         
         let data: Data
         switch type {
-        case is ApiCurrent.Type:
+        case is ApiModel.Type:
             data = jsonString.data(using: .utf8) ?? Data()
             break
         default:

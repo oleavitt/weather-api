@@ -1,5 +1,5 @@
 //
-//  ApiCurrent.swift
+//  ApiModel.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 10/24/24.
@@ -7,37 +7,15 @@
 
 import Foundation
 
-struct ApiCurrent: Decodable {
+struct ApiModel: Decodable {
     var location: Location?
     var current: Current?
+    var forecast: Forecast?
     var error: ApiError?
 }
 
-struct Location: Decodable {
-    var name: String = ""
-    var region: String = ""
-    var country: String = ""
-    var lat: Double = 0.0
-    var lon: Double = 0.0
-    var tzId: String = ""
-    var localtimeEpoch: Int = 0
-    var localtime: String = ""
-
-    enum CodingKeys: String, CodingKey {
-        case name = "name"
-        case region = "region"
-        case country = "country"
-        case lat = "lat"
-        case lon = "lon"
-        case tzId = "tz_id"
-        case localtimeEpoch = "localtime_epoch"
-        case localtime = "localtime"
-    }
-}
-
 struct Current: Decodable {
-    var lastUpdatedEpoch: Int = 0
-    var lastUpdated: String = ""
+    var lastUpdated: String?
     var tempC: Double = 0.0
     var tempF: Double = 0.0
     var isDay: Int = 0
@@ -66,9 +44,8 @@ struct Current: Decodable {
     var gustMph: Double = 0.0
     var gustKph: Double = 0.0
     var airQuality: AirQuality?
-    
+
     enum CodingKeys: String, CodingKey {
-        case lastUpdatedEpoch = "last_updated_epoch"
         case lastUpdated = "last_updated"
         case tempC = "temp_c"
         case tempF = "temp_f"
@@ -105,7 +82,7 @@ struct Condition: Decodable {
     var text: String = ""
     var icon: String = ""
     var code: Int = 0
-
+    
     enum CodingKeys: String, CodingKey {
         case text = "text"
         case icon = "icon"
@@ -132,6 +109,108 @@ struct AirQuality: Decodable {
         case pm10 = "pm10"
         case usEpaIndex = "us-epa-index"
         case gbDefraIndex = "gb-defra-index"
+    }
+}
+
+// MARK: - Forecast
+struct Forecast: Decodable {
+    let forecastday: [Forecastday]
+}
+
+// MARK: - Forecastday
+struct Forecastday: Decodable, Hashable {
+    static func == (lhs: Forecastday, rhs: Forecastday) -> Bool {
+        lhs.hashValue == rhs.hashValue
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        
+    }
+    
+    let astro: Astro
+    let hour: [Current]
+    let day: Day
+    let dateEpoch: Int
+    let date: String
+    
+    enum CodingKeys: String, CodingKey {
+        case astro, hour, day
+        case dateEpoch = "date_epoch"
+        case date
+    }
+}
+
+// MARK: - Astro
+struct Astro: Codable {
+    let sunset: String
+    let isSunUp: Int
+    let moonrise: String
+    let moonIllumination: Int
+    let sunrise, moonPhase, moonset: String
+    let isMoonUp: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case sunset
+        case isSunUp = "is_sun_up"
+        case moonrise
+        case moonIllumination = "moon_illumination"
+        case sunrise
+        case moonPhase = "moon_phase"
+        case moonset
+        case isMoonUp = "is_moon_up"
+    }
+}
+
+// MARK: - Day
+struct Day: Decodable {
+    let avgvisKM: Int
+    let mintempC, avgtempC: Double
+    let totalprecipIn, totalsnowCM, dailyWillItRain: Int
+    let maxtempF: Double
+    let dailyWillItSnow, dailyChanceOfRain, avghumidity, totalprecipMm: Int
+    let condition: Condition
+    let maxwindKph, maxwindMph: Double
+    let avgvisMiles: Int
+    let uv: Double
+    let dailyChanceOfSnow: Int
+    let mintempF, avgtempF, maxtempC: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case avgvisKM = "avgvis_km"
+        case mintempC = "mintemp_c"
+        case avgtempC = "avgtemp_c"
+        case totalprecipIn = "totalprecip_in"
+        case totalsnowCM = "totalsnow_cm"
+        case dailyWillItRain = "daily_will_it_rain"
+        case maxtempF = "maxtemp_f"
+        case dailyWillItSnow = "daily_will_it_snow"
+        case dailyChanceOfRain = "daily_chance_of_rain"
+        case avghumidity
+        case totalprecipMm = "totalprecip_mm"
+        case condition
+        case maxwindKph = "maxwind_kph"
+        case maxwindMph = "maxwind_mph"
+        case avgvisMiles = "avgvis_miles"
+        case uv
+        case dailyChanceOfSnow = "daily_chance_of_snow"
+        case mintempF = "mintemp_f"
+        case avgtempF = "avgtemp_f"
+        case maxtempC = "maxtemp_c"
+    }
+}
+
+// MARK: - Location
+struct Location: Codable {
+    let region, country, localtime: String
+    let lon, lat: Double
+    let tzID, name: String
+    let localtimeEpoch: Int
+    
+    enum CodingKeys: String, CodingKey {
+        case region, country, localtime, lon, lat
+        case tzID = "tz_id"
+        case name
+        case localtimeEpoch = "localtime_epoch"
     }
 }
 

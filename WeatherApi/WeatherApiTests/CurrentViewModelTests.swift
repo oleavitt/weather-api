@@ -22,7 +22,7 @@ final class CurrentViewModelTests: XCTestCase {
     func testGetCurrent() async throws {
         let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
-        await viewModel.getCurrentWeather()
+        await viewModel.getCurrentAndForecastWeather()
         
         if case let .success(current) = viewModel.state {
             XCTAssertNotNil(current.location)
@@ -35,7 +35,6 @@ final class CurrentViewModelTests: XCTestCase {
             
             XCTAssertNotNil(current.current)
             if let current = current.current {
-                XCTAssertFalse(current.lastUpdated.isEmpty)
                 XCTAssertNil(current.airQuality)
             }
             
@@ -49,7 +48,7 @@ final class CurrentViewModelTests: XCTestCase {
         let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
         viewModel.showAirQuality = true
-        await viewModel.getCurrentWeather()
+        await viewModel.getCurrentAndForecastWeather()
         
         if case let .success(current) = viewModel.state {
             XCTAssertNotNil(current.location)
@@ -62,7 +61,6 @@ final class CurrentViewModelTests: XCTestCase {
             
             XCTAssertNotNil(current.current)
             if let current = current.current {
-                XCTAssertFalse(current.lastUpdated.isEmpty)
                 XCTAssertNotNil(current.airQuality)
             }
             
@@ -75,7 +73,7 @@ final class CurrentViewModelTests: XCTestCase {
     func testGetCurrentErrorNoMatch() async throws {
         let viewModel = CurrentViewModel(NetworkLayerMock())
         viewModel.locationQuery = "D"
-        await viewModel.getCurrentWeather()
+        await viewModel.getCurrentAndForecastWeather()
         
         if case let .failure(error) = viewModel.state {
             XCTAssertEqual(error as? ApiErrorType, .noMatch)

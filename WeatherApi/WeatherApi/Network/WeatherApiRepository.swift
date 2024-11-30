@@ -9,6 +9,6 @@ import Foundation
 import Combine
 
 protocol WeatherApiRepository {
-    var currentPublisher: CurrentValueSubject<LoadingState<[ApiCurrent]>, Never> { get }
+    var currentPublisher: CurrentValueSubject<LoadingState<[ApiModel]>, Never> { get }
     func loadCurrent() async
 }
