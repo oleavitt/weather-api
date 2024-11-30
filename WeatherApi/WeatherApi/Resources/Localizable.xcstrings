@@ -1,6 +1,26 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@"
+          }
+        }
+      }
+    },
+    "%@ %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@ %2$@ %3$@"
+          }
+        }
+      }
+    },
     "deg_c" : {
       "comment" : "Units Celsius",
       "extractionState" : "manual",
@@ -91,6 +111,16 @@
     "Forecasted weather" : {
 
     },
+    "gusts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Gusts"
+          }
+        }
+      }
+    },
     "here-and-now" : {
       "localizations" : {
         "en" : {
@@ -159,12 +189,12 @@
     "Settings View" : {
 
     },
-    "Wind %@ %@ %@, gusts %@ %@" : {
+    "wind" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
-            "state" : "new",
-            "value" : "Wind %1$@ %2$@ %3$@, gusts %4$@ %5$@"
+            "state" : "translated",
+            "value" : "Wind"
           }
         }
       }

@@ -128,7 +128,11 @@ extension CurrentViewModel {
     }
     
     var windSummary: String {
-        String(localized: "Wind \(windDir) \(windSpeed) \(speedUnits), gusts \(gustSpeed) \(speedUnits)")
+        String(localized: "\(windDir) \(windSpeed) \(speedUnits)")
+    }
+    
+    var gustsSummary: String {
+        String(localized: "\(gustSpeed) \(speedUnits)")
     }
     
     var isDay: Bool {

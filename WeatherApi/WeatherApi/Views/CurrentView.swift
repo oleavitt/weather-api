@@ -83,7 +83,7 @@ struct CurrentView: View {
                     }
                     .padding(.bottom)
                     Text(viewModel.feelsLike)
-                    Text(viewModel.windSummary)
+                    windsView
                     Spacer()
                 }
                .padding(.top, proxy.safeAreaInsets.top)
@@ -99,6 +99,16 @@ struct CurrentView: View {
         }
     }
 
+    var windsView: some View {
+        ScrollView(.horizontal) {
+            HStack {
+                DetailChip("wind", viewModel.windSummary)
+                DetailChip("gusts", viewModel.gustsSummary)
+            }
+            .padding()
+        }
+    }
+    
     func errorView(error: Error) -> some View {
         VStack {
             HStack(alignment: .top) {
