@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "%@" : {
+
+    },
     "%@ %@" : {
       "localizations" : {
         "en" : {
@@ -188,6 +191,16 @@
     },
     "Settings View" : {
 
+    },
+    "uv" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UV"
+          }
+        }
+      }
     },
     "wind" : {
       "localizations" : {

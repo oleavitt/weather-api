@@ -135,6 +135,13 @@ extension CurrentViewModel {
         String(localized: "\(gustSpeed) \(speedUnits)")
     }
     
+    var uvIndex: String {
+        if let current = apiModel?.current {
+            return String(localized: "\(current.uv.formatted())")
+        }
+        return "--"
+    }
+
     var isDay: Bool {
         (apiModel?.current?.isDay ?? 0) > 0
     }
