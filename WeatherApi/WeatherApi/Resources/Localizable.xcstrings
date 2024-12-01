@@ -134,6 +134,16 @@
         }
       }
     },
+    "humidity" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Humidity"
+          }
+        }
+      }
+    },
     "kph" : {
       "comment" : "Units kilometers per hour",
       "extractionState" : "manual",

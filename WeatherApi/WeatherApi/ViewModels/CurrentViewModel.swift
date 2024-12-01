@@ -142,6 +142,13 @@ extension CurrentViewModel {
         return "--"
     }
 
+    var humidity: String {
+        if let humidity = apiModel?.current?.humidity {
+            return "\(humidity)%"
+        }
+        return "--%"
+    }
+    
     var isDay: Bool {
         (apiModel?.current?.isDay ?? 0) > 0
     }

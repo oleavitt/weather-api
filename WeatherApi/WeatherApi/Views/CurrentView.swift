@@ -104,6 +104,7 @@ struct CurrentView: View {
             HStack {
                 DetailChip("wind", viewModel.windSummary)
                 DetailChip("gusts", viewModel.gustsSummary)
+                DetailChip("humidity", viewModel.humidity)
                 DetailChip("uv", viewModel.uvIndex)
             }
             .padding()
