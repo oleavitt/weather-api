@@ -70,12 +70,7 @@ class CurrentViewModel: ObservableObject {
 extension CurrentViewModel {
     
     var conditionsIconUrl: URL? {
-        guard let path = apiModel?.current?.condition.icon,
-              var components = URLComponents(string: path) else {
-            return nil
-        }
-        components.scheme = "https"
-        return components.url
+        URL.httpsURL(apiModel?.current?.condition.icon)
     }
     
     var tempString: String {
