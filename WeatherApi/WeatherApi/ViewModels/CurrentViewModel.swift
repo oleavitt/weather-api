@@ -147,4 +147,25 @@ extension CurrentViewModel {
     var isDay: Bool {
         (apiModel?.current?.isDay ?? 0) > 0
     }
+    
+    func forecastDays() -> [ForcastDayViewModel] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return apiModel?.forecast?.forecastday.map {
+            let date = dateFormatter.date(from: $0.date)
+            let maxTemp: Double
+            let minTemp: Double
+            if showFahrenheit {
+                maxTemp = $0.day.maxtempF
+                minTemp = $0.day.mintempF
+            } else {
+                maxTemp = $0.day.maxtempC
+                minTemp = $0.day.mintempC
+            }
+            return ForcastDayViewModel(date: date,
+                                       hi: maxTemp,
+                                       lo: minTemp,
+                                       conditionIconURL: URL.httpsURL($0.day.condition.icon))
+        } ?? []
+    }
 }

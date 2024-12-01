@@ -84,6 +84,7 @@ struct CurrentView: View {
                     .padding(.bottom)
                     Text(viewModel.feelsLike)
                     detailsView
+                    forecastView
                     Spacer()
                 }
                .padding(.top, proxy.safeAreaInsets.top)
@@ -108,6 +109,15 @@ struct CurrentView: View {
                 DetailChip("uv", viewModel.uvIndex)
             }
             .padding()
+        }
+    }
+    
+    var forecastView: some View {
+        ScrollView {
+            ForEach(viewModel.forecastDays(), id: \.self) { day in
+                ForecastDayView(day: day)
+                    .padding(.horizontal)
+            }
         }
     }
     
