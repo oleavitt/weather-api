@@ -18,17 +18,29 @@ struct ForecastDayView: View {
                     .padding(.leading)
                 BasicCachedAsyncImage(url: day.conditionIconURL)
                     .frame(width: 64, height: 64)
-                VStack {
-                    Text(day.hi.formatted() + "°")
-                        .font(.custom(
-                            currentTheme.fontFamily, fixedSize: 16))
-                        .fontWeight(.bold)
-                        .foregroundColor(.red)
-                    Text(day.lo.formatted() + "°")
-                        .font(.custom(
-                            currentTheme.fontFamily, fixedSize: 14))
-                        .fontWeight(.bold)
-                        .foregroundColor(.blue)
+                VStack(alignment: .leading, spacing: 0) {
+                    HStack(spacing: 0) {
+                        Image(systemName: "arrowtriangle.up.fill")
+                            .resizable()
+                            .frame(width: 6, height: 6)
+                            .padding(.trailing, 4)
+                        Text(day.hi.formatted() + "°")
+                            .font(.custom(
+                                currentTheme.fontFamily, fixedSize: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.red)
+                    }
+                    HStack(spacing: 0) {
+                        Image(systemName: "arrowtriangle.down.fill")
+                            .resizable()
+                            .frame(width: 6, height: 6)
+                            .padding(.trailing, 4)
+                        Text(day.lo.formatted() + "°")
+                            .font(.custom(
+                                currentTheme.fontFamily, fixedSize: 16))
+                            .fontWeight(.bold)
+                            .foregroundColor(.blue)
+                    }
                 }
                 Spacer()
             }
@@ -83,7 +95,7 @@ struct ForecastDayView: View {
 #Preview {
     let mockDay = ForcastDayViewModel(epoch: 1733100385,
                                       date: Date(),
-                                      hi: 70.5,
+                                      hi: 70,
                                       lo: 58.1,
                                       conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
                                       hours: [
