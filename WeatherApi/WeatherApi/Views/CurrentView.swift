@@ -27,6 +27,7 @@ struct CurrentView: View {
                 }
             }
             .onAppear {
+                locationManager.requestAuthorization()
                 locationManager.requestLocation() {
                     viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
                     Task {
