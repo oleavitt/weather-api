@@ -122,15 +122,7 @@ struct Forecast: Decodable {
 }
 
 // MARK: - Forecastday
-struct Forecastday: Decodable, Hashable {
-    static func == (lhs: Forecastday, rhs: Forecastday) -> Bool {
-        lhs.hashValue == rhs.hashValue
-    }
-    
-    func hash(into hasher: inout Hasher) {
-        
-    }
-    
+struct Forecastday: Decodable {
     let astro: Astro
     let hour: [Current]
     let day: Day
@@ -167,24 +159,32 @@ struct Astro: Codable {
 
 // MARK: - Day
 struct Day: Decodable {
-    let avgvisKM: Int
-    let mintempC, avgtempC: Double
-    let totalprecipIn, totalsnowCM, dailyWillItRain: Int
+    let avgvisKM: Double
+    let avgvisMiles: Double
+    let mintempF: Double
+    let mintempC: Double
+    let avgtempF: Double
+    let avgtempC: Double
     let maxtempF: Double
-    let dailyWillItSnow, dailyChanceOfRain, avghumidity, totalprecipMm: Int
-    let condition: Condition
-    let maxwindKph, maxwindMph: Double
-    let avgvisMiles: Int
-    let uv: Double
+    let maxtempC: Double
+    let totalPrecipIn: Double
+    let totalSnowCM: Double
+    let dailyWillItRain: Int
+    let dailyWillItSnow: Int
+    let dailyChanceOfRain: Int
     let dailyChanceOfSnow: Int
-    let mintempF, avgtempF, maxtempC: Double
+    let avghumidity, totalprecipMm: Double
+    let condition: Condition
+    let maxwindMph: Double
+    let maxwindKph: Double
+    let uv: Double
     
     enum CodingKeys: String, CodingKey {
         case avgvisKM = "avgvis_km"
         case mintempC = "mintemp_c"
         case avgtempC = "avgtemp_c"
-        case totalprecipIn = "totalprecip_in"
-        case totalsnowCM = "totalsnow_cm"
+        case totalPrecipIn = "totalprecip_in"
+        case totalSnowCM = "totalsnow_cm"
         case dailyWillItRain = "daily_will_it_rain"
         case maxtempF = "maxtemp_f"
         case dailyWillItSnow = "daily_will_it_snow"
