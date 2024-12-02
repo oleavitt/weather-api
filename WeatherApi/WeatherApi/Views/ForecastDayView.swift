@@ -16,23 +16,17 @@ struct ForecastDayView: View {
             HStack(spacing: 0) {
                 Text(date)
                     .padding(.leading)
-                CachedAsyncImage(url: day.conditionIconURL) { phase in
-                    switch phase {
-                    case .success(let image):
-                        image
-                    default:
-                        placeHolderImage
-                    }
-                }
-                .frame(width: 64, height: 64)
+                BasicCachedAsyncImage(url: day.conditionIconURL)                 .frame(width: 64, height: 64)
                 VStack {
                     Text(day.hi.formatted() + "°")
                         .font(.custom(
-                            currentTheme.fontFamily, fixedSize: 14))
+                            currentTheme.fontFamily, fixedSize: 16))
+                        .fontWeight(.bold)
                         .foregroundColor(.red)
                     Text(day.lo.formatted() + "°")
                         .font(.custom(
                             currentTheme.fontFamily, fixedSize: 14))
+                        .fontWeight(.bold)
                         .foregroundColor(.blue)
                 }
                 Spacer()
@@ -45,12 +39,6 @@ struct ForecastDayView: View {
             currentTheme.backgroundColor
         }
         .cornerRadius(16)
-    }
-    
-    var placeHolderImage: some View {
-        Image(systemName: "photo")
-            .font(.title)
-            .foregroundStyle(.placeholder)
     }
 
     private var date: String {

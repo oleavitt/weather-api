@@ -84,9 +84,9 @@ private class ImageLoader: ObservableObject {
         /// Check if the image is in cache
         if let cachedResponse = ImageLoader.cache.cachedResponse(for: URLRequest(url: url)),
            let cachedImage = UIImage(data: cachedResponse.data, scale: scale) {
-            withAnimation(animation) {
+//            withAnimation(animation) {
                 phase = .success(Image(uiImage: cachedImage))
-            }
+//            }
 #if DEBUG
             print("CachedAsyncImage: Cache hit (\(url.absoluteString))")
 #endif
@@ -109,9 +109,9 @@ private class ImageLoader: ObservableObject {
 #if DEBUG
                 print("CachedAsyncImage: Downloaded (\(url.absoluteString))")
 #endif
-                withAnimation(animation) {
+//                withAnimation(animation) {
                     phase = .success(Image(uiImage: image))
-                }
+//                }
             } else {
 #if DEBUG
                 print("CachedAsyncImage: Decode Error (\(url.absoluteString))")
@@ -123,9 +123,30 @@ private class ImageLoader: ObservableObject {
 #if DEBUG
             print("CachedAsyncImage: Error (\(url.absoluteString))")
 #endif
-            withAnimation(animation) {
+//            withAnimation(animation) {
                 phase = .failure(error)
+//            }
+        }
+    }
+}
+
+struct BasicCachedAsyncImage: View {
+    var url: URL?
+    
+    var body: some View {
+        CachedAsyncImage(url: url) { phase in
+            switch phase {
+            case .success(let image):
+                image
+            default:
+                placeHolderImage
             }
         }
+    }
+    
+    var placeHolderImage: some View {
+        Image(systemName: "photo")
+            .font(.title)
+            .foregroundStyle(.placeholder)
     }
 }

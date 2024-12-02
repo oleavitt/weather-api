@@ -61,14 +61,7 @@ struct CurrentView: View {
                     if let location = locationManager.location {
                         Text("Your location: \(location.latitude), \(location.longitude)")
                     }
-                    CachedAsyncImage(url: viewModel.conditionsIconUrl) { phase in
-                        switch phase {
-                        case .success(let image):
-                            image
-                        default:
-                            placeHolderImage
-                        }
-                    }
+                    BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
                     HStack {
                         Text(viewModel.locationName)
                             .font(.system(size: 24))
@@ -138,12 +131,6 @@ struct CurrentView: View {
                 .font(.system(size: 80))
                 .fontWeight(.ultraLight)
         }
-    }
-    
-    var placeHolderImage: some View {
-        Image(systemName: "photo")
-            .font(.title)
-            .foregroundStyle(.placeholder)
     }
 }
 
