@@ -38,7 +38,7 @@ struct ForecastDayView: View {
         .background {
             currentTheme.backgroundColor
         }
-        .cornerRadius(16)
+        .cornerRadius(currentTheme.cornerRadius)
     }
 
     private var date: String {

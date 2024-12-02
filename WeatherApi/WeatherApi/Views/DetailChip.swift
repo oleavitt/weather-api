@@ -28,7 +28,7 @@ struct DetailChip: View {
         .background {
             currentTheme.backgroundColor
         }
-        .cornerRadius(16)
+        .cornerRadius(currentTheme.cornerRadius)
         .font(.custom(
             currentTheme.fontFamily, fixedSize: 14))
         .foregroundStyle(.secondary)
