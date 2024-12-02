@@ -16,6 +16,8 @@ struct ApiModel: Decodable {
 
 struct Current: Decodable {
     var lastUpdated: String?
+    var timeEpoch: Int?
+    var time: String?
     var tempC: Double = 0.0
     var tempF: Double = 0.0
     var isDay: Int = 0
@@ -47,6 +49,8 @@ struct Current: Decodable {
 
     enum CodingKeys: String, CodingKey {
         case lastUpdated = "last_updated"
+        case timeEpoch = "localtime_epoch"
+        case time = "time"
         case tempC = "temp_c"
         case tempF = "temp_f"
         case isDay = "is_day"

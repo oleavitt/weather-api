@@ -151,6 +151,11 @@ extension CurrentViewModel {
     func forecastDays() -> [ForcastDayViewModel] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateTimeFormatter = DateFormatter()
+        dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let timeFormatter = DateFormatter()
+        timeFormatter.dateFormat = "ha"
+
         return apiModel?.forecast?.forecastday.map {
             let date = dateFormatter.date(from: $0.date)
             let maxTemp: Double
@@ -162,10 +167,30 @@ extension CurrentViewModel {
                 maxTemp = $0.day.maxtempC
                 minTemp = $0.day.mintempC
             }
-            return ForcastDayViewModel(date: date,
+            let hours: [ForecastHour] = $0.hour.map {
+                let timeString: String
+                if let time = dateTimeFormatter.date(from: $0.time ?? "") {
+                    timeString = timeFormatter.string(from: time)
+                } else {
+                    timeString = "--"
+                }
+                let temp: Double
+                if showFahrenheit {
+                    temp = $0.tempF
+                } else {
+                    temp = $0.tempC
+                }
+                return ForecastHour(epoch: $0.timeEpoch ?? 0,
+                                    time: timeString,
+                                    temp: temp,
+                                    conditionIconURL: URL.httpsURL($0.condition.icon))
+            }
+            return ForcastDayViewModel(epoch: $0.dateEpoch,
+                                       date: date,
                                        hi: maxTemp,
                                        lo: minTemp,
-                                       conditionIconURL: URL.httpsURL($0.day.condition.icon))
+                                       conditionIconURL: URL.httpsURL($0.day.condition.icon),
+                                       hours: hours)
         } ?? []
     }
 }
