@@ -15,6 +15,7 @@ class LocationManager: NSObject, ObservableObject {
     
     private let locationManager = CLLocationManager()
     private var completion: (()->Void)?
+    private var authReqCompletion: (()->Void)?
 
     override init() {
         super.init()
@@ -26,7 +27,8 @@ class LocationManager: NSObject, ObservableObject {
         locationManager.requestLocation()
     }
     
-    public func requestAuthorization(always: Bool = false) {
+    public func requestAuthorization(always: Bool = false, completion: @escaping ()->Void) {
+        self.authReqCompletion = completion
         if always {
             locationManager.requestAlwaysAuthorization()
         } else {
@@ -46,6 +48,7 @@ extension LocationManager: CLLocationManagerDelegate {
     
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         authorizationStatus = status
+        authReqCompletion?()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

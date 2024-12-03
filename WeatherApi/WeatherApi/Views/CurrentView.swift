@@ -11,7 +11,7 @@ struct CurrentView: View {
     
     @ObservedObject var viewModel: CurrentViewModel
     @StateObject var locationManager = LocationManager()
-    
+
     var body: some View {
         GeometryReader { proxy in
             VStack {
@@ -27,11 +27,12 @@ struct CurrentView: View {
                 }
             }
             .onAppear {
-                locationManager.requestAuthorization()
-                locationManager.requestLocation() {
-                    viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
-                    Task {
-                        await viewModel.getCurrentAndForecastWeather()
+                locationManager.requestAuthorization() {
+                    locationManager.requestLocation() {
+                        viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
+                        Task {
+                            await viewModel.getCurrentAndForecastWeather()
+                        }
                     }
                 }
             }
