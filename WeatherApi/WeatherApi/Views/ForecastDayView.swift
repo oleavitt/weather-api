@@ -48,6 +48,7 @@ struct ForecastDayView: View {
                 HStack {
                     ForEach(day.hours, id: \.self) { hour in
                         forecastHourView(hour: hour)
+                            .padding(.bottom, 4)
                     }
                 }
             }
@@ -65,22 +66,35 @@ struct ForecastDayView: View {
             Text(hour.time)
                 .font(.custom(
                     currentTheme.fontFamily, fixedSize: 12))
-            CachedAsyncImage(url: hour.conditionIconURL) { phase in
-                switch phase {
-                case .success(let image):
-                    image
-                        .resizable()
-                        .frame(width: 48, height: 48)
-                default:
-                    Image(systemName: "photo")
-                        .foregroundStyle(.placeholder)
+            if let sunRiseSetImageName = hour.sunRiseSetImage {
+                // Insert the sunrise and sunset times
+                Image(systemName: sunRiseSetImageName)
+                    .symbolRenderingMode(.palette)
+                    .foregroundStyle(.gray, .yellow, .yellow)
+                    .frame(width: 36, height: 36)
+                Spacer()
+                Text(hour.isSunset ? "sunset" : "sunrise")
+                    .font(.custom(
+                        currentTheme.fontFamily, fixedSize: 12))
+                    .foregroundStyle(.secondary)
+            } else {
+                CachedAsyncImage(url: hour.conditionIconURL) { phase in
+                    switch phase {
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .frame(width: 48, height: 48)
+                    default:
+                        Image(systemName: "photo")
+                            .foregroundStyle(.placeholder)
+                    }
                 }
+                .frame(width: 36, height: 36)
+                Text(hour.temp.formatted() + "°")
+                    .font(.custom(
+                        currentTheme.fontFamily, fixedSize: 14))
+                    .fontWeight(.bold)
             }
-            .frame(width: 36, height: 36)
-            Text(hour.temp.formatted() + "°")
-                .font(.custom(
-                    currentTheme.fontFamily, fixedSize: 14))
-                .fontWeight(.bold)
         }
     }
     
@@ -107,11 +121,22 @@ struct ForecastDayView: View {
                                                      time: "1am",
                                                      temp: 66.2,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/night/113.png")),
+                                        ForecastHour(epoch: 1733036400,
+                                                     time: "1:45am",
+                                                     temp: 0,
+                                                     conditionIconURL: nil,
+                                                     sunRiseSetImage: "sunrise.fill"),
                                         ForecastHour(epoch: 1733040000,
                                                      time: "2am",
                                                      temp: 67.5,
-                                                     conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"))
-                                      ])
+                                                     conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png")),
+                                        ForecastHour(epoch: 1733036400,
+                                                     time: "3:45am",
+                                                     temp: 0,
+                                                     conditionIconURL: nil,
+                                                     sunRiseSetImage: "sunset.fill",
+                                                     isSunset: true)
+                                     ])
     VStack {
         ScrollView {
             ForecastDayView(day: mockDay)

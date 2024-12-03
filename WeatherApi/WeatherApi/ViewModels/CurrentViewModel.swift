@@ -153,8 +153,12 @@ extension CurrentViewModel {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let dateTimeFormatter = DateFormatter()
         dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "ha"
+        let riseSetInputFormatter = DateFormatter()
+        riseSetInputFormatter.dateFormat = "yyyy-MM-dd h:mm a"
+        let hourFormatter = DateFormatter()
+        hourFormatter.dateFormat = "ha"
+        let hourMinFormatter = DateFormatter()
+        hourMinFormatter.dateFormat = "h:mma"
 
         return apiModel?.forecast?.forecastday.map {
             let date = dateFormatter.date(from: $0.date)
@@ -167,10 +171,10 @@ extension CurrentViewModel {
                 maxTemp = $0.day.maxtempC
                 minTemp = $0.day.mintempC
             }
-            let hours: [ForecastHour] = $0.hour.map {
+            var hours: [ForecastHour] = $0.hour.map {
                 let timeString: String
                 if let time = dateTimeFormatter.date(from: $0.time ?? "") {
-                    timeString = timeFormatter.string(from: time)
+                    timeString = hourFormatter.string(from: time)
                 } else {
                     timeString = "--"
                 }
@@ -184,6 +188,27 @@ extension CurrentViewModel {
                                     time: timeString,
                                     temp: temp,
                                     conditionIconURL: URL.httpsURL($0.condition.icon))
+            }
+            if let sunriseTime = riseSetInputFormatter.date(from: "\($0.date) \($0.astro.sunrise)") {
+                let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
+                                           time: hourMinFormatter.string(from: sunriseTime),
+                                           temp: 0.0,
+                                           conditionIconURL: nil,
+                                           sunRiseSetImage: "sunrise.fill",
+                                           isSunset: false)
+                hours.append(sunrise)
+            }
+            if let sunsetTime = riseSetInputFormatter.date(from: "\($0.date) \($0.astro.sunset)") {
+                let sunset = ForecastHour(epoch: Int(sunsetTime.timeIntervalSince1970),
+                                          time: hourMinFormatter.string(from: sunsetTime),
+                                          temp: 0.0,
+                                          conditionIconURL: nil,
+                                          sunRiseSetImage: "sunset.fill",
+                                          isSunset: true)
+                hours.append(sunset)
+            }
+            hours = hours.sorted {
+                $0.epoch < $1.epoch
             }
             return ForcastDayViewModel(epoch: $0.dateEpoch,
                                        date: date,

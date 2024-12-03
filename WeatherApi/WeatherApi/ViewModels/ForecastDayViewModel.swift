@@ -23,4 +23,6 @@ struct ForecastHour: Identifiable, Hashable {
     let time: String
     let temp: Double
     let conditionIconURL: URL?
+    var sunRiseSetImage: String?
+    var isSunset = false
 }
