@@ -156,6 +156,16 @@
         }
       }
     },
+    "loading-one-moment-please" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "One moment, please…"
+          }
+        }
+      }
+    },
     "map" : {
       "localizations" : {
         "en" : {

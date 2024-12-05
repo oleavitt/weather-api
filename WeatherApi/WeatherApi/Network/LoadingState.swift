@@ -8,6 +8,7 @@
 import Foundation
 
 public enum LoadingState<T> {
+    case startup
     case empty
     case loading
     case success(T)

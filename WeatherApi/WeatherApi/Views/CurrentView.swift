@@ -16,6 +16,8 @@ struct CurrentView: View {
         GeometryReader { proxy in
             VStack {
                 switch viewModel.state {
+                case .startup:
+                    loadingView()
                 case .empty:
                     emptyView()
                 case .loading:
@@ -46,14 +48,19 @@ struct CurrentView: View {
                     .foregroundColor(.secondary)
                 Text("empty-search-message")
             }
+            .padding(.top)
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     func loadingView() -> some View {
         VStack {
-            ProgressView()
+            ProgressView() {
+                Text("loading-one-moment-please")
+            }
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     func currentView(current: ApiModel) -> some View {
@@ -123,8 +130,10 @@ struct CurrentView: View {
                     .foregroundColor(.red)
                 Text(error.localizedDescription)
             }
+            .padding(.top)
             Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
     func temperatureView(current: ApiModel) -> some View {
