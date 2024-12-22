@@ -67,9 +67,7 @@ struct CurrentView: View {
         GeometryReader { proxy in
             VStack {
                 VStack {
-                    if let location = locationManager.location {
-                        Text("Your location: \(location.latitude), \(location.longitude)")
-                    }
+                    Text("time-last-updated \(viewModel.timeLastUpdated)")
                     BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
                     HStack {
                         Text(viewModel.locationName)

@@ -257,6 +257,16 @@
         }
       }
     },
+    "time-last-updated %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Last updated: %@"
+          }
+        }
+      }
+    },
     "uv" : {
       "localizations" : {
         "en" : {
@@ -293,16 +303,6 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wind"
-          }
-        }
-      }
-    },
-    "Your location: %lf, %lf" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "new",
-            "value" : "Your location: %1$lf, %2$lf"
           }
         }
       }

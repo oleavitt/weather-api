@@ -39,7 +39,10 @@ class CurrentViewModel: ObservableObject {
         if case LoadingState<ApiModel>.loading = state { return }
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
+            #if DEBUG
             print("Time since last update: \(timeElapsed)")
+            print("Last query: \(lastLocationQuery ?? "--"), Query: \(locationQuery)")
+            #endif
             if timeElapsed < 60 && lastLocationQuery == locationQuery {
                 return
             }
@@ -84,6 +87,10 @@ extension CurrentViewModel {
     
     var tempUnits: String {
         String(localized: showFahrenheit ? "deg_f" : "deg_c")
+    }
+    
+    var timeLastUpdated: String {
+        apiModel?.current?.lastUpdated ?? "--"
     }
     
     var locationName: String {
