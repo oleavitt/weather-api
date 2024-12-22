@@ -28,15 +28,11 @@ struct CurrentView: View {
                     errorView(error: error)
                 }
             }
+            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
+                loadData()
+            }
             .onAppear {
-                locationManager.requestAuthorization() {
-                    locationManager.requestLocation() {
-                        viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
-                        Task {
-                            await viewModel.getCurrentAndForecastWeather()
-                        }
-                    }
-                }
+                loadData()
             }
         }
     }
@@ -139,6 +135,20 @@ struct CurrentView: View {
             Text(viewModel.tempString)
                 .font(.system(size: 80))
                 .fontWeight(.ultraLight)
+        }
+    }
+}
+
+private extension CurrentView {
+    func loadData() {
+        // TODO: Update with last location saved while awaiting updated location
+        locationManager.requestAuthorization() {
+            locationManager.requestLocation() {
+                viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
+                Task {
+                    await viewModel.getCurrentAndForecastWeather()
+                }
+            }
         }
     }
 }
