@@ -11,7 +11,8 @@ struct CurrentView: View {
     
     @ObservedObject var viewModel: CurrentViewModel
     @StateObject var locationManager = LocationManager()
-
+    @Environment(\.scenePhase) private var scenePhase
+    
     var body: some View {
         GeometryReader { proxy in
             VStack {
@@ -28,9 +29,11 @@ struct CurrentView: View {
                     errorView(error: error)
                 }
             }
-            .onReceive(NotificationCenter.default.publisher(for: UIApplication.didBecomeActiveNotification)) { _ in
-                loadData()
-            }
+            .onChange(of: scenePhase, { oldValue, newValue in
+                if newValue == .active {
+                    loadData()
+                }
+            })
             .onAppear {
                 loadData()
             }
