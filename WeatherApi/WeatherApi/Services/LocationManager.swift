@@ -29,10 +29,19 @@ class LocationManager: NSObject, ObservableObject {
     
     public func requestAuthorization(always: Bool = false, completion: @escaping ()->Void) {
         self.authReqCompletion = completion
-        if always {
-            locationManager.requestAlwaysAuthorization()
-        } else {
-            locationManager.requestWhenInUseAuthorization()
+        
+        switch locationManager.authorizationStatus {
+        
+        case .authorizedAlways, .authorizedWhenInUse:
+            completion()
+            return
+            
+        default:
+            if always {
+                locationManager.requestAlwaysAuthorization()
+            } else {
+                locationManager.requestWhenInUseAuthorization()
+            }
         }
     }
     
