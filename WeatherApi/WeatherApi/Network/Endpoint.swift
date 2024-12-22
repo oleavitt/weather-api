@@ -34,6 +34,6 @@ enum Endpoint {
         guard let url else {
             return nil
         }
-        return URLRequest(url: url)
+        return URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
     }
 }
