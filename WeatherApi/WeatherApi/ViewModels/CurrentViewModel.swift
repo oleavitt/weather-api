@@ -9,7 +9,8 @@ import SwiftUI
 
 class CurrentViewModel: ObservableObject {
     
-    @Published var state: LoadingState<ApiModel> = .empty
+    @Published var state: LoadingState<ApiModel> = .startup
+    @AppStorage("weather-api-key") var weatherApiKey = ""
     
     var locationQuery = ""
     var showAirQuality = false
@@ -30,7 +31,7 @@ class CurrentViewModel: ObservableObject {
     @MainActor
     func getCurrentAndForecastWeather() async {
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        if locationQuery.isEmpty {
+        if locationQuery.isEmpty || weatherApiKey.isEmpty {
             state = .empty
             return
         }
@@ -44,8 +45,9 @@ class CurrentViewModel: ObservableObject {
             }
         }
         
-        guard let request = Endpoint.currentForecast(query: locationQuery,
-                                             aqi: showAirQuality).request else {
+        guard let request = Endpoint.currentForecast(apiKey: weatherApiKey,
+                                                     query: locationQuery,
+                                                     aqi: showAirQuality).request else {
             return
         }
         

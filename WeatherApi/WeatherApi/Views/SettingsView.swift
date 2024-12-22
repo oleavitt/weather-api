@@ -9,10 +9,17 @@ import SwiftUI
 
 struct SettingsView: View {
     var body: some View {
-        Text("Settings View")
+        List {
+            NavigationLink(destination: ApiProviderView()) {
+                Text("api-providers")
+            }
+        }
+        .navigationTitle("settings")
     }
 }
 
 #Preview {
-    SettingsView()
+    NavigationStack {
+        SettingsView()
+    }
 }

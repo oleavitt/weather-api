@@ -7,15 +7,14 @@
 
 import Foundation
 
-var apiKey = ""
 private let apiHost = "api.weatherapi.com"
 
 enum Endpoint {
-    case currentForecast(query: String, aqi: Bool)
-    
+    case currentForecast(apiKey: String, query: String, aqi: Bool)
+
     var url: URL? {
         switch self {
-        case .currentForecast(let query, let aqi):
+        case .currentForecast(let apiKey, let query, let aqi):
             var components = URLComponents()
             components.scheme = "https"
             components.host = apiHost

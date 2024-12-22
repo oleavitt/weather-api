@@ -2,7 +2,14 @@
   "sourceLanguage" : "en",
   "strings" : {
     "%@" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@"
+          }
+        }
+      }
     },
     "%@ %@" : {
       "localizations" : {
@@ -20,6 +27,26 @@
           "stringUnit" : {
             "state" : "new",
             "value" : "%1$@ %2$@ %3$@"
+          }
+        }
+      }
+    },
+    "api-key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API key"
+          }
+        }
+      }
+    },
+    "api-providers" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "API Providers"
           }
         }
       }
@@ -102,6 +129,7 @@
       }
     },
     "forecast" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -167,6 +195,7 @@
       }
     },
     "map" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -188,13 +217,12 @@
         }
       }
     },
-    "search_location" : {
-      "extractionState" : "stale",
+    "provider" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter a location"
+            "value" : "Provider"
           }
         }
       }
@@ -208,9 +236,6 @@
           }
         }
       }
-    },
-    "Settings View" : {
-
     },
     "sunrise" : {
       "localizations" : {
@@ -238,6 +263,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "UV"
+          }
+        }
+      }
+    },
+    "Weather API" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Weather API"
+          }
+        }
+      }
+    },
+    "weather-api-key-placeholder" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Please enter a valid key"
           }
         }
       }
