@@ -14,6 +14,7 @@ struct WeatherApiView: View {
     
     enum TabSelection: Int {
         case current
+        case forecast
         case settings
     }
     
@@ -22,15 +23,16 @@ struct WeatherApiView: View {
     var body: some View {
         NavigationStack {
             TabView(selection: $tabSelection) {
-                CurrentView(viewModel: viewModel)
+                CurrentView(isForecast: false)
                     .tag(TabSelection.current)
                     .tabItem {
                         Label("here-and-now", systemImage: "house")
                     }
-//                ForecastView()
-//                    .tabItem {
-//                        Label("forecast", systemImage: "clock")
-//                    }
+                CurrentView(isForecast: true)
+                    .tag(TabSelection.forecast)
+                    .tabItem {
+                        Label("forecast", systemImage: "clock")
+                    }
 //                MapView()
 //                    .tabItem {
 //                        Label("map", systemImage: "mappin.and.ellipse")
@@ -41,6 +43,7 @@ struct WeatherApiView: View {
                         Label("settings", systemImage: "gearshape")
                     }
             }
+            .environmentObject(viewModel)
             .onAppear {
                 if weatherApiKey.isEmpty {
                     tabSelection = .settings

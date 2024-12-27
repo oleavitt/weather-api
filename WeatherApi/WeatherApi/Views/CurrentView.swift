@@ -9,7 +9,10 @@ import SwiftUI
 
 struct CurrentView: View {
     
-    @ObservedObject var viewModel: CurrentViewModel
+    @State var isForecast: Bool
+
+    @EnvironmentObject var viewModel: CurrentViewModel
+
     @StateObject var locationManager = LocationManager()
     @Environment(\.scenePhase) private var scenePhase
     
@@ -83,7 +86,9 @@ struct CurrentView: View {
                     .padding(.bottom)
                     Text(viewModel.feelsLike)
                     detailsView
-                    forecastView
+                    if isForecast {
+                        forecastView
+                    }
                     Spacer()
                 }
                .padding(.top, proxy.safeAreaInsets.top)
@@ -156,13 +161,13 @@ private extension CurrentView {
     }
 }
 
-#Preview {
-    let viewModel = CurrentViewModel(NetworkLayerMock())
-    
-    CurrentView(viewModel: viewModel)
-        .onAppear {
-            viewModel.locationQuery = "Dallas"
-            viewModel.showAirQuality = true
-            viewModel.showFahrenheit = true
-        }
-}
+//#Preview {
+//    let viewModel = CurrentViewModel(NetworkLayerMock())
+//    
+//    CurrentView(viewModel: viewModel, isForecast: false)
+//        .onAppear {
+//            viewModel.locationQuery = "Dallas"
+//            viewModel.showAirQuality = true
+//            viewModel.showFahrenheit = true
+//        }
+//}
