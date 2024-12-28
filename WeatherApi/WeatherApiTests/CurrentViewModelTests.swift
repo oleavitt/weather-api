@@ -11,7 +11,7 @@ import SwiftUI
 
 final class CurrentViewModelTests: XCTestCase {
 
-    @AppStorage("weather-api-key") var weatherApiKey = "1234abcd"
+    @AppStorage("weather-api-key") var weatherApiKey = ""
     
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
