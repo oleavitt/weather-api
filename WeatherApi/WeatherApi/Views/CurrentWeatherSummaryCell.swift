@@ -16,16 +16,22 @@ struct CurrentWeatherSummaryCell: View {
                 .fontWeight(.light)
             HStack {
                 VStack(alignment: .leading) {
-                    Text(date)
+                    HStack {
+                        Text(date)
+                            .font(.system(size: 24))
+                        Spacer()
+                    }
                     Text(time)
+                        .fontWeight(.light)
                 }
+                .frame(width: 96)
                 BasicCachedAsyncImage(url: URL.httpsURL(data.icon))
                     .frame(width: 64, height: 64)
                 Text("\(data.tempF.formatted())°")
-                    .font(.system(size: 60))
+                    .font(.system(size: 48))
                     .fontWeight(.ultraLight)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.leading)
+                    .padding(.leading)
+                Spacer()
             }
             .padding(.horizontal)
             .frame(maxWidth: .infinity)
@@ -67,8 +73,15 @@ private extension CurrentWeatherSummaryCell {
             location: "Dallas, Texas",                                               epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
-            tempF: 67.6,
-            icon: "//cdn.weatherapi.com/weather/64x64/day/200.png",
+            tempF: -23,
+            icon: "//cdn.weatherapi.com/weather/64x64/night/113.png",
+            isDay: false))
+        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
+            location: "Dallas, Texas",                                               epochUpdated: 1234,
+            dateTime: Date(),
+            tempC: 17.8,
+            tempF: 108.6,
+            icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
             isDay: true))
         Spacer()
     }
