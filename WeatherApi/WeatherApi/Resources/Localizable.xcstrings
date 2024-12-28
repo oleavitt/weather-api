@@ -129,7 +129,6 @@
       }
     },
     "forecast" : {
-      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -138,9 +137,6 @@
           }
         }
       }
-    },
-    "Forecasted weather" : {
-
     },
     "gusts" : {
       "localizations" : {

@@ -27,7 +27,11 @@ struct CurrentView: View {
                 case .loading:
                     loadingView()
                 case .success(let current):
-                    currentView(current: current)
+                    if isForecast {
+                        forecasttView(current: current)
+                    } else {
+                        currentView(current: current)
+                    }
                 case .failure(let error):
                     errorView(error: error)
                 }
@@ -86,12 +90,43 @@ struct CurrentView: View {
                     .padding(.bottom)
                     Text(viewModel.feelsLike)
                     detailsView
-                    if isForecast {
-                        forecastView
-                    }
                     Spacer()
                 }
-               .padding(.top, proxy.safeAreaInsets.top)
+                .padding(.top, proxy.safeAreaInsets.top)
+            }
+            .background {
+                let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
+                LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+            }
+            .foregroundColor(.white)
+            .font(.system(size: 18))
+            .fontWeight(.light)
+            .ignoresSafeArea(edges: [.top, .horizontal])
+        }
+    }
+    
+    func forecasttView(current: ApiModel) -> some View {
+        GeometryReader { proxy in
+            VStack {
+                VStack {
+                    BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
+                    HStack {
+                        Text(viewModel.locationName)
+                            .font(.system(size: 24))
+                            .fontWeight(.light)
+                    }
+                    .frame(maxWidth: .infinity)
+                    temperatureView(current: current)
+                    HStack {
+                        Text(viewModel.condition)
+                            .font(.system(size: 18))
+                            .fontWeight(.medium)
+                    }
+                    .padding(.bottom)
+                    forecastListView
+                    Spacer()
+                }
+                .padding(.top, proxy.safeAreaInsets.top)
             }
             .background {
                 let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
@@ -116,7 +151,7 @@ struct CurrentView: View {
         }
     }
     
-    var forecastView: some View {
+    var forecastListView: some View {
         ScrollView {
             ForEach(viewModel.forecastDays(), id: \.self) { day in
                 ForecastDayView(day: day)
@@ -160,14 +195,3 @@ private extension CurrentView {
         }
     }
 }
-
-//#Preview {
-//    let viewModel = CurrentViewModel(NetworkLayerMock())
-//    
-//    CurrentView(viewModel: viewModel, isForecast: false)
-//        .onAppear {
-//            viewModel.locationQuery = "Dallas"
-//            viewModel.showAirQuality = true
-//            viewModel.showFahrenheit = true
-//        }
-//}
