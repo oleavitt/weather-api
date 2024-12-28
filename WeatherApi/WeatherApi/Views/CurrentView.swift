@@ -11,39 +11,37 @@ struct CurrentView: View {
     
     @State var isForecast: Bool
 
-    @EnvironmentObject var viewModel: CurrentViewModel
+    @EnvironmentObject var viewModel: WeatherViewModel
 
     @StateObject var locationManager = LocationManager()
     @Environment(\.scenePhase) private var scenePhase
     
     var body: some View {
-        GeometryReader { proxy in
-            VStack {
-                switch viewModel.state {
-                case .startup:
-                    loadingView()
-                case .empty:
-                    emptyView()
-                case .loading:
-                    loadingView()
-                case .success(let current):
-                    if isForecast {
-                        forecasttView(current: current)
-                    } else {
-                        currentView(current: current)
-                    }
-                case .failure(let error):
-                    errorView(error: error)
+        VStack {
+            switch viewModel.state {
+            case .startup:
+                loadingView()
+            case .empty:
+                emptyView()
+            case .loading:
+                loadingView()
+            case .success(let current):
+                if isForecast {
+                    forecasttView(current: current)
+                } else {
+                    currentView(current: current)
                 }
+            case .failure(let error):
+                errorView(error: error)
             }
-            .onChange(of: scenePhase, { oldValue, newValue in
-                if newValue == .active {
-                    loadData()
-                }
-            })
-            .onAppear {
+        }
+        .onChange(of: scenePhase, { oldValue, newValue in
+            if newValue == .active {
                 loadData()
             }
+        })
+        .onAppear {
+            loadData()
         }
     }
     

@@ -1,5 +1,5 @@
 //
-//  CurrentViewModel.swift
+//  WeatherViewModel.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 10/23/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-class CurrentViewModel: ObservableObject {
+class WeatherViewModel: ObservableObject {
     
     @Published var state: LoadingState<ApiModel> = .startup
     @AppStorage("weather-api-key") var weatherApiKey = ""
@@ -72,7 +72,7 @@ class CurrentViewModel: ObservableObject {
     }
 }
 
-extension CurrentViewModel {
+extension WeatherViewModel {
     
     var conditionsIconUrl: URL? {
         URL.httpsURL(apiModel?.current?.condition.icon)

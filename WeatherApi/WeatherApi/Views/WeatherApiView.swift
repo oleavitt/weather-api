@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WeatherApiView: View {
     
-    @StateObject var viewModel = CurrentViewModel(NetworkLayerImpl())
+    @StateObject var viewModel = WeatherViewModel(NetworkLayerImpl())
     @AppStorage("weather-api-key") var weatherApiKey = ""
     
     enum TabSelection: Int {

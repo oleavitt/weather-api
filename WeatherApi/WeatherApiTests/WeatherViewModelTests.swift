@@ -1,5 +1,5 @@
 //
-//  CurrentViewModelTests.swift
+//  WeatherViewModelTests.swift
 //  WeatherApiTests
 //
 //  Created by Oren Leavitt on 10/23/24.
@@ -9,7 +9,7 @@ import XCTest
 import SwiftUI
 @testable import WeatherApi
 
-final class CurrentViewModelTests: XCTestCase {
+final class WeatherViewModelTests: XCTestCase {
 
     @AppStorage("weather-api-key") var weatherApiKey = ""
     
@@ -23,7 +23,7 @@ final class CurrentViewModelTests: XCTestCase {
     }
 
     func testGetCurrent() async throws {
-        let viewModel = CurrentViewModel(NetworkLayerMock())
+        let viewModel = WeatherViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
         await viewModel.getCurrentAndForecastWeather()
         
@@ -48,7 +48,7 @@ final class CurrentViewModelTests: XCTestCase {
     }
 
     func testGetCurrentWithAqi() async throws {
-        let viewModel = CurrentViewModel(NetworkLayerMock())
+        let viewModel = WeatherViewModel(NetworkLayerMock())
         viewModel.locationQuery = "Dallas"
         viewModel.showAirQuality = true
         await viewModel.getCurrentAndForecastWeather()
@@ -74,7 +74,7 @@ final class CurrentViewModelTests: XCTestCase {
     }
     
     func testGetCurrentErrorNoMatch() async throws {
-        let viewModel = CurrentViewModel(NetworkLayerMock())
+        let viewModel = WeatherViewModel(NetworkLayerMock())
         viewModel.locationQuery = "D"
         await viewModel.getCurrentAndForecastWeather()
         
