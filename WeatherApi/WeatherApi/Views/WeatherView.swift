@@ -107,20 +107,8 @@ struct WeatherView: View {
         GeometryReader { proxy in
             VStack {
                 VStack {
-                    BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
-                    HStack {
-                        Text(viewModel.locationName)
-                            .font(.system(size: 24))
-                            .fontWeight(.light)
-                    }
-                    .frame(maxWidth: .infinity)
-                    temperatureView(current: current)
-                    HStack {
-                        Text(viewModel.condition)
-                            .font(.system(size: 18))
-                            .fontWeight(.medium)
-                    }
-                    .padding(.bottom)
+                    CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
+                        .padding([.bottom, .horizontal])
                     forecastListView
                     Spacer()
                 }

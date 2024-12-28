@@ -31,6 +31,16 @@
         }
       }
     },
+    "%@°" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "%@°"
+          }
+        }
+      }
+    },
     "api-key" : {
       "localizations" : {
         "en" : {

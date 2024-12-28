@@ -93,6 +93,13 @@ extension WeatherViewModel {
         apiModel?.current?.lastUpdated ?? "--"
     }
     
+    var timeLastUpdatedDate: Date {
+        let dateTimeFormatter = DateFormatter()
+        dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        
+        return dateTimeFormatter.date(from: timeLastUpdated) ?? Date()
+    }
+    
     var locationName: String {
         if let city = apiModel?.location?.name {
             var locationName = city
@@ -226,5 +233,15 @@ extension WeatherViewModel {
                                        conditionIconURL: URL.httpsURL($0.day.condition.icon),
                                        hours: hours)
         } ?? []
+    }
+    
+    func currentWeatherModel() -> CurrentWeatherModel {
+        CurrentWeatherModel(location: locationName,
+                        epochUpdated: apiModel?.current?.localTimeEpoch ?? 0,
+                        dateTime: timeLastUpdatedDate,
+                        tempC: apiModel?.current?.tempC ?? 0.0,
+                        tempF: apiModel?.current?.tempF ?? 0.0,
+                        icon: apiModel?.current?.condition.icon ?? "",
+                        isDay: isDay)
     }
 }
