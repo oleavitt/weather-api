@@ -1,5 +1,5 @@
 //
-//  CurrentView.swift
+//  WeatherView.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 10/22/24.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct CurrentView: View {
+struct WeatherView: View {
     
     @State var isForecast: Bool
 
@@ -27,7 +27,7 @@ struct CurrentView: View {
                 loadingView()
             case .success(let current):
                 if isForecast {
-                    forecasttView(current: current)
+                    forecastView(current: current)
                 } else {
                     currentView(current: current)
                 }
@@ -103,7 +103,7 @@ struct CurrentView: View {
         }
     }
     
-    func forecasttView(current: ApiModel) -> some View {
+    func forecastView(current: ApiModel) -> some View {
         GeometryReader { proxy in
             VStack {
                 VStack {
@@ -180,7 +180,7 @@ struct CurrentView: View {
     }
 }
 
-private extension CurrentView {
+private extension WeatherView {
     func loadData() {
         // TODO: Update with last location saved while awaiting updated location
         locationManager.requestAuthorization() {
