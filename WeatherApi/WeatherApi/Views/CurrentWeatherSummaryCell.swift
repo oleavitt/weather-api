@@ -16,15 +16,12 @@ struct CurrentWeatherSummaryCell: View {
                 .fontWeight(.light)
             HStack {
                 VStack(alignment: .leading) {
-                    HStack {
-                        Text(date)
-                            .font(.system(size: 24))
-                        Spacer()
-                    }
+                    Text(date)
+                        .font(.system(size: 24))
                     Text(time)
                         .fontWeight(.light)
                 }
-                .frame(width: 96)
+                .frame(maxWidth: 96, alignment: .leading)
                 BasicCachedAsyncImage(url: URL.httpsURL(data.icon))
                     .frame(width: 64, height: 64)
                 Text("\(data.tempF.formatted())°")
