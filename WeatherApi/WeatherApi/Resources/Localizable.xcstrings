@@ -168,6 +168,19 @@
         }
       }
     },
+    "history" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History"
+          }
+        }
+      }
+    },
+    "History View" : {
+
+    },
     "humidity" : {
       "localizations" : {
         "en" : {

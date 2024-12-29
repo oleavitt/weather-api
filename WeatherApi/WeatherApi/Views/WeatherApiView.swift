@@ -15,6 +15,7 @@ struct WeatherApiView: View {
     enum TabSelection: Int {
         case current
         case forecast
+        case history
         case settings
     }
     
@@ -32,6 +33,11 @@ struct WeatherApiView: View {
                     .tag(TabSelection.forecast)
                     .tabItem {
                         Label("forecast", systemImage: "clock")
+                    }
+                HistoryView()
+                    .tag(TabSelection.history)
+                    .tabItem {
+                        Label("history", systemImage: "list.bullet")
                     }
 //                MapView()
 //                    .tabItem {
