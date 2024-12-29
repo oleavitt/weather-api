@@ -84,4 +84,29 @@ final class WeatherViewModelTests: XCTestCase {
             XCTFail("View model state is not the error state")
         }
     }
+    
+    func testProperties() async throws {
+        let viewModel = WeatherViewModel(NetworkLayerMock())
+        viewModel.locationQuery = "Dallas"
+        await viewModel.getCurrentAndForecastWeather()
+        
+        XCTAssertEqual(viewModel.uvIndex, "0")
+        XCTAssertEqual(viewModel.humidity, "58%")
+        XCTAssertFalse(viewModel.isDay)
+    }
+    
+    func testForecastDays() async throws {
+        let viewModel = WeatherViewModel(NetworkLayerMock())
+        viewModel.locationQuery = "Dallas"
+        await viewModel.getCurrentAndForecastWeather()
+        
+        let forecastDays = viewModel.forecastDays()
+        XCTAssertEqual(forecastDays.count, 3)
+        
+        if let dayOne = forecastDays.first {
+            XCTAssertEqual(dayOne.hours.count, 26) // 24 hours plus sunrise and sunset times
+        } else {
+            XCTFail("Could not get the first day of the forecast")
+        }
+    }
 }
