@@ -65,20 +65,28 @@ private extension CurrentWeatherSummaryCell {
             tempC: 17.8,
             tempF: 64,
             icon: "//cdn.weatherapi.com/weather/64x64/night/119.png",
+            code: 1000,
+            uv: 0,
             isDay: false))
         CurrentWeatherSummaryCell(data: CurrentWeatherModel(
-            location: "Dallas, Texas",                                               epochUpdated: 1234,
+            location: "Dallas, Texas",
+            epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
             tempF: -23,
             icon: "//cdn.weatherapi.com/weather/64x64/night/113.png",
+            code: 1000,
+            uv: 0,
             isDay: false))
         CurrentWeatherSummaryCell(data: CurrentWeatherModel(
-            location: "Dallas, Texas",                                               epochUpdated: 1234,
+            location: "Dallas, Texas",
+            epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
             tempF: 108.6,
             icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
+            code: 1000,
+            uv: 2,
             isDay: true))
         Spacer()
     }

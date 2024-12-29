@@ -237,11 +237,13 @@ extension WeatherViewModel {
     
     func currentWeatherModel() -> CurrentWeatherModel {
         CurrentWeatherModel(location: locationName,
-                        epochUpdated: apiModel?.current?.localTimeEpoch ?? 0,
-                        dateTime: timeLastUpdatedDate,
-                        tempC: apiModel?.current?.tempC ?? 0.0,
-                        tempF: apiModel?.current?.tempF ?? 0.0,
-                        icon: apiModel?.current?.condition.icon ?? "",
-                        isDay: isDay)
+                            epochUpdated: apiModel?.current?.localTimeEpoch ?? 0,
+                            dateTime: timeLastUpdatedDate,
+                            tempC: apiModel?.current?.tempC ?? 0.0,
+                            tempF: apiModel?.current?.tempF ?? 0.0,
+                            icon: apiModel?.current?.condition.icon ?? "",
+                            code: apiModel?.current?.condition.code ?? 0,
+                            uv: apiModel?.current?.uv ?? 0.0,
+                            isDay: isDay)
     }
 }

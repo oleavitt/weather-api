@@ -6,14 +6,42 @@
 //
 
 import Foundation
+import SwiftData
 
-struct CurrentWeatherModel: Identifiable, Hashable {
+@Model
+final class CurrentWeatherModel: Identifiable, Hashable {
     var id: Int { epochUpdated }
-    let location: String
-    let epochUpdated: Int
-    let dateTime: Date
-    let tempC: Double
-    let tempF: Double
-    let icon: String
-    let isDay: Bool
+    var location: String
+    var epochUpdated: Int
+    var dateTime: Date
+    var tempC: Double
+    var tempF: Double
+    var icon: String
+    var code: Int
+    var uv: Double
+    var isDay: Bool
+    
+    init(location: String,
+         epochUpdated: Int,
+         dateTime: Date,
+         tempC: Double,
+         tempF: Double,
+         icon: String,
+         code: Int,
+         uv: Double,
+         isDay: Bool) {
+        self.location = location
+        self.epochUpdated = epochUpdated
+        self.dateTime = dateTime
+        self.tempC = tempC
+        self.tempF = tempF
+        self.icon = icon
+        self.code = code
+        self.uv = uv
+        self.isDay = isDay
+    }
 }
+
+
+
+
