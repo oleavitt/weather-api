@@ -194,12 +194,17 @@ private extension WeatherView {
         
     func saveToHistory() {
         let current = viewModel.currentWeatherModel()
-        print("History count: \(history.count) Saving history...")
+#if DEBUG
+        print("History count: \(history.count)")
+#endif
         if !history.contains(where: {
-            $0.epochUpdated == current.epochUpdated
+            $0.epochUpdated == current.epochUpdated &&
+            $0.location == current.location
            }) {
             context.insert(viewModel.currentWeatherModel())
+#if DEBUG
             print("History saved for epoch: \(current.epochUpdated)")
+#endif
         }
     }
 }

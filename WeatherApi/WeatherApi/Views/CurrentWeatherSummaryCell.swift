@@ -25,7 +25,7 @@ struct CurrentWeatherSummaryCell: View {
                 BasicCachedAsyncImage(url: URL.httpsURL(data.icon))
                     .frame(width: 64, height: 64)
                 Text("\(data.tempF.formatted())°")
-                    .font(.system(size: 48))
+                    .font(.system(size: 36))
                     .fontWeight(.ultraLight)
                     .padding(.leading)
                 Spacer()

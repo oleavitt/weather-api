@@ -41,10 +41,10 @@ class WeatherViewModel: ObservableObject {
         if case LoadingState<ApiModel>.loading = state { return }
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
-            #if DEBUG
+#if DEBUG
             print("Time since last update: \(timeElapsed)")
             print("Last query: \(lastLocationQuery ?? "--"), Query: \(locationQuery)")
-            #endif
+#endif
             if timeElapsed < 60 && lastLocationQuery == locationQuery {
                 return
             }
@@ -70,7 +70,9 @@ class WeatherViewModel: ObservableObject {
             }
         } catch {
             state = .failure(error)
+#if DEBUG
             print(error)
+#endif
         }
     }
 }

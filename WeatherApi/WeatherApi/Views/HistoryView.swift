@@ -16,14 +16,50 @@ struct HistoryView: View {
         sort: \CurrentWeatherModel.dateTime
     ) var history: [CurrentWeatherModel]
 
+    @State var showConfirmDelete = false
+    @State var itemToDelete: CurrentWeatherModel?
+    
     var body: some View {
-        ScrollView {
-            ForEach(history) { item in
-                CurrentWeatherSummaryCell(data: item)
+        NavigationStack {
+            List {
+                ForEach(history) { item in
+                    CurrentWeatherSummaryCell(data: item)
+                        .listRowSeparator(.hidden)
+                        .swipeActions(allowsFullSwipe: false) {
+                            Button(role: .destructive) {
+                                itemToDelete = item
+                                showConfirmDelete.toggle()
+                            } label: {
+                                Label("delete", systemImage: "trash")
+                                    .symbolVariant(.fill)
+                            }
+                        }
+                        .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+                }
             }
+            .navigationTitle("history")
+            .confirmationDialog("delete-this-item",
+                                isPresented: $showConfirmDelete,
+                                titleVisibility: .visible,
+                                actions: {
+                Button(role: .destructive) {
+                    deleteItem()
+                } label: {
+                    Label("delete", systemImage: "trash")
+                        .symbolVariant(.fill)
+                }
+            })
         }
-        .padding()
-        .navigationTitle("history")
+    }
+}
+
+private extension HistoryView {
+    
+    func deleteItem() {
+        if let itemToDelete {
+            context.delete(itemToDelete)
+        }
+        itemToDelete = nil
     }
 }
 
