@@ -10,8 +10,9 @@ import SwiftUI
 class WeatherViewModel: ObservableObject {
     
     @Published var state: LoadingState<ApiModel> = .startup
+    @Published var isLoaded = false
     @AppStorage("weather-api-key") var weatherApiKey = ""
-    
+
     var locationQuery = ""
     var showAirQuality = false
     var showFahrenheit = true
@@ -30,6 +31,7 @@ class WeatherViewModel: ObservableObject {
     
     @MainActor
     func getCurrentAndForecastWeather() async {
+        isLoaded = false
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         if locationQuery.isEmpty || weatherApiKey.isEmpty {
             state = .empty
@@ -64,6 +66,7 @@ class WeatherViewModel: ObservableObject {
                 state = .failure(ApiErrorType.fromErrorCode(code: errorResponse.code))
             } else {
                 state = .success(current)
+                isLoaded = true
             }
         } catch {
             state = .failure(error)
@@ -237,7 +240,7 @@ extension WeatherViewModel {
     
     func currentWeatherModel() -> CurrentWeatherModel {
         CurrentWeatherModel(location: locationName,
-                            epochUpdated: apiModel?.current?.localTimeEpoch ?? 0,
+                            epochUpdated: apiModel?.current?.lastUpdatedEpoch ?? 0,
                             dateTime: timeLastUpdatedDate,
                             tempC: apiModel?.current?.tempC ?? 0.0,
                             tempF: apiModel?.current?.tempF ?? 0.0,

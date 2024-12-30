@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WeatherApiView: View {
     
@@ -50,6 +51,7 @@ struct WeatherApiView: View {
                     }
             }
             .environmentObject(viewModel)
+            .modelContainer(for: CurrentWeatherModel.self)
             .onAppear {
                 if weatherApiKey.isEmpty {
                     tabSelection = .settings

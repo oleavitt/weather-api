@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct WeatherView: View {
     
@@ -15,6 +16,11 @@ struct WeatherView: View {
 
     @StateObject var locationManager = LocationManager()
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.modelContext) var context
+    
+    @Query(
+        sort: \CurrentWeatherModel.dateTime
+    ) var history: [CurrentWeatherModel]
     
     var body: some View {
         VStack {
@@ -35,11 +41,16 @@ struct WeatherView: View {
                 errorView(error: error)
             }
         }
-        .onChange(of: scenePhase, { oldValue, newValue in
+        .onChange(of: scenePhase) { oldValue, newValue in
             if newValue == .active {
                 loadData()
             }
-        })
+        }
+        .onChange(of: viewModel.isLoaded) {
+            if viewModel.isLoaded {
+                saveToHistory()
+            }
+        }
         .onAppear {
             loadData()
         }
@@ -178,6 +189,17 @@ private extension WeatherView {
                     await viewModel.getCurrentAndForecastWeather()
                 }
             }
+        }
+    }
+        
+    func saveToHistory() {
+        let current = viewModel.currentWeatherModel()
+        print("History count: \(history.count) Saving history...")
+        if !history.contains(where: {
+            $0.epochUpdated == current.epochUpdated
+           }) {
+            context.insert(viewModel.currentWeatherModel())
+            print("History saved for epoch: \(current.epochUpdated)")
         }
     }
 }
