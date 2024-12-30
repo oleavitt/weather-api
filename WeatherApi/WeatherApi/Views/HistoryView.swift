@@ -13,7 +13,8 @@ struct HistoryView: View {
     @Environment(\.modelContext) var context
     
     @Query(
-        sort: \CurrentWeatherModel.dateTime
+        sort: \CurrentWeatherModel.dateTime,
+        order: .reverse
     ) var history: [CurrentWeatherModel]
 
     @State var showConfirmDelete = false
