@@ -61,6 +61,9 @@
         }
       }
     },
+    "data-source" : {
+
+    },
     "deg_c" : {
       "comment" : "Units Celsius",
       "extractionState" : "manual",
@@ -91,6 +94,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete"
+          }
+        }
+      }
+    },
+    "delete-all-history" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete all History"
+          }
+        }
+      }
+    },
+    "delete-all-history-confirm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This will delete all history from the History view."
           }
         }
       }
