@@ -20,7 +20,7 @@ struct WeatherView: View {
     
     @Query(
         sort: \CurrentWeatherModel.dateTime
-    ) var history: [CurrentWeatherModel]
+    ) var history: CurrentWeatherHistory
     
     var body: some View {
         VStack {

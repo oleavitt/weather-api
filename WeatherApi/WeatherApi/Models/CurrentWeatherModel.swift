@@ -42,6 +42,7 @@ final class CurrentWeatherModel: Identifiable, Hashable {
     }
 }
 
+typealias CurrentWeatherHistory = [CurrentWeatherModel]
 
 
 

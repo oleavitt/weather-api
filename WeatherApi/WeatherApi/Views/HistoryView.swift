@@ -15,7 +15,7 @@ struct HistoryView: View {
     @Query(
         sort: \CurrentWeatherModel.dateTime,
         order: .reverse
-    ) var history: [CurrentWeatherModel]
+    ) var history: CurrentWeatherHistory
 
     @State var showConfirmDelete = false
     @State var itemToDelete: CurrentWeatherModel?
@@ -37,6 +37,9 @@ struct HistoryView: View {
                         }
                         .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 }
+            }
+            .task {
+                
             }
             .navigationTitle("history")
             .confirmationDialog("delete-this-item",
