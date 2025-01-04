@@ -19,7 +19,8 @@ struct WeatherView: View {
     @Environment(\.modelContext) var context
     
     @State var isSearchQuery = false
-    
+    @State var showSearchBar = false
+
     @Query(
         sort: \CurrentWeatherModel.dateTime
     ) var history: [CurrentWeatherModel]
@@ -44,7 +45,9 @@ struct WeatherView: View {
                     errorView(error: error)
                 }
             }
-            .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle(isForecast ? "forecast" : "current")
+            .searchable(text: $viewModel.locationQuery, placement: .toolbar, prompt: "search-prompt")
             .onSubmit(of: .search, {
                 isSearchQuery = true
                 loadData()
@@ -91,63 +94,55 @@ struct WeatherView: View {
     }
     
     func currentView(current: ApiModel) -> some View {
-        GeometryReader { proxy in
+        VStack {
             VStack {
-                VStack {
-                    Text("time-last-updated \(viewModel.timeLastUpdated)")
-                    BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
-                    HStack {
-                        Text(viewModel.locationName)
-                            .font(.system(size: 24))
-                            .fontWeight(.light)
-                    }
-                    .frame(maxWidth: .infinity)
-                    temperatureView(current: current)
-                    HStack {
-                        Text(viewModel.condition)
-                            .font(.system(size: 18))
-                            .fontWeight(.medium)
-                    }
-                    .padding(.bottom)
-                    Text(viewModel.feelsLike)
-                    detailsView
-                    Spacer()
+                Text("time-last-updated \(viewModel.timeLastUpdated)")
+                BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
+                HStack {
+                    Text(viewModel.locationName)
+                        .font(.system(size: 24))
+                        .fontWeight(.light)
                 }
-                .padding(.top, proxy.safeAreaInsets.top)
+                .frame(maxWidth: .infinity)
+                temperatureView(current: current)
+                HStack {
+                    Text(viewModel.condition)
+                        .font(.system(size: 18))
+                        .fontWeight(.medium)
+                }
+                .padding(.bottom)
+                Text(viewModel.feelsLike)
+                detailsView
+                Spacer()
             }
-            .background {
-                let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-                LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
-            }
-            .foregroundColor(.white)
-            .font(.system(size: 18))
-            .fontWeight(.light)
-            .ignoresSafeArea(edges: [.top, .horizontal])
-            .navigationTitle("current")
+            .padding(.top)
         }
+        .background {
+            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
+            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+        }
+        .foregroundColor(.white)
+        .font(.system(size: 18))
+        .fontWeight(.light)
     }
     
     func forecastView(current: ApiModel) -> some View {
-        GeometryReader { proxy in
+        VStack {
             VStack {
-                VStack {
-                    CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
-                        .padding([.bottom, .horizontal])
-                    forecastListView
-                    Spacer()
-                }
-                .padding(.top, proxy.safeAreaInsets.top)
+                CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
+                    .padding([.bottom, .horizontal])
+                forecastListView
+                Spacer()
             }
-            .background {
-                let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-                LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
-            }
-            .foregroundColor(.white)
-            .font(.system(size: 18))
-            .fontWeight(.light)
-            .ignoresSafeArea(edges: [.top, .horizontal])
-            .navigationTitle("forecast")
+            .padding(.top)
         }
+        .background {
+            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
+            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+        }
+        .foregroundColor(.white)
+        .font(.system(size: 18))
+        .fontWeight(.light)
     }
 
     var detailsView: some View {

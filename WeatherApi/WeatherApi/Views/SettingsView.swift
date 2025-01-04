@@ -26,6 +26,7 @@ struct SettingsView: View {
                     }
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("settings")
             .confirmationDialog("delete-all-history-confirm",
                                 isPresented: $showDeleteHistoryConfirm,

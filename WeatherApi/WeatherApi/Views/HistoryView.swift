@@ -38,6 +38,7 @@ struct HistoryView: View {
                         .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                 }
             }
+            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("history")
             .confirmationDialog("delete-this-item",
                                 isPresented: $showConfirmDelete,
