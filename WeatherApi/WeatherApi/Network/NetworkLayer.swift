@@ -13,35 +13,39 @@ protocol NetworkLayer {
 }
 
 class NetworkLayerImpl: NetworkLayer {
-    
+
     var cancellables = Set<AnyCancellable>()
-    
-    func fetchJsonData<T: Decodable>(request: URLRequest, type: T.Type) -> Future<T, Error> {
-        Future<T, Error> { promise in
+    func fetchJsonData<T: Decodable>(request: URLRequest, type: T.Type) -> AnyPublisher<T, Error> {
 #if DEBUG
-            print(request.url?.absoluteString ?? "")
+        print(request.url?.absoluteString ?? "")
 #endif
-            URLSession.shared.dataTaskPublisher(for: request)
-                .retry(1)
-                .tryMap { (data, response) -> Data in
+        return URLSession.shared.dataTaskPublisher(for: request)
+            .retry(1)
+            .tryMap { (data, response) -> Data in
 #if DEBUG
-                    if let responseObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                        if let jsonData = try? JSONSerialization.data(withJSONObject: responseObject, options: .prettyPrinted),
-                           let strData = String(data: jsonData, encoding: .utf8) {
-                            print("RESPONSE (JSON): \(strData)")
-                        } else {
-                            print("RESPONSE (OBJECT): ", responseObject)
-                        }
-                    } else  if let strData = String(data: data, encoding: .utf8) {
-                        print("RESPONSE (OTHER): \(strData)")
+                if let responseObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
+                    if let jsonData = try? JSONSerialization.data(withJSONObject: responseObject, options: .prettyPrinted),
+                       let strData = String(data: jsonData, encoding: .utf8) {
+                        print("RESPONSE (JSON): \(strData)")
                     } else {
-                        print("RESPONSE: None")
+                        print("RESPONSE (OBJECT): ", responseObject)
                     }
-#endif
-                    return data
+                } else  if let strData = String(data: data, encoding: .utf8) {
+                    print("RESPONSE (OTHER): \(strData)")
+                } else {
+                    print("RESPONSE: None")
                 }
-                .decode(type: T.self, decoder: JSONDecoder())
-                .receive(on: DispatchQueue.main)
+#endif
+                return data
+            }
+            .decode(type: T.self, decoder: JSONDecoder())
+            .receive(on: DispatchQueue.main)
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchJsonDataFuture<T: Decodable>(request: URLRequest, type: T.Type) -> Future<T, Error> {
+        Future<T, Error> { [unowned self] promise in
+            self.fetchJsonData(request: request, type: T.self)
                 .sink {
                     if case let .failure(error) = $0 {
                         promise(.failure(error))

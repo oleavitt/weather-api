@@ -29,6 +29,37 @@ class WeatherViewModel: ObservableObject {
     
     private var apiModel: ApiModel?
     
+    func getCurrentAndForecast() {
+        locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
+        if locationQuery.isEmpty || weatherApiKey.isEmpty {
+            state = .empty
+            return
+        }
+
+        if case LoadingState<ApiModel>.loading = state { return }
+        
+        if let lastUpdated {
+            let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
+#if DEBUG
+            print("Time since last update: \(timeElapsed)")
+            print("Last query: \(lastLocationQuery ?? "--"), Query: \(locationQuery)")
+#endif
+            if timeElapsed < 60 && lastLocationQuery == locationQuery {
+                return
+            }
+        }
+        
+        guard let request = Endpoint.currentForecast(apiKey: weatherApiKey,
+                                                     query: locationQuery,
+                                                     aqi: showAirQuality).request else {
+            return
+        }
+        
+        state = .loading
+        
+        
+    }
+    
     @MainActor
     func getCurrentAndForecastWeather() async {
         isLoaded = false
