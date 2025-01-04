@@ -18,41 +18,53 @@ struct WeatherView: View {
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) var context
     
+    @State var isSearchQuery = false
+    
     @Query(
         sort: \CurrentWeatherModel.dateTime
     ) var history: [CurrentWeatherModel]
     
     var body: some View {
-        VStack {
-            switch viewModel.state {
-            case .startup:
-                loadingView()
-            case .empty:
-                emptyView()
-            case .loading:
-                loadingView()
-            case .success(let current):
-                if isForecast {
-                    forecastView(current: current)
-                } else {
-                    currentView(current: current)
+        NavigationStack {
+            VStack {
+                switch viewModel.state {
+                case .startup:
+                    loadingView()
+                case .empty:
+                    emptyView()
+                case .loading:
+                    loadingView()
+                case .success(let current):
+                    if isForecast {
+                        forecastView(current: current)
+                    } else {
+                        currentView(current: current)
+                    }
+                case .failure(let error):
+                    errorView(error: error)
                 }
-            case .failure(let error):
-                errorView(error: error)
             }
-        }
-        .onChange(of: scenePhase) { oldValue, newValue in
-            if newValue == .active {
+            .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
+            .onSubmit(of: .search, {
+                isSearchQuery = true
                 loadData()
+            })
+            .onChange(of: scenePhase) { oldValue, newValue in
+                if newValue == .active {
+                    // Refresh when app becomes active
+                    if isSearchQuery && !viewModel.locationQuery.isEmpty {
+                        loadData()
+                    } else {
+                        loadDataFromLocation()
+                    }
+                }
             }
-        }
-        .onChange(of: viewModel.isLoaded) {
-            if viewModel.isLoaded {
-                saveToHistory()
+            .onChange(of: viewModel.isLoaded) {
+                if viewModel.isLoaded {
+                    // Save a history entry when a new current weather update is loaded
+                    saveToHistory()
+                }
             }
-        }
-        .onAppear {
-            loadData()
         }
     }
     
@@ -111,6 +123,7 @@ struct WeatherView: View {
             .font(.system(size: 18))
             .fontWeight(.light)
             .ignoresSafeArea(edges: [.top, .horizontal])
+            .navigationTitle("current")
         }
     }
     
@@ -133,6 +146,7 @@ struct WeatherView: View {
             .font(.system(size: 18))
             .fontWeight(.light)
             .ignoresSafeArea(edges: [.top, .horizontal])
+            .navigationTitle("forecast")
         }
     }
 
@@ -180,18 +194,22 @@ struct WeatherView: View {
 }
 
 private extension WeatherView {
-    func loadData() {
-        // TODO: Update with last location saved while awaiting updated location
+    func loadDataFromLocation() {
         locationManager.requestAuthorization() {
             locationManager.requestLocation() {
+                isSearchQuery = false
                 viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
-                Task {
-                    await viewModel.getCurrentAndForecastWeather()
-                }
+                loadData()
             }
         }
     }
-        
+    
+    func loadData() {
+        Task {
+            await viewModel.getCurrentAndForecastWeather()
+        }
+    }
+
     func saveToHistory() {
         let current = viewModel.currentWeatherModel()
 #if DEBUG

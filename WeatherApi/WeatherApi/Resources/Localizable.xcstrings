@@ -61,6 +61,16 @@
         }
       }
     },
+    "current" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Current"
+          }
+        }
+      }
+    },
     "data-source" : {
 
     },

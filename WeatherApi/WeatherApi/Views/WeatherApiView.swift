@@ -23,39 +23,37 @@ struct WeatherApiView: View {
     @State private var tabSelection: TabSelection = .current
     
     var body: some View {
-        NavigationStack {
-            TabView(selection: $tabSelection) {
-                WeatherView(isForecast: false)
-                    .tag(TabSelection.current)
-                    .tabItem {
-                        Label("here-and-now", systemImage: "house")
-                    }
-                WeatherView(isForecast: true)
-                    .tag(TabSelection.forecast)
-                    .tabItem {
-                        Label("forecast", systemImage: "clock")
-                    }
-                HistoryView()
-                    .tag(TabSelection.history)
-                    .tabItem {
-                        Label("history", systemImage: "list.bullet")
-                    }
-//                MapView()
-//                    .tabItem {
-//                        Label("map", systemImage: "mappin.and.ellipse")
-//                    }
-                SettingsView()
-                    .tag(TabSelection.settings)
-                    .tabItem {
-                        Label("settings", systemImage: "gearshape")
-                    }
-            }
-            .environmentObject(viewModel)
-            .modelContainer(for: CurrentWeatherModel.self)
-            .onAppear {
-                if weatherApiKey.isEmpty {
-                    tabSelection = .settings
+        TabView(selection: $tabSelection) {
+            WeatherView(isForecast: false)
+                .tag(TabSelection.current)
+                .tabItem {
+                    Label("here-and-now", systemImage: "house")
                 }
+            WeatherView(isForecast: true)
+                .tag(TabSelection.forecast)
+                .tabItem {
+                    Label("forecast", systemImage: "clock")
+                }
+            HistoryView()
+                .tag(TabSelection.history)
+                .tabItem {
+                    Label("history", systemImage: "list.bullet")
+                }
+//            MapView()
+//                .tabItem {
+//                    Label("map", systemImage: "mappin.and.ellipse")
+//                }
+            SettingsView()
+                .tag(TabSelection.settings)
+                .tabItem {
+                    Label("settings", systemImage: "gearshape")
+                }
+        }
+        .environmentObject(viewModel)
+        .modelContainer(for: CurrentWeatherModel.self)
+        .onAppear {
+            if weatherApiKey.isEmpty {
+                tabSelection = .settings
             }
         }
     }

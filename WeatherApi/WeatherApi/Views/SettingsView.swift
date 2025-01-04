@@ -13,27 +13,29 @@ struct SettingsView: View {
     @State var showDeleteHistoryConfirm = false
     
     var body: some View {
-        List {
-            Section("data-source") {
-                NavigationLink(destination: ApiProviderView()) {
-                    Text("api-providers")
+        NavigationStack {
+            List {
+                Section("data-source") {
+                    NavigationLink(destination: ApiProviderView()) {
+                        Text("api-providers")
+                    }
+                }
+                Section("history") {
+                    Button("delete-all-history") {
+                        showDeleteHistoryConfirm.toggle()
+                    }
                 }
             }
-            Section("history") {
-                Button("delete-all-history") {
-                    showDeleteHistoryConfirm.toggle()
+            .navigationTitle("settings")
+            .confirmationDialog("delete-all-history-confirm",
+                                isPresented: $showDeleteHistoryConfirm,
+                                titleVisibility: .visible) {
+                Button(role: .destructive) {
+                    deleteAllHistory()
+                } label: {
+                    Label("delete", systemImage: "trash")
+                        .symbolVariant(.fill)
                 }
-            }
-        }
-        .navigationTitle("settings")
-        .confirmationDialog("delete-all-history-confirm",
-                            isPresented: $showDeleteHistoryConfirm,
-                            titleVisibility: .visible) {
-            Button(role: .destructive) {
-                deleteAllHistory()
-            } label: {
-                Label("delete", systemImage: "trash")
-                    .symbolVariant(.fill)
             }
         }
     }
