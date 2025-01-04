@@ -296,6 +296,16 @@
         }
       }
     },
+    "search-prompt" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Enter a search location"
+          }
+        }
+      }
+    },
     "settings" : {
       "localizations" : {
         "en" : {
