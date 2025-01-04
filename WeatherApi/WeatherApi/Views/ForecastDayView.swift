@@ -28,7 +28,7 @@ struct ForecastDayView: View {
                             .font(.custom(
                                 currentTheme.fontFamily, fixedSize: 16))
                             .fontWeight(.bold)
-                            .foregroundColor(.red)
+                            .foregroundStyle(.high)
                     }
                     HStack(spacing: 0) {
                         Image(systemName: "arrowtriangle.down.fill")
@@ -39,7 +39,7 @@ struct ForecastDayView: View {
                             .font(.custom(
                                 currentTheme.fontFamily, fixedSize: 16))
                             .fontWeight(.bold)
-                            .foregroundColor(.blue)
+                            .foregroundStyle(.low)
                     }
                 }
                 Spacer()

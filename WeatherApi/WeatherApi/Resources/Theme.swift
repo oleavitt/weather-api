@@ -12,7 +12,7 @@ var currentTheme = WeatherAppTheme.default
 struct WeatherAppTheme {
     static let `default` = WeatherAppTheme(
         fontFamily: "Arial",
-        backgroundColor: Color(white: 0.95),
+        backgroundColor: .cellBackground,
         cornerRadius: 8
     )
     
