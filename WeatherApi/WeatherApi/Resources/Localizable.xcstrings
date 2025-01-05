@@ -61,6 +61,16 @@
         }
       }
     },
+    "confirm-delete" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Confirm Delete"
+          }
+        }
+      }
+    },
     "current" : {
       "localizations" : {
         "en" : {
@@ -72,7 +82,25 @@
       }
     },
     "data-source" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Data Source"
+          }
+        }
+      }
+    },
+    "days" : {
+      "extractionState" : "stale",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "days"
+          }
+        }
+      }
     },
     "deg_c" : {
       "comment" : "Units Celsius",
@@ -128,12 +156,42 @@
         }
       }
     },
+    "delete-history-older-than" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Delete History older than"
+          }
+        }
+      }
+    },
+    "delete-old-history-confirm %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This will delete history older than %@ hours from the History view."
+          }
+        }
+      }
+    },
     "delete-this-item" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete this item?"
+          }
+        }
+      }
+    },
+    "done" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Done"
           }
         }
       }
@@ -159,7 +217,14 @@
       }
     },
     "error-network" : {
-
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "There was an error trying to connect."
+          }
+        }
+      }
     },
     "error-no-match" : {
       "localizations" : {
@@ -227,6 +292,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "History"
+          }
+        }
+      }
+    },
+    "history %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "History (%lld items)"
+          }
+        }
+      }
+    },
+    "hours" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "hours"
           }
         }
       }
