@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct CurrentWeatherSummaryCell: View {
-    @State var data: CurrentWeatherModel
+    var data: CurrentWeatherModel
     var body: some View {
         VStack(spacing: 0) {
             Text(data.location)
@@ -68,7 +68,7 @@ private extension CurrentWeatherSummaryCell {
             code: 1000,
             uv: 0,
             isDay: false))
-        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
+        CurrentWeatherSummaryCell(data:CurrentWeatherModel(
             location: "Dallas, Texas",
             epochUpdated: 1234,
             dateTime: Date(),

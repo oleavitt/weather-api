@@ -10,7 +10,6 @@ import SwiftData
 
 @Model
 final class CurrentWeatherModel: Identifiable, Hashable {
-    var id: Int { epochUpdated }
     var location: String
     var epochUpdated: Int
     var dateTime: Date
