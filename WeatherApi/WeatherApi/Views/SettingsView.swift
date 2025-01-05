@@ -12,7 +12,9 @@ struct SettingsView: View {
     
     // TODO: Need to serparate database concerns out of View to an MVVM friendly container
     @Environment(\.modelContext) var context
-    
+
+    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+
     @State var showDeleteHistoryConfirm = false
     @State var showDeleteOldHistoryConfirm = false
     @State var historyHours = "30"
@@ -24,6 +26,13 @@ struct SettingsView: View {
                 Section("data-source") {
                     NavigationLink(destination: ApiProviderView()) {
                         Text("api-providers")
+                    }
+                }
+                Section("units") {
+                    Picker("temperature", selection: $tempUnitsSetting) {
+                        ForEach(TempUnits.allCases, id: \.self) { unit in
+                            Text(unit.description).tag(unit)
+                        }
                     }
                 }
                 Section("history \(historyCount)") {

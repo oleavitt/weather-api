@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ApiProviderView: View {
     @State var apiKeyInput: String = ""
-    @AppStorage("weather-api-key") var weatherApiKey = ""
+    @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     
     var body: some View {
         Form {

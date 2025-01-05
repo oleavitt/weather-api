@@ -32,6 +32,7 @@
       }
     },
     "%@°" : {
+      "extractionState" : "stale",
       "localizations" : {
         "en" : {
           "stringUnit" : {
@@ -182,6 +183,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete this item?"
+          }
+        }
+      }
+    },
+    "description-deg_c" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Celsius (°C)"
+          }
+        }
+      }
+    },
+    "description-deg_f" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Fahrenheit (°F)"
           }
         }
       }
@@ -421,12 +442,32 @@
         }
       }
     },
+    "temperature" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Temperature"
+          }
+        }
+      }
+    },
     "time-last-updated %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Last updated: %@"
+          }
+        }
+      }
+    },
+    "units" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Units"
           }
         }
       }

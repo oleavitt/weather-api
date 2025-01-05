@@ -11,11 +11,12 @@ class WeatherViewModel: ObservableObject {
     
     @Published var state: LoadingState<ApiModel> = .startup
     @Published var isLoaded = false
-    @AppStorage("weather-api-key") var weatherApiKey = ""
+    
+    @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
+    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
 
     var locationQuery = ""
     var showAirQuality = false
-    var showFahrenheit = true
     var showImperial = true
     
     let networkLayer: NetworkLayer
@@ -84,14 +85,14 @@ extension WeatherViewModel {
     }
     
     var tempString: String {
-        if let temp = showFahrenheit ? apiModel?.current?.tempF : apiModel?.current?.tempC {
+        if let temp = (tempUnitsSetting == .fahrenheit) ? apiModel?.current?.tempF : apiModel?.current?.tempC {
             return temp.formatted() + "°"
         }
         return "--"
     }
     
     var tempUnits: String {
-        String(localized: showFahrenheit ? "deg_f" : "deg_c")
+        tempUnitsSetting.symbol
     }
     
     var timeLastUpdated: String {
@@ -121,7 +122,7 @@ extension WeatherViewModel {
     }
     
     var feelsLike: String {
-        if let temp = showFahrenheit ? apiModel?.current?.feelslikeF : apiModel?.current?.feelslikeC {
+        if let temp = (tempUnitsSetting == .fahrenheit) ? apiModel?.current?.feelslikeF : apiModel?.current?.feelslikeC {
             return String(localized: "feels_like \(temp.formatted())")
         }
         return "--"
@@ -185,7 +186,7 @@ extension WeatherViewModel {
             let date = dateFormatter.date(from: $0.date)
             let maxTemp: Double
             let minTemp: Double
-            if showFahrenheit {
+            if tempUnitsSetting == .fahrenheit {
                 maxTemp = $0.day.maxtempF
                 minTemp = $0.day.mintempF
             } else {
@@ -200,7 +201,7 @@ extension WeatherViewModel {
                     timeString = "--"
                 }
                 let temp: Double
-                if showFahrenheit {
+                if tempUnitsSetting == .fahrenheit {
                     temp = $0.tempF
                 } else {
                     temp = $0.tempC

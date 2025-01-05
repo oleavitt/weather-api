@@ -9,6 +9,9 @@ import SwiftUI
 
 struct CurrentWeatherSummaryCell: View {
     var data: CurrentWeatherModel
+
+    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+
     var body: some View {
         VStack(spacing: 0) {
             Text(data.location)
@@ -24,7 +27,7 @@ struct CurrentWeatherSummaryCell: View {
                 .frame(maxWidth: 96, alignment: .leading)
                 BasicCachedAsyncImage(url: URL.httpsURL(data.icon))
                     .frame(width: 64, height: 64)
-                Text("\(data.tempF.formatted())°")
+                Text(temperature)
                     .font(.system(size: 36))
                     .fontWeight(.ultraLight)
                     .padding(.leading)
@@ -43,6 +46,10 @@ struct CurrentWeatherSummaryCell: View {
 }
 
 private extension CurrentWeatherSummaryCell {
+    var temperature: String {
+        "\((tempUnitsSetting == .fahrenheit ? data.tempF : data.tempC).formatted())°"
+    }
+    
     var date: String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"

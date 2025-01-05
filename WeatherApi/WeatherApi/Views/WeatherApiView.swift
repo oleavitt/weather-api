@@ -11,7 +11,7 @@ import SwiftData
 struct WeatherApiView: View {
     
     @StateObject var viewModel = WeatherViewModel(NetworkLayerImpl())
-    @AppStorage("weather-api-key") var weatherApiKey = ""
+    @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     
     enum TabSelection: Int {
         case current
