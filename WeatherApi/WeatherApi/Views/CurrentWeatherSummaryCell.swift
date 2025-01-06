@@ -8,26 +8,30 @@
 import SwiftUI
 
 struct CurrentWeatherSummaryCell: View {
-    var data: CurrentWeatherModel
+    @StateObject private var viewModel: CurrentWeatherSummaryCellViewModel
 
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+    
+    init(data: CurrentWeatherModel) {
+        _viewModel = StateObject(wrappedValue: CurrentWeatherSummaryCellViewModel(data: data))
+    }
 
     var body: some View {
         VStack(spacing: 0) {
-            Text(data.location)
+            Text(viewModel.location)
                 .font(.system(size: 24))
                 .fontWeight(.light)
             HStack {
                 VStack(alignment: .leading) {
-                    Text(date)
+                    Text(viewModel.date)
                         .font(.system(size: 24))
-                    Text(time)
+                    Text(viewModel.time)
                         .fontWeight(.light)
                 }
                 .frame(maxWidth: 96, alignment: .leading)
-                BasicCachedAsyncImage(url: URL.httpsURL(data.icon))
+                BasicCachedAsyncImage(url: viewModel.iconURL)
                     .frame(width: 64, height: 64)
-                Text(temperature)
+                Text(viewModel.temperature)
                     .font(.system(size: 36))
                     .fontWeight(.ultraLight)
                     .padding(.leading)
@@ -39,27 +43,9 @@ struct CurrentWeatherSummaryCell: View {
         .foregroundColor(.white)
         .font(.system(size: 18))
         .background {
-            data.isDay ? Color.blue : Color.black
+            viewModel.isDay ? Color.blue : Color.black
         }
         .cornerRadius(currentTheme.cornerRadius)
-    }
-}
-
-private extension CurrentWeatherSummaryCell {
-    var temperature: String {
-        "\((tempUnitsSetting == .fahrenheit ? data.tempF : data.tempC).formatted())°"
-    }
-    
-    var date: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d"
-        return dateFormatter.string(from: data.dateTime)
-    }
-    
-    var time: String {
-        let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "h:mma"
-        return timeFormatter.string(from: data.dateTime).lowercased()
     }
 }
 
