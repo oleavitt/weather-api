@@ -43,7 +43,6 @@ struct WeatherView: View {
                     errorView(error: error)
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(isForecast ? "forecast" : "current")
             .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
             .onSubmit(of: .search, {
@@ -223,9 +222,7 @@ private extension WeatherView {
 
     func saveToHistory() {
         let current = viewModel.currentWeatherModel()
-#if DEBUG
-        print("History count: \(history.count)")
-#endif
+
         if !history.contains(where: {
             $0.epochUpdated == current.epochUpdated &&
             $0.location == current.location
@@ -233,6 +230,7 @@ private extension WeatherView {
             context.insert(viewModel.currentWeatherModel())
 #if DEBUG
             print("History saved for epoch: \(current.epochUpdated)")
+            print("History count: \(history.count)")
 #endif
         }
     }

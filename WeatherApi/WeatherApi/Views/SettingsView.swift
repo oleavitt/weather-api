@@ -67,7 +67,6 @@ struct SettingsView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("settings")
             .alert("confirm-delete", isPresented: $showDeleteHistoryConfirm, actions: {
                 Button("delete", role: .destructive) {

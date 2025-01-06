@@ -39,7 +39,6 @@ struct HistoryView: View {
                         }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .navigationTitle("history")
             .confirmationDialog("delete-this-item",
                                 isPresented: $showConfirmDelete,
