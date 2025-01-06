@@ -292,7 +292,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Please enter a search location."
+            "value" : "No results found. Please enter a valid city name, airport name or code, postal code, or GPS coordinates (latitude, longitude)"
           }
         }
       }
@@ -447,7 +447,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Enter a search location"
+            "value" : "City, airport, postal code or coordinates"
           }
         }
       }
