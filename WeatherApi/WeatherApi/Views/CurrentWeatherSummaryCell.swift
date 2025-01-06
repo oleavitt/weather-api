@@ -9,8 +9,6 @@ import SwiftUI
 
 struct CurrentWeatherSummaryCell: View {
     @StateObject private var viewModel: CurrentWeatherSummaryCellViewModel
-
-    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
     
     init(data: CurrentWeatherModel) {
         _viewModel = StateObject(wrappedValue: CurrentWeatherSummaryCellViewModel(data: data))
