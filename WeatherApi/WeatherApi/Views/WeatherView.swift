@@ -98,6 +98,9 @@ struct WeatherView: View {
                     Text(viewModel.locationName)
                         .font(.system(size: 24))
                         .fontWeight(.light)
+                    if !viewModel.isSearchQuery {
+                        Image(systemName: "location.fill")
+                    }
                 }
                 .frame(maxWidth: .infinity)
                 temperatureView(current: current)
