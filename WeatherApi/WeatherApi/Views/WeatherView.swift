@@ -17,9 +17,6 @@ struct WeatherView: View {
     @StateObject var locationManager = LocationManager()
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) var context
-    
-    @State var isSearchQuery = false
-    @State var showSearchBar = false
 
     @Query(
         sort: \CurrentWeatherModel.dateTime
@@ -49,7 +46,7 @@ struct WeatherView: View {
             .navigationTitle(isForecast ? "forecast" : "current")
             .searchable(text: $viewModel.locationQuery, placement: .toolbar, prompt: "search-prompt")
             .onSubmit(of: .search, {
-                isSearchQuery = true
+                viewModel.isSearchQuery = true
                 loadData()
             })
             .onChange(of: scenePhase) { oldValue, newValue in
@@ -191,7 +188,7 @@ private extension WeatherView {
     func loadDataFromLocation() {
         locationManager.requestAuthorization() {
             locationManager.requestLocation() {
-                isSearchQuery = false
+                viewModel.isSearchQuery = false
                 viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
                 loadData()
             }
@@ -199,7 +196,7 @@ private extension WeatherView {
     }
     
     func reloadData() {
-        if isSearchQuery && !viewModel.locationQuery.isEmpty {
+        if viewModel.isSearchQuery && !viewModel.locationQuery.isEmpty {
             loadData()
         } else {
             loadDataFromLocation()

@@ -17,6 +17,7 @@ class WeatherViewModel: ObservableObject {
     @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
 
     var locationQuery = ""
+    var isSearchQuery = false
     var showAirQuality = false
     
     let networkLayer: NetworkLayer
