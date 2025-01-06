@@ -9,7 +9,8 @@ import Foundation
 import SwiftData
 
 @Model
-final class CurrentWeatherModel: Identifiable, Hashable {
+final class CurrentWeatherModel {
+    @Attribute(.unique) var id: UUID
     var location: String
     var epochUpdated: Int
     var dateTime: Date
@@ -29,6 +30,7 @@ final class CurrentWeatherModel: Identifiable, Hashable {
          code: Int,
          uv: Double,
          isDay: Bool) {
+        id = UUID()
         self.location = location
         self.epochUpdated = epochUpdated
         self.dateTime = dateTime
