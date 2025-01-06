@@ -62,7 +62,9 @@ class WeatherViewModel: ObservableObject {
             return
         }
         
-        state = .loading
+        if case .success = state {} else {
+            state = .loading
+        }
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiModel.self)
             apiModel = current
