@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftData
+import CoreLocationUI
 
 struct WeatherView: View {
     
@@ -44,7 +45,7 @@ struct WeatherView: View {
             }
             .navigationBarTitleDisplayMode(.inline)
             .navigationTitle(isForecast ? "forecast" : "current")
-            .searchable(text: $viewModel.locationQuery, placement: .toolbar, prompt: "search-prompt")
+            .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
             .onSubmit(of: .search, {
                 viewModel.isSearchQuery = true
                 loadData()
@@ -92,7 +93,15 @@ struct WeatherView: View {
     func currentView(current: ApiModel) -> some View {
         VStack {
             VStack {
-                Text("time-last-updated \(viewModel.timeLastUpdated)")
+                HStack {
+                    Text("time-last-updated \(viewModel.timeLastUpdated)")
+                    LocationButton(.currentLocation) {
+                        loadDataFromLocation()
+                    }
+                    .symbolVariant(.fill)
+                    .labelStyle(.iconOnly)
+                    .clipShape(.capsule)
+                }
                 BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
                 HStack {
                     Text(viewModel.locationName)
