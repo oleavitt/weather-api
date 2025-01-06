@@ -14,6 +14,7 @@ struct SettingsView: View {
     @Environment(\.modelContext) var context
 
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+    @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
 
     @State var showDeleteHistoryConfirm = false
     @State var showDeleteOldHistoryConfirm = false
@@ -29,8 +30,13 @@ struct SettingsView: View {
                     }
                 }
                 Section("units") {
-                    Picker("temperature", selection: $tempUnitsSetting) {
+                    Picker(TempUnits.title, selection: $tempUnitsSetting) {
                         ForEach(TempUnits.allCases, id: \.self) { unit in
+                            Text(unit.description).tag(unit)
+                        }
+                    }
+                    Picker(SpeedUnits.title, selection: $speedUnitsSetting) {
+                        ForEach(SpeedUnits.allCases, id: \.self) { unit in
                             Text(unit.description).tag(unit)
                         }
                     }

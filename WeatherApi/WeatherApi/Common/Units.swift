@@ -29,3 +29,26 @@ enum TempUnits: String, Codable, CaseIterable {
         }
     }
 }
+
+enum SpeedUnits: String, Codable, CaseIterable {
+    case mph
+    case kph
+    
+    var symbol: String {
+        switch self {
+        case .mph: return String(localized: "mph")
+        case .kph: return String(localized: "kph")
+        }
+    }
+    
+    static var title: String {
+        String(localized: "speed")
+    }
+    
+    var description: String {
+        switch self {
+        case .mph: return String(localized: "description-mph")
+        case .kph: return String(localized: "description-kph")
+        }
+    }
+}

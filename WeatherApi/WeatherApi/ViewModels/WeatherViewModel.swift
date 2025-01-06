@@ -14,10 +14,10 @@ class WeatherViewModel: ObservableObject {
     
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+    @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
 
     var locationQuery = ""
     var showAirQuality = false
-    var showImperial = true
     
     let networkLayer: NetworkLayer
     
@@ -137,15 +137,15 @@ extension WeatherViewModel {
     }
     
     var windSpeed: String {
-        (showImperial ? apiModel?.current?.windMph : apiModel?.current?.windKph)?.formatted() ?? "--"
+        ((speedUnitsSetting == .mph) ? apiModel?.current?.windMph : apiModel?.current?.windKph)?.formatted() ?? "--"
     }
     
     var gustSpeed: String {
-        (showImperial ? apiModel?.current?.gustMph : apiModel?.current?.gustKph)?.formatted() ?? "--"
+        ((speedUnitsSetting == .mph) ? apiModel?.current?.gustMph : apiModel?.current?.gustKph)?.formatted() ?? "--"
     }
     
     var speedUnits: String {
-        String(localized: showImperial ? "mph" : "kph")
+        speedUnitsSetting.symbol
     }
     
     var windSummary: String {

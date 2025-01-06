@@ -207,6 +207,26 @@
         }
       }
     },
+    "description-kph" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Kilometers per hour (kph)"
+          }
+        }
+      }
+    },
+    "description-mph" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Miles per hour (mph)"
+          }
+        }
+      }
+    },
     "done" : {
       "localizations" : {
         "en" : {
@@ -438,6 +458,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Settings"
+          }
+        }
+      }
+    },
+    "speed" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed"
           }
         }
       }
