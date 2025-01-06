@@ -19,15 +19,24 @@ struct ApiProviderView: View {
             }
             Section("api-key") {
                 TextField("weather-api-key-placeholder", text: $apiKeyInput)
+                    .autocorrectionDisabled()
+                    .keyboardType(.asciiCapable)
             }
         }
         .onAppear {
             apiKeyInput = weatherApiKey
         }
+        .onDisappear {
+            saveChanges()
+        }
         .onSubmit(of: .text) {
-            weatherApiKey = apiKeyInput
+            saveChanges()
         }
         .navigationTitle("api-providers")
+    }
+    
+    func saveChanges() {
+        weatherApiKey = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
 

@@ -237,12 +237,32 @@
         }
       }
     },
+    "error-invalid-api-key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Your API key is invalid. Please check that the correct key is entered and that it is still valid with your API source."
+          }
+        }
+      }
+    },
     "error-network" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "There was an error trying to connect."
+          }
+        }
+      }
+    },
+    "error-no-api-key" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No API key found. Please enter a valid WeatherAPI.com API key in Settings -> API Providers"
           }
         }
       }
@@ -262,7 +282,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "An error occurred ."
+            "value" : "An error occurred."
           }
         }
       }

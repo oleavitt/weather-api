@@ -55,11 +55,7 @@ struct WeatherView: View {
             .onChange(of: scenePhase) { oldValue, newValue in
                 if newValue == .active {
                     // Refresh when app becomes active
-                    if isSearchQuery && !viewModel.locationQuery.isEmpty {
-                        loadData()
-                    } else {
-                        loadDataFromLocation()
-                    }
+                    reloadData()
                 }
             }
             .onChange(of: viewModel.isLoaded) {
@@ -67,6 +63,9 @@ struct WeatherView: View {
                     // Save a history entry when a new current weather update is loaded
                     saveToHistory()
                 }
+            }
+            .onAppear {
+                reloadData()
             }
         }
     }
@@ -196,6 +195,14 @@ private extension WeatherView {
                 viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
                 loadData()
             }
+        }
+    }
+    
+    func reloadData() {
+        if isSearchQuery && !viewModel.locationQuery.isEmpty {
+            loadData()
+        } else {
+            loadDataFromLocation()
         }
     }
     

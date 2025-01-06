@@ -33,8 +33,12 @@ class WeatherViewModel: ObservableObject {
     @MainActor
     func getCurrentAndForecastWeather() async {
         isLoaded = false
+        if weatherApiKey.isEmpty {
+            state = .failure(ApiErrorType.noApiKey)
+            return
+        }
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
-        if locationQuery.isEmpty || weatherApiKey.isEmpty {
+        if locationQuery.isEmpty {
             state = .empty
             return
         }

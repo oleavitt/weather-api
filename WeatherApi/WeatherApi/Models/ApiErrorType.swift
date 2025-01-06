@@ -12,11 +12,14 @@ enum ApiErrorType: Error {
     case emptySearch
     case networkError
     case genericError
-    
+    case noApiKey
+    case invalidApiKey
+
     static func fromErrorCode(code: Int) -> ApiErrorType {
         switch code {
         case 1003: return .emptySearch
         case 1006: return .noMatch
+        case 2000..<3000: return .invalidApiKey
         default: return .genericError
         }
     }
@@ -26,13 +29,17 @@ extension ApiErrorType: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noMatch:
-            return NSLocalizedString("error-no-match", comment: "")
+            return String(localized: "error-no-match")
         case .emptySearch:
-            return NSLocalizedString("error-empty-search", comment: "")
+            return String(localized: "error-empty-search")
         case .networkError:
-            return NSLocalizedString("error-network", comment: "")
+            return String(localized: "error-network")
         case .genericError:
-            return NSLocalizedString("error-unknown", comment: "")
+            return String(localized: "error-unknown")
+        case .noApiKey:
+            return String(localized: "error-no-api-key")
+        case .invalidApiKey:
+            return String(localized: "error-invalid-api-key")
         }
     }
 }
