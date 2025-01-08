@@ -136,8 +136,6 @@ struct WeatherView: View {
     func forecastView(current: ApiModel) -> some View {
         VStack {
             VStack {
-                CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
-                    .padding([.bottom, .horizontal])
                 forecastListView
                 Spacer()
             }
@@ -166,6 +164,8 @@ struct WeatherView: View {
     
     var forecastListView: some View {
         ScrollView {
+            CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
+                .padding([.bottom, .horizontal])
             ForEach(viewModel.forecastDays(), id: \.self) { day in
                 ForecastDayView(day: day)
                     .padding(.horizontal)
