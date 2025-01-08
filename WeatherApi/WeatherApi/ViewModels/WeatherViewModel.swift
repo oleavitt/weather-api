@@ -7,20 +7,28 @@
 
 import SwiftUI
 
+/// View model for the WeatherView which represents the Current and Forecast tabs of the app.
 class WeatherViewModel: ObservableObject {
     
+    /// Network layer interface that is injected into view model at the time of creation.
+    let networkLayer: NetworkLayer
+
+    /// Location search query that is passed to the API.
+    var locationQuery = ""
+    
+    /// Indicator set from view to indicate a search is active.
+    var isSearchQuery = false
+    
+    /// Set true to include air quality (AQI) results in API response
+    var showAirQuality = false
+
     @Published var state: LoadingState<ApiModel> = .startup
     @Published var isLoaded = false
-    
+    @Published var isRefreshing = false
+
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
     @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
-
-    var locationQuery = ""
-    var isSearchQuery = false
-    var showAirQuality = false
-    
-    let networkLayer: NetworkLayer
     
     private var lastUpdated: Date?
     private var lastLocationQuery: String?
@@ -29,22 +37,32 @@ class WeatherViewModel: ObservableObject {
         self.networkLayer = networkLayer
     }
     
+    /// Top level data moded that received result of API call
     private var apiModel: ApiModel?
     
+    /// Make a request to the combined current and forecast API endpoint and update view model state with result.
     @MainActor
     func getCurrentAndForecastWeather() async {
         isLoaded = false
+        
+        // Make sure we have our API key.
         if weatherApiKey.isEmpty {
             state = .failure(ApiErrorType.noApiKey)
             return
         }
+        
+        // Make sure we have the required query parameter to send to the API.
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         if locationQuery.isEmpty {
             state = .empty
             return
         }
         
+        // Return if we are already loading or refreshing.
         if case LoadingState<ApiModel>.loading = state { return }
+        if isRefreshing { return }
+        
+        // Don't update/refresh too soon if location did not change.
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
 #if DEBUG
@@ -56,15 +74,21 @@ class WeatherViewModel: ObservableObject {
             }
         }
         
+        // Get the combined current and forecast API endpoint
         guard let request = Endpoint.currentForecast(apiKey: weatherApiKey,
                                                      query: locationQuery,
                                                      aqi: showAirQuality).request else {
             return
         }
         
-        if case .success = state {} else {
+        // Determine whether to show the full "loading" state or a "refreshing" state.
+        if case .success = state {
+            isRefreshing = true
+        } else {
             state = .loading
         }
+        
+        // Now we can fetch the weather data and update final state based on result.
         do {
             let current = try await networkLayer.fetchJsonData(request: request, type: ApiModel.self)
             apiModel = current
@@ -82,11 +106,13 @@ class WeatherViewModel: ObservableObject {
             print(error)
 #endif
         }
+        isRefreshing = false
     }
 }
 
+/// Computed properties that format response data using user's preferred units settings.
 extension WeatherViewModel {
-    
+    /// Return a full https URL to the icon resource from the relative path returned in the API response.
     var conditionsIconUrl: URL? {
         URL.httpsURL(apiModel?.current?.condition.icon)
     }
@@ -177,6 +203,8 @@ extension WeatherViewModel {
         (apiModel?.current?.isDay ?? 0) > 0
     }
     
+    /// Parse out the Forecast days/hours list from the response data
+    /// - Returns: Array of forecast day structures for the forecast days list
     func forecastDays() -> [ForcastDayViewModel] {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
@@ -249,6 +277,8 @@ extension WeatherViewModel {
         } ?? []
     }
     
+    /// Get a condensed version of current weather for the `CurrentWeatherSummaryCell` Forecast and History list
+    /// - Returns: CurrentWeatherModel populated with data
     func currentWeatherModel() -> CurrentWeatherModel {
         CurrentWeatherModel(location: locationName,
                             epochUpdated: apiModel?.current?.lastUpdatedEpoch ?? 0,
