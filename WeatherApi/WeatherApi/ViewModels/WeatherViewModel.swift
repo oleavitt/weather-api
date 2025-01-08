@@ -24,7 +24,6 @@ class WeatherViewModel: ObservableObject {
 
     @Published var state: LoadingState<ApiModel> = .startup
     @Published var isLoaded = false
-    @Published var isRefreshing = false
 
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
@@ -60,7 +59,6 @@ class WeatherViewModel: ObservableObject {
         
         // Return if we are already loading or refreshing.
         if case LoadingState<ApiModel>.loading = state { return }
-        if isRefreshing { return }
         
         // Don't update/refresh too soon if location did not change.
         if let lastUpdated {
@@ -81,12 +79,8 @@ class WeatherViewModel: ObservableObject {
             return
         }
         
-        // Determine whether to show the full "loading" state or a "refreshing" state.
-        if case .success = state {
-            isRefreshing = true
-        } else {
-            state = .loading
-        }
+        // Indicate that we are loading and awaiting response...
+        state = .loading
         
         // Now we can fetch the weather data and update final state based on result.
         do {
@@ -106,7 +100,6 @@ class WeatherViewModel: ObservableObject {
             print(error)
 #endif
         }
-        isRefreshing = false
     }
 }
 
