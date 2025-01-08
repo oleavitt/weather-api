@@ -244,6 +244,7 @@ extension WeatherViewModel {
                                        hi: maxTemp,
                                        lo: minTemp,
                                        conditionIconURL: URL.httpsURL($0.day.condition.icon),
+                                       condition: $0.day.condition.text,
                                        hours: hours)
         } ?? []
     }

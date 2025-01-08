@@ -18,32 +18,12 @@ struct ForecastDayView: View {
                     .padding(.leading)
                 BasicCachedAsyncImage(url: day.conditionIconURL)
                     .frame(width: 64, height: 64)
-                VStack(alignment: .leading, spacing: 0) {
-                    HStack(spacing: 0) {
-                        Image(systemName: "arrowtriangle.up.fill")
-                            .resizable()
-                            .frame(width: 6, height: 6)
-                            .padding(.trailing, 4)
-                        Text(day.hi.formatted() + "°")
-                            .font(.custom(
-                                currentTheme.fontFamily, fixedSize: 16))
-                            .fontWeight(.bold)
-                            .foregroundStyle(.high)
-                    }
-                    HStack(spacing: 0) {
-                        Image(systemName: "arrowtriangle.down.fill")
-                            .resizable()
-                            .frame(width: 6, height: 6)
-                            .padding(.trailing, 4)
-                        Text(day.lo.formatted() + "°")
-                            .font(.custom(
-                                currentTheme.fontFamily, fixedSize: 16))
-                            .fontWeight(.bold)
-                            .foregroundStyle(.low)
-                    }
-                }
+                hiloView
                 Spacer()
             }
+            Text(day.condition)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(day.hours, id: \.self) { hour in
@@ -61,6 +41,33 @@ struct ForecastDayView: View {
         .cornerRadius(currentTheme.cornerRadius)
     }
 
+    private var hiloView: some View {
+        VStack(alignment: .leading, spacing: 0) {
+            HStack(spacing: 0) {
+                Image(systemName: "arrowtriangle.up.fill")
+                    .resizable()
+                    .frame(width: 6, height: 6)
+                    .padding(.trailing, 4)
+                Text(day.hi.formatted() + "°")
+                    .font(.custom(
+                        currentTheme.fontFamily, fixedSize: 16))
+                    .fontWeight(.bold)
+                    .foregroundStyle(.high)
+            }
+            HStack(spacing: 0) {
+                Image(systemName: "arrowtriangle.down.fill")
+                    .resizable()
+                    .frame(width: 6, height: 6)
+                    .padding(.trailing, 4)
+                Text(day.lo.formatted() + "°")
+                    .font(.custom(
+                        currentTheme.fontFamily, fixedSize: 16))
+                    .fontWeight(.bold)
+                    .foregroundStyle(.low)
+            }
+        }
+    }
+    
     private func forecastHourView(hour: ForecastHour) -> some View {
         VStack {
             Text(hour.time)
@@ -112,6 +119,7 @@ struct ForecastDayView: View {
                                       hi: 70,
                                       lo: 58.1,
                                       conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
+                                      condition: "Sunny",
                                       hours: [
                                         ForecastHour(epoch: 1733032800,
                                                      time: "12am",
