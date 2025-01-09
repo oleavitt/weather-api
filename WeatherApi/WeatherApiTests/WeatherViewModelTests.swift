@@ -92,6 +92,7 @@ final class WeatherViewModelTests: XCTestCase {
         
         XCTAssertEqual(viewModel.uvIndex, "0")
         XCTAssertEqual(viewModel.humidity, "58%")
+        XCTAssertEqual(viewModel.pressure, "29.76 in")
         XCTAssertFalse(viewModel.isDay)
     }
     

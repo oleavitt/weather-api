@@ -151,15 +151,24 @@ struct WeatherView: View {
     }
 
     var detailsView: some View {
-        ScrollView(.horizontal) {
-            HStack {
-                DetailChip("wind", viewModel.windSummary)
-                DetailChip("gusts", viewModel.gustsSummary)
-                DetailChip("humidity", viewModel.humidity)
-                DetailChip("uv", viewModel.uvIndex)
+        VStack {
+            ScrollView(.horizontal) {
+                HStack {
+                    DetailChip("humidity", viewModel.humidity)
+                    DetailChip("uv", viewModel.uvIndex)
+                    DetailChip("pressure", viewModel.pressure)
+                }
+                .padding(.horizontal)
             }
-            .padding()
+            ScrollView(.horizontal) {
+                HStack {
+                    DetailChip("wind", viewModel.windSummary)
+                    DetailChip("gusts", viewModel.gustsSummary)
+                }
+                .padding(.horizontal)
+            }
         }
+        .padding(.top)
     }
     
     var forecastListView: some View {

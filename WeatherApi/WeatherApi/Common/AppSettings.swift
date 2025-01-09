@@ -12,4 +12,5 @@ enum AppSettings: String {
     case weatherApiKey = "weather-api-key"
     case unitsTemp = "units-temperature"
     case unitsSpeed = "units-speed"
+    case unitsPressure = "units-pressure"
 }

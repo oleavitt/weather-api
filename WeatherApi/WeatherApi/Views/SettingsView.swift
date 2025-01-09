@@ -15,6 +15,7 @@ struct SettingsView: View {
 
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
     @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
+    @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inches
 
     @State var showDeleteHistoryConfirm = false
     @State var showDeleteOldHistoryConfirm = false
@@ -37,6 +38,11 @@ struct SettingsView: View {
                     }
                     Picker(SpeedUnits.title, selection: $speedUnitsSetting) {
                         ForEach(SpeedUnits.allCases, id: \.self) { unit in
+                            Text(unit.description).tag(unit)
+                        }
+                    }
+                    Picker(PressureUnits.title, selection: $pressureUnitsSetting) {
+                        ForEach(PressureUnits.allCases, id: \.self) { unit in
                             Text(unit.description).tag(unit)
                         }
                     }

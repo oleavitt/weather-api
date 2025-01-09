@@ -28,7 +28,8 @@ class WeatherViewModel: ObservableObject {
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
     @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
-    
+    @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inches
+
     private var lastUpdated: Date?
     private var lastLocationQuery: String?
     
@@ -190,6 +191,13 @@ extension WeatherViewModel {
             return "\(humidity)%"
         }
         return "--%"
+    }
+    
+    var pressure: String {
+        if let pressure = (pressureUnitsSetting == .inches) ? apiModel?.current?.pressureIn : apiModel?.current?.pressureMb {
+            return "\(pressure.formatted()) \(pressureUnitsSetting.symbol)"
+        }
+        return "--"
     }
     
     var isDay: Bool {

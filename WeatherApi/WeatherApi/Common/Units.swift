@@ -52,3 +52,26 @@ enum SpeedUnits: String, Codable, CaseIterable {
         }
     }
 }
+
+enum PressureUnits: String, Codable, CaseIterable {
+    case inches
+    case milliBars
+    
+    var symbol: String {
+        switch self {
+        case .inches: return String(localized: "in")
+        case .milliBars: return String(localized: "mb")
+        }
+    }
+    
+    static var title: String {
+        String(localized: "pressure")
+    }
+    
+    var description: String {
+        switch self {
+        case .inches: return String(localized: "description-inches")
+        case .milliBars: return String(localized: "description-millibars")
+        }
+    }
+}

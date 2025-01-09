@@ -91,17 +91,6 @@
         }
       }
     },
-    "days" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "days"
-          }
-        }
-      }
-    },
     "deg_c" : {
       "comment" : "Units Celsius",
       "extractionState" : "manual",
@@ -206,12 +195,32 @@
         }
       }
     },
+    "description-inches" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Inches (in)"
+          }
+        }
+      }
+    },
     "description-kph" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
             "value" : "Kilometers per hour (kph)"
+          }
+        }
+      }
+    },
+    "description-millibars" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Millibars (mb)"
           }
         }
       }
@@ -386,6 +395,16 @@
         }
       }
     },
+    "in" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "in"
+          }
+        }
+      }
+    },
     "kph" : {
       "comment" : "Units kilometers per hour",
       "extractionState" : "manual",
@@ -419,6 +438,16 @@
         }
       }
     },
+    "mb" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "mb"
+          }
+        }
+      }
+    },
     "mph" : {
       "comment" : "Units miles per hour",
       "extractionState" : "manual",
@@ -437,6 +466,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Precip"
+          }
+        }
+      }
+    },
+    "pressure" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pressure"
           }
         }
       }
