@@ -8,10 +8,12 @@
 import Foundation
 import Combine
 
+/// Abstracted networking layer interface
 protocol NetworkLayer {
     func fetchJsonData<T: Decodable>(request: URLRequest, type: T.Type) async throws -> T
 }
 
+/// Sends requests to the live API site and gets back live data.
 class NetworkLayerImpl: NetworkLayer {
     
     var cancellables = Set<AnyCancellable>()

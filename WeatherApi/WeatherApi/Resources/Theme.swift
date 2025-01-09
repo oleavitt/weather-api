@@ -9,6 +9,7 @@ import SwiftUI
 
 var currentTheme = WeatherAppTheme.default
 
+/// A shared collection of app theming constants.
 struct WeatherAppTheme {
     static let `default` = WeatherAppTheme(
         fontFamily: "Arial",

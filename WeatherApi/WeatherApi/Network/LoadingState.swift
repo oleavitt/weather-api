@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Used to update view during the loading progress of an async API call.
 public enum LoadingState<T> {
     case startup
     case empty

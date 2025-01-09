@@ -9,9 +9,11 @@ import Foundation
 
 private let apiHost = "api.weatherapi.com"
 
+/// Defines and builds Requests/URLs for API endpoints
 enum Endpoint {
     case currentForecast(apiKey: String, query: String, aqi: Bool)
 
+    /// Return a URL for the endpoint.
     var url: URL? {
         switch self {
         case .currentForecast(let apiKey, let query, let aqi):
@@ -30,10 +32,13 @@ enum Endpoint {
         }
     }
     
+    /// Return a URL for the endpoint, wrapped in a URLRequest.
     var request: URLRequest? {
         guard let url else {
             return nil
         }
+        
+        // Ignore local cache data so that we receive a fresh response from the API each time.
         return URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
     }
 }

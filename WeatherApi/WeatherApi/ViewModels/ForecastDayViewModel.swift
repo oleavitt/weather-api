@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A view model interface for the forecast days/hours views.
 struct ForcastDayViewModel: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int
@@ -20,6 +21,7 @@ struct ForcastDayViewModel: Identifiable, Hashable {
     let hours: [ForecastHour]
 }
 
+/// For the hours views.
 struct ForecastHour: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int

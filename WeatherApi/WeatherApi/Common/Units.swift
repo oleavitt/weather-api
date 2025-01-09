@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Temperature units
 enum TempUnits: String, Codable, CaseIterable {
     case fahrenheit
     case celsius
@@ -30,6 +31,7 @@ enum TempUnits: String, Codable, CaseIterable {
     }
 }
 
+/// Wind speed units
 enum SpeedUnits: String, Codable, CaseIterable {
     case mph
     case kph
@@ -53,6 +55,7 @@ enum SpeedUnits: String, Codable, CaseIterable {
     }
 }
 
+/// Barametric pressure units
 enum PressureUnits: String, Codable, CaseIterable {
     case inches
     case milliBars

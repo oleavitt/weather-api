@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 
+/// Returns mock response data for previews and unit tests.
 class NetworkLayerMock: NetworkLayer {
    
     func fetchJsonData<T: Decodable>(request: URLRequest, type: T.Type) async throws -> T {

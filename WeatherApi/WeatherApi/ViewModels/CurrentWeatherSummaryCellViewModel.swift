@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// A view model interface for the current summary and history cell views.
 class CurrentWeatherSummaryCellViewModel: ObservableObject {
     var data: CurrentWeatherModel
 

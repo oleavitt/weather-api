@@ -8,6 +8,8 @@
 import SwiftUI
 import CoreLocation
 
+/// An interface to CoreLocation for authorization and querying location.
+/// This handles the delegation and returns results via completion handlers.
 class LocationManager: NSObject, ObservableObject {
     
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
@@ -22,11 +24,13 @@ class LocationManager: NSObject, ObservableObject {
         self.locationManager.delegate = self
     }
     
+    /// Get location and return result in a completion block.
     func requestLocation(completion: @escaping ()->Void) {
         self.completion = completion
         locationManager.requestLocation()
     }
     
+    /// Request authorization and return result in a completion block.
     public func requestAuthorization(always: Bool = false, completion: @escaping ()->Void) {
         self.authReqCompletion = completion
         
@@ -45,6 +49,8 @@ class LocationManager: NSObject, ObservableObject {
         }
     }
     
+    /// The last queried location as a string in "lat, long" format.
+    /// Nil is returned if no location is available.
     var locationString: String? {
         if let location {
             return "\(location.latitude.formatted()),\(location.longitude.formatted())"

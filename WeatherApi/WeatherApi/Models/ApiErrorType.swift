@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Enum for mapping API error codes to message text.
 enum ApiErrorType: Error {
     case noMatch
     case emptySearch
