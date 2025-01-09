@@ -24,7 +24,8 @@ final class CurrentWeatherSummaryCellViewModelTests: XCTestCase {
         uv: 0,
         isDay: false))
     
-    func testPropertiesDefault() {
+    func testPropertiesFahrenheit() {
+        tempUnitsSetting = .fahrenheit
         XCTAssertFalse(viewModel.isDay)
         XCTAssertFalse(viewModel.date.isEmpty)
         XCTAssertFalse(viewModel.time.isEmpty)
