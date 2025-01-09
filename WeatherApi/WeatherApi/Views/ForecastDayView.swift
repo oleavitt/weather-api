@@ -13,17 +13,26 @@ struct ForecastDayView: View {
     
     var body: some View {
         VStack {
-            HStack(spacing: 0) {
-                Text(date)
+            ScrollView(.horizontal) {
+                HStack(spacing: 0) {
+                    Text(date)
+                        .font(.custom(
+                            currentTheme.fontFamily, fixedSize: 30))
+                        .padding(.leading)
+                    BasicCachedAsyncImage(url: day.conditionIconURL)
+                        .frame(width: 64, height: 64)
+                    hiloView
+                    VStack {
+                        Text("precip")
+                        Text("\(day.chanceOfPrecip)%")
+                    }
                     .padding(.leading)
-                BasicCachedAsyncImage(url: day.conditionIconURL)
-                    .frame(width: 64, height: 64)
-                hiloView
-                Spacer()
+                    Spacer()
+                }
+                Text(day.condition)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
             }
-            Text(day.condition)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal)
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(day.hours, id: \.self) { hour in
