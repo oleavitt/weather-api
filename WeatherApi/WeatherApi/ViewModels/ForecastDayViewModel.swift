@@ -15,6 +15,7 @@ struct ForcastDayViewModel: Identifiable, Hashable {
     let lo: Double
     let conditionIconURL: URL?
     let condition: String
+    let chanceOfPrecip: Int
     let hours: [ForecastHour]
 }
 
@@ -24,6 +25,7 @@ struct ForecastHour: Identifiable, Hashable {
     let time: String
     let temp: Double
     let conditionIconURL: URL?
+    let chanceOfPrecip: Int
     var sunRiseSetImage: String?
     var isSunset = false
 }

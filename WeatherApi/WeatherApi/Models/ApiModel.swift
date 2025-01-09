@@ -120,13 +120,16 @@ struct AirQuality: Decodable {
 
 // MARK: - Forecast
 struct Forecast: Decodable {
-    let forecastday: [Forecastday]
+    let forecastDay: [ForecastDayModel]
+    enum CodingKeys: String, CodingKey {
+        case forecastDay = "forecastday"
+    }
 }
 
-// MARK: - Forecastday
-struct Forecastday: Decodable {
+// MARK: - ForecastDayModel
+struct ForecastDayModel: Decodable {
     let astro: Astro
-    let hour: [Current]
+    let hour: [ForecastHourModel]
     let day: Day
     let dateEpoch: Int
     let date: String
@@ -135,6 +138,80 @@ struct Forecastday: Decodable {
         case astro, hour, day
         case dateEpoch = "date_epoch"
         case date
+    }
+}
+
+// MARK: - ForecastHourModel
+struct ForecastHourModel: Decodable {
+    let visMiles: Double
+    let isDay: Int
+    let pressureIn: Double
+    let precipMm: Double
+    let windDir: String
+    let humidity: Double
+    let heatindexC: Double
+    let gustMph: Double
+    let windKph: Double
+    let windchillC: Double
+    let chanceOfSnow: Int
+    let timeEpoch: Int
+    let tempF: Double
+    let condition: Condition
+    let feelslikeF: Double
+    let dewpointC: Double
+    let snowCM: Double
+    let uv: Double
+    let cloud: Int
+    let gustKph: Double
+    let tempC: Double
+    let precipIn: Double
+    let heatindexF: Double
+    let dewpointF: Double
+    let windMph: Double
+    let windDegree: Int
+    let feelslikeC: Double
+    let windchillF: Double
+    let chanceOfRain: Int
+    let willItSnow: Int
+    let time: String
+    let pressureMB: Double
+    let willItRain: Int
+    let visKM: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case visMiles = "vis_miles"
+        case isDay = "is_day"
+        case pressureIn = "pressure_in"
+        case precipMm = "precip_mm"
+        case windDir = "wind_dir"
+        case humidity
+        case heatindexC = "heatindex_c"
+        case gustMph = "gust_mph"
+        case windKph = "wind_kph"
+        case windchillC = "windchill_c"
+        case chanceOfSnow = "chance_of_snow"
+        case timeEpoch = "time_epoch"
+        case tempF = "temp_f"
+        case condition
+        case feelslikeF = "feelslike_f"
+        case dewpointC = "dewpoint_c"
+        case snowCM = "snow_cm"
+        case uv, cloud
+        case gustKph = "gust_kph"
+        case tempC = "temp_c"
+        case precipIn = "precip_in"
+        case heatindexF = "heatindex_f"
+        case dewpointF = "dewpoint_f"
+        case windMph = "wind_mph"
+        case windDegree = "wind_degree"
+        case feelslikeC = "feelslike_c"
+        case windchillF = "windchill_f"
+        case chanceOfRain = "chance_of_rain"
+        case willItSnow = "will_it_snow"
+        case time
+        case pressureMB = "pressure_mb"
+        case willItRain = "will_it_rain"
+        case visKM = "vis_km"
     }
 }
 

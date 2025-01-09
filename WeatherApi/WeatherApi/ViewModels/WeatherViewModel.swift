@@ -210,49 +210,52 @@ extension WeatherViewModel {
         let hourMinFormatter = DateFormatter()
         hourMinFormatter.dateFormat = "h:mma"
 
-        return apiModel?.forecast?.forecastday.map {
-            let date = dateFormatter.date(from: $0.date)
+        return apiModel?.forecast?.forecastDay.map { day in
+            let date = dateFormatter.date(from: day.date)
             let maxTemp: Double
             let minTemp: Double
             if tempUnitsSetting == .fahrenheit {
-                maxTemp = $0.day.maxtempF
-                minTemp = $0.day.mintempF
+                maxTemp = day.day.maxtempF
+                minTemp = day.day.mintempF
             } else {
-                maxTemp = $0.day.maxtempC
-                minTemp = $0.day.mintempC
+                maxTemp = day.day.maxtempC
+                minTemp = day.day.mintempC
             }
-            var hours: [ForecastHour] = $0.hour.map {
+            var hours: [ForecastHour] = day.hour.map { hour in
                 let timeString: String
-                if let time = dateTimeFormatter.date(from: $0.time ?? "") {
+                if let time = dateTimeFormatter.date(from: hour.time) {
                     timeString = hourFormatter.string(from: time)
                 } else {
                     timeString = "--"
                 }
                 let temp: Double
                 if tempUnitsSetting == .fahrenheit {
-                    temp = $0.tempF
+                    temp = hour.tempF
                 } else {
-                    temp = $0.tempC
+                    temp = hour.tempC
                 }
-                return ForecastHour(epoch: $0.timeEpoch ?? 0,
+                return ForecastHour(epoch: hour.timeEpoch,
                                     time: timeString,
                                     temp: temp,
-                                    conditionIconURL: URL.httpsURL($0.condition.icon))
+                                    conditionIconURL: URL.httpsURL(hour.condition.icon),
+                                    chanceOfPrecip: hour.chanceOfRain)
             }
-            if let sunriseTime = riseSetInputFormatter.date(from: "\($0.date) \($0.astro.sunrise)") {
+            if let sunriseTime = riseSetInputFormatter.date(from: "\(day.date) \(day.astro.sunrise)") {
                 let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
                                            time: hourMinFormatter.string(from: sunriseTime),
                                            temp: 0.0,
                                            conditionIconURL: nil,
+                                           chanceOfPrecip: 0,
                                            sunRiseSetImage: "sunrise.fill",
                                            isSunset: false)
                 hours.append(sunrise)
             }
-            if let sunsetTime = riseSetInputFormatter.date(from: "\($0.date) \($0.astro.sunset)") {
+            if let sunsetTime = riseSetInputFormatter.date(from: "\(day.date) \(day.astro.sunset)") {
                 let sunset = ForecastHour(epoch: Int(sunsetTime.timeIntervalSince1970),
                                           time: hourMinFormatter.string(from: sunsetTime),
                                           temp: 0.0,
                                           conditionIconURL: nil,
+                                          chanceOfPrecip: 0,
                                           sunRiseSetImage: "sunset.fill",
                                           isSunset: true)
                 hours.append(sunset)
@@ -260,12 +263,13 @@ extension WeatherViewModel {
             hours = hours.sorted {
                 $0.epoch < $1.epoch
             }
-            return ForcastDayViewModel(epoch: $0.dateEpoch,
+            return ForcastDayViewModel(epoch: day.dateEpoch,
                                        date: date,
                                        hi: maxTemp,
                                        lo: minTemp,
-                                       conditionIconURL: URL.httpsURL($0.day.condition.icon),
-                                       condition: $0.day.condition.text,
+                                       conditionIconURL: URL.httpsURL(day.day.condition.icon),
+                                       condition: day.day.condition.text,
+                                       chanceOfPrecip: day.day.dailyChanceOfRain,
                                        hours: hours)
         } ?? []
     }
