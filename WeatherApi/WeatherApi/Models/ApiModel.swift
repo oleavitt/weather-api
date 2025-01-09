@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// Universal top level response model returned by call to WeatherAPI endpoint
 struct ApiModel: Decodable {
     var location: Location?
     var current: Current?
