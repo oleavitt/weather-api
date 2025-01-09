@@ -270,6 +270,7 @@ extension WeatherViewModel {
                                        conditionIconURL: URL.httpsURL(day.day.condition.icon),
                                        condition: day.day.condition.text,
                                        chanceOfPrecip: day.day.dailyChanceOfRain,
+                                       chanceOfSnow: day.day.dailyChanceOfSnow,
                                        hours: hours)
         } ?? []
     }

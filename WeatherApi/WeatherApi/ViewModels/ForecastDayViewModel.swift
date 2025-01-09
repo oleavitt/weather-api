@@ -16,6 +16,7 @@ struct ForcastDayViewModel: Identifiable, Hashable {
     let conditionIconURL: URL?
     let condition: String
     let chanceOfPrecip: Int
+    let chanceOfSnow: Int
     let hours: [ForecastHour]
 }
 

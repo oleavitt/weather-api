@@ -27,6 +27,13 @@ struct ForecastDayView: View {
                         Text("\(day.chanceOfPrecip)%")
                     }
                     .padding(.leading)
+                    if day.chanceOfSnow > 0 {
+                        VStack {
+                            Text("snow")
+                            Text("\(day.chanceOfSnow)%")
+                        }
+                        .padding(.leading)
+                    }
                     Spacer()
                 }
                 Text(day.condition)
@@ -128,7 +135,9 @@ struct ForecastDayView: View {
                                       hi: 70,
                                       lo: 58.1,
                                       conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
-                                      condition: "Sunny", chanceOfPrecip: 0,
+                                      condition: "Sunny",
+                                      chanceOfPrecip: 0,
+                                      chanceOfSnow: 5,
                                       hours: [
                                         ForecastHour(epoch: 1733032800,
                                                      time: "12am",
