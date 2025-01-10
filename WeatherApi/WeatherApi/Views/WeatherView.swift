@@ -67,28 +67,7 @@ struct WeatherView: View {
         }
     }
     
-    func emptyView() -> some View {
-        VStack {
-            HStack(alignment: .top) {
-                Image(systemName: "magnifyingglass")
-                    .foregroundColor(.secondary)
-                Text("empty-search-message")
-            }
-            .padding(.top)
-            Spacer()
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
-    func loadingView() -> some View {
-        VStack {
-            ProgressView() {
-                Text("loading-one-moment-please")
-            }
-        }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
-    }
-    
+    /// Content shown when Current tab is selected.
     func currentView(current: ApiModel) -> some View {
         VStack {
             ScrollView {
@@ -132,6 +111,7 @@ struct WeatherView: View {
         .fontWeight(.light)
     }
     
+    /// Content shown when Forecast tab is selected.
     func forecastView(current: ApiModel) -> some View {
         VStack {
             ScrollView {
@@ -152,7 +132,17 @@ struct WeatherView: View {
         .font(.system(size: 18))
         .fontWeight(.light)
     }
+    
+    /// Temperature subview
+    func temperatureView(current: ApiModel) -> some View {
+        HStack(alignment: .lastTextBaseline, spacing: 0) {
+            Text(viewModel.tempString)
+                .font(.system(size: 80))
+                .fontWeight(.ultraLight)
+        }
+    }
 
+    /// Details subviews
     var detailsView: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -174,6 +164,17 @@ struct WeatherView: View {
         .padding(.top)
     }
     
+    /// Content shown while data is loading.
+    func loadingView() -> some View {
+        VStack {
+            ProgressView() {
+                Text("loading-one-moment-please")
+            }
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+    }
+
+    /// Content shown when there is an error.
     func errorView(error: Error) -> some View {
         VStack {
             HStack(alignment: .top) {
@@ -187,15 +188,22 @@ struct WeatherView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
-    func temperatureView(current: ApiModel) -> some View {
-        HStack(alignment: .lastTextBaseline, spacing: 0) {
-            Text(viewModel.tempString)
-                .font(.system(size: 80))
-                .fontWeight(.ultraLight)
+    /// Content shown when there is nothing to show.
+    func emptyView() -> some View {
+        VStack {
+            HStack(alignment: .top) {
+                Image(systemName: "magnifyingglass")
+                    .foregroundColor(.secondary)
+                Text("empty-search-message")
+            }
+            .padding(.top)
+            Spacer()
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 }
 
+/// Helpers for loading data from location or search, and saving to History
 private extension WeatherView {
     func loadDataFromLocation() {
         locationManager.requestAuthorization() {
