@@ -91,7 +91,7 @@ struct WeatherView: View {
     
     func currentView(current: ApiModel) -> some View {
         VStack {
-            VStack {
+            ScrollView {
                 HStack {
                     Text("time-last-updated \(viewModel.timeLastUpdated)")
                     LocationButton(.currentLocation) {
@@ -120,10 +120,9 @@ struct WeatherView: View {
                 .padding(.bottom)
                 Text(viewModel.feelsLike)
                 detailsView
-                Spacer()
             }
-            .padding(.top)
         }
+        .padding(.top)
         .background {
             let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
             LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
@@ -135,12 +134,16 @@ struct WeatherView: View {
     
     func forecastView(current: ApiModel) -> some View {
         VStack {
-            VStack {
-                forecastListView
-                Spacer()
+            ScrollView {
+                CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
+                    .padding([.bottom, .horizontal])
+                ForEach(viewModel.forecastDays(), id: \.self) { day in
+                    ForecastDayView(day: day)
+                        .padding(.horizontal)
+                }
             }
-            .padding(.top)
         }
+        .padding(.top)
         .background {
             let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
             LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
@@ -169,17 +172,6 @@ struct WeatherView: View {
             }
         }
         .padding(.top)
-    }
-    
-    var forecastListView: some View {
-        ScrollView {
-            CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
-                .padding([.bottom, .horizontal])
-            ForEach(viewModel.forecastDays(), id: \.self) { day in
-                ForecastDayView(day: day)
-                    .padding(.horizontal)
-            }
-        }
     }
     
     func errorView(error: Error) -> some View {
