@@ -135,9 +135,10 @@ extension WeatherViewModel {
         
     var timeLastUpdatedFormatted: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, h:mma"
-        dateFormatter.amSymbol = "am"
-        dateFormatter.pmSymbol = "pm"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        dateFormatter.amSymbol = String(localized: "am")
+        dateFormatter.pmSymbol = String(localized: "pm")
         return dateFormatter.string(from: timeLastUpdatedDate)
     }
 

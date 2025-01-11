@@ -23,14 +23,18 @@ class CurrentWeatherSummaryCellViewModel: ObservableObject {
     
     var date: String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d"
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .none
         return dateFormatter.string(from: data.dateTime)
     }
     
     var time: String {
         let timeFormatter = DateFormatter()
-        timeFormatter.dateFormat = "h:mma"
-        return timeFormatter.string(from: data.dateTime).lowercased()
+        timeFormatter.dateStyle = .none
+        timeFormatter.timeStyle = .short
+        timeFormatter.amSymbol = String(localized: "am")
+        timeFormatter.pmSymbol = String(localized: "pm")
+        return timeFormatter.string(from: data.dateTime)
     }
 
     var location: String {

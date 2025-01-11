@@ -41,6 +41,16 @@
         }
       }
     },
+    "am" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "am"
+          }
+        }
+      }
+    },
     "api-key" : {
       "localizations" : {
         "en" : {
@@ -460,6 +470,16 @@
         }
       }
     },
+    "pm" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "pm"
+          }
+        }
+      }
+    },
     "precip" : {
       "localizations" : {
         "en" : {
@@ -565,7 +585,7 @@
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Last updated: %@"
+            "value" : "Updated: %@"
           }
         }
       }
