@@ -72,7 +72,7 @@ struct WeatherView: View {
         VStack {
             ScrollView {
                 HStack {
-                    Text("time-last-updated \(viewModel.timeLastUpdated)")
+                    Text("time-last-updated \(viewModel.timeLastUpdatedFormatted)")
                     LocationButton(.currentLocation) {
                         loadDataFromLocation()
                     }

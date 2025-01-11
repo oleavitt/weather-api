@@ -132,7 +132,15 @@ extension WeatherViewModel {
         
         return dateTimeFormatter.date(from: timeLastUpdated) ?? Date()
     }
-    
+        
+    var timeLastUpdatedFormatted: String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MMM d, h:mma"
+        dateFormatter.amSymbol = "am"
+        dateFormatter.pmSymbol = "pm"
+        return dateFormatter.string(from: timeLastUpdatedDate)
+    }
+
     var locationName: String {
         if let city = apiModel?.location?.name {
             var locationName = city
