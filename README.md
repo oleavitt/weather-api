@@ -33,8 +33,8 @@ When you have your key, set the API key in the app's Settings -> API Providers s
      <td>Search Result</td>
   </tr>
   <tr>
-    <td><img src="https://github.com/user-attachments/assets/db0023f5-ea87-48dc-bee8-482527ff9559" width=30% height=30%></td>
-    <td><img src="https://github.com/user-attachments/assets/8058ffb8-598f-44a6-9f6f-10e5f6d17762" width=30% height=30%></td>
+    <td><img src="https://github.com/user-attachments/assets/066151da-ca01-4f58-a128-27e0a3aa6c0b" width=30% height=30%></td>
+    <td><img src="https://github.com/user-attachments/assets/b1c37337-bb20-44ff-a13c-133e9c1b113d" width=30% height=30%></td>
     <td><img src="https://github.com/user-attachments/assets/5368c4c9-d0b9-4eba-9099-478a84308d81" width=30% height=30%></td>
   </tr>
 </table>
