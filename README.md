@@ -26,28 +26,11 @@ When you have your key, set the API key in the app's Settings -> API Providers s
 
 ## Screenshots
 
-<table>
-  <tr>
-     <td>Here & Now (Current)</td>
-     <td>Forecast</td>
-     <td>Search Result</td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/066151da-ca01-4f58-a128-27e0a3aa6c0b" width=30% height=30%></td>
-    <td><img src="https://github.com/user-attachments/assets/b1c37337-bb20-44ff-a13c-133e9c1b113d" width=30% height=30%></td>
-    <td><img src="https://github.com/user-attachments/assets/5368c4c9-d0b9-4eba-9099-478a84308d81" width=30% height=30%></td>
-  </tr>
-</table>
+| Here & Now (Current) | Forecast | Search Result |
+| -- | -- | -- |
+| ![Here & Now (Current)](https://github.com/user-attachments/assets/066151da-ca01-4f58-a128-27e0a3aa6c0b) | ![Forecast](https://github.com/user-attachments/assets/b1c37337-bb20-44ff-a13c-133e9c1b113d) | ![Search Result](https://github.com/user-attachments/assets/5368c4c9-d0b9-4eba-9099-478a84308d81) |
 
-<table>
-  <tr>
-     <td>History</td>
-     <td>Settings</td>
-     <td>API Providers</td>
-  </tr>
-  <tr>
-    <td><img src="https://github.com/user-attachments/assets/6e8f6cff-86bf-4133-bffb-4205885104e9" width=30% height=30%></td>
-    <td><img src="https://github.com/user-attachments/assets/58ef5908-2672-46de-8f34-9731d1768518" width=30% height=30%></td>
-    <td><img src="https://github.com/user-attachments/assets/84838337-0d38-4832-aef1-6a81d06284ae" width=30% height=30%></td>
-  </tr>
-</table>
+| History | Settings | API Providers |
+| -- | -- | -- |
+| ![History](https://github.com/user-attachments/assets/6e8f6cff-86bf-4133-bffb-4205885104e9) | ![Settings](https://github.com/user-attachments/assets/58ef5908-2672-46de-8f34-9731d1768518) | ![API Providers](https://github.com/user-attachments/assets/84838337-0d38-4832-aef1-6a81d06284ae) |
+
