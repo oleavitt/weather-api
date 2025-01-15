@@ -50,11 +50,7 @@ struct ForecastDayView: View {
             }
             .padding([.leading, .bottom, .trailing])
         }
-        .foregroundColor(.primary)
-        .background {
-            currentTheme.backgroundColor
-        }
-        .cornerRadius(currentTheme.cornerRadius)
+        .cardStyle()
     }
 
     private var hiloView: some View {

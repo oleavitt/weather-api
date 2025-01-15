@@ -25,14 +25,7 @@ struct DetailChip: View {
         }
         .frame(minHeight: 50)
         .padding(.horizontal)
-        .background {
-            currentTheme.backgroundColor
-        }
-        .cornerRadius(currentTheme.cornerRadius)
-        .font(.custom(
-            currentTheme.fontFamily, fixedSize: 14))
-        .foregroundStyle(.secondary)
-        .foregroundColor(.primary)
+        .cardStyle()
     }
 }
 
