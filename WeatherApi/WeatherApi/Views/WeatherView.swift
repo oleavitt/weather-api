@@ -145,25 +145,16 @@ struct WeatherView: View {
     /// Details subviews
     var detailsView: some View {
         VStack {
-            ScrollView(.horizontal) {
-                HStack {
-                    DetailChip("humidity", viewModel.humidity)
-                    DetailChip("uv", viewModel.uvIndex)
-                    DetailChip("pressure", viewModel.pressure)
-                }
-                .padding(.horizontal)
+            HStack {
+                DetailChip("humidity", viewModel.humidity)
+                DetailChip("uv", viewModel.uvIndex)
+                DetailChip("pressure", viewModel.pressure)
             }
-            ScrollView(.horizontal) {
-                HStack {
-                    DetailChip("wind", viewModel.windSummary)
-                    DetailChip("gusts", viewModel.gustsSummary)
-                }
-                .padding(.horizontal)
-            }
+            WindView(viewModel: WindViewModel(windModel: viewModel.windModel))
         }
-        .padding(.top)
+        .padding([.horizontal, .top])
     }
-    
+
     /// Content shown while data is loading.
     func loadingView() -> some View {
         VStack {

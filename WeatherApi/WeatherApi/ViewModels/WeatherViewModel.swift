@@ -164,30 +164,6 @@ extension WeatherViewModel {
         return "--"
     }
     
-    var windDir: String {
-        apiModel?.current?.windDir ?? "--"
-    }
-    
-    var windSpeed: String {
-        ((speedUnitsSetting == .mph) ? apiModel?.current?.windMph : apiModel?.current?.windKph)?.formatted() ?? "--"
-    }
-    
-    var gustSpeed: String {
-        ((speedUnitsSetting == .mph) ? apiModel?.current?.gustMph : apiModel?.current?.gustKph)?.formatted() ?? "--"
-    }
-    
-    var speedUnits: String {
-        speedUnitsSetting.symbol
-    }
-    
-    var windSummary: String {
-        String(localized: "\(windDir) \(windSpeed) \(speedUnits)")
-    }
-    
-    var gustsSummary: String {
-        String(localized: "\(gustSpeed) \(speedUnits)")
-    }
-    
     var uvIndex: String {
         if let current = apiModel?.current {
             return String(localized: "\(current.uv.formatted())")
@@ -211,6 +187,15 @@ extension WeatherViewModel {
     
     var isDay: Bool {
         (apiModel?.current?.isDay ?? 0) > 0
+    }
+    
+    var windModel: WindModel? {
+        WindModel(speedKph: apiModel?.current?.windKph ?? 0.0,
+                  speedMph: apiModel?.current?.windMph ?? 0.0,
+                  degree: Double(apiModel?.current?.windDegree ?? 0),
+                  direction: apiModel?.current?.windDir ?? "--",
+                  gustKph: apiModel?.current?.gustKph ?? 0.0,
+                  gustMph: apiModel?.current?.gustMph ?? 0.0)
     }
     
     /// Parse out the Forecast days/hours list from the response data

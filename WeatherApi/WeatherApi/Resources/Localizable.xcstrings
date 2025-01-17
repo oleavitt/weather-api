@@ -345,12 +345,12 @@
         }
       }
     },
-    "gusts" : {
+    "gusts %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Gusts"
+            "value" : "Gusts: %1$@ %2$@"
           }
         }
       }
@@ -546,6 +546,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Speed"
+          }
+        }
+      }
+    },
+    "speed %@ %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Speed: %1$@ %2$@ %3$@"
           }
         }
       }
