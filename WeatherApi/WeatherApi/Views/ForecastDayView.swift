@@ -18,7 +18,6 @@ struct ForecastDayView: View {
                     Text(date)
                         .font(.custom(
                             currentTheme.fontFamily, fixedSize: 30))
-                        .padding(.leading)
                     BasicCachedAsyncImage(url: day.conditionIconURL)
                         .frame(width: 64, height: 64)
                     hiloView
@@ -38,7 +37,6 @@ struct ForecastDayView: View {
                 }
                 Text(day.condition)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
             }
             ScrollView(.horizontal) {
                 HStack {
@@ -48,7 +46,6 @@ struct ForecastDayView: View {
                     }
                 }
             }
-            .padding([.leading, .bottom, .trailing])
         }
         .cardStyle()
     }

@@ -23,8 +23,7 @@ struct DetailChip: View {
                     currentTheme.fontFamily, fixedSize: 12))
             Text(value)
         }
-        .frame(minHeight: 50)
-        .padding(.horizontal)
+        .frame(minHeight: 40)
         .cardStyle()
     }
 }
