@@ -35,11 +35,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		8C52D4942CC8B83400AA558C /* WeatherApi */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = WeatherApi;
-			sourceTree = "<group>";
-		};
 		8C52D4A52CC8B83600AA558C /* WeatherApiTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WeatherApiTests;
@@ -48,6 +43,11 @@
 		8C52D4AF2CC8B83600AA558C /* WeatherApiUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = WeatherApiUITests;
+			sourceTree = "<group>";
+		};
+		8C8EC5DA2D3CC94E007422D2 /* WeatherApi */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = WeatherApi;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -81,7 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				8C52D4BF2CC8C0A300AA558C /* README.md */,
-				8C52D4942CC8B83400AA558C /* WeatherApi */,
+				8C8EC5DA2D3CC94E007422D2 /* WeatherApi */,
 				8C52D4A52CC8B83600AA558C /* WeatherApiTests */,
 				8C52D4AF2CC8B83600AA558C /* WeatherApiUITests */,
 				8C52D4932CC8B83400AA558C /* Products */,
@@ -114,7 +114,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				8C52D4942CC8B83400AA558C /* WeatherApi */,
+				8C8EC5DA2D3CC94E007422D2 /* WeatherApi */,
 			);
 			name = WeatherApi;
 			packageProductDependencies = (
