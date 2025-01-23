@@ -8,33 +8,17 @@
 
 import Foundation
 import Combine
+@testable import WeatherApi
 
 /// Returns mock response data for previews and unit tests.
 class NetworkLayerMock: NetworkLayer {
-   
+    private let data: Data
+
+    init(jsonData: Data = Data()) {
+        self.data = jsonData
+    }
+    
     func fetchJsonDataPublisher<T: Decodable>(request: URLRequest, type: T.Type) -> AnyPublisher<T, Error> {
-        let query = request.url?.query() ?? ""
-        let jsonString: String
-        if query.contains("q=Dallas") {
-            if query.contains("aqi=yes") {
-                jsonString = currentWithAqiJson
-            } else {
-                jsonString = forcastJson
-            }
-        } else {
-            jsonString = currentErrorNoMatchJson
-        }
-        
-        let data: Data
-        switch type {
-        case is ApiModel.Type:
-            data = jsonString.data(using: .utf8) ?? Data()
-            break
-        default:
-            data = Data()
-            break
-        }
-        
         return Just(data)
             .decode(type: T.self, decoder: JSONDecoder())
             .eraseToAnyPublisher()
