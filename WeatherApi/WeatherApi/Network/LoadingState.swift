@@ -8,10 +8,10 @@
 import Foundation
 
 /// Used to update view during the loading progress of an async API call.
-public enum LoadingState<T> {
+public enum LoadingState {
     case startup
     case empty
     case loading
-    case success(T)
-    case failure(Error)
+    case success
+    case failure
 }

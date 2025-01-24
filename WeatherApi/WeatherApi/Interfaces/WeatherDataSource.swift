@@ -29,7 +29,7 @@ struct LocationData {
     let name: String
     let region: String
     let country: String
-    let localtime: Date
+    let localtime: Date?
     let localtimeEpoch: Int
     let lon: Double
     let lat: Double
@@ -39,7 +39,7 @@ struct LocationData {
 // MARK: API Current
 
 struct CurrentData {
-    let dateTimeLastUpdated: Date
+    let dateTimeLastUpdated: Date?
     let lastUpdatedEpoch: Int
     let tempC: Double
     let tempF: Double
@@ -99,7 +99,7 @@ struct ForecastDayData {
     let forecastHours: [ForecastHourData]
     let day: DayData
     let dateEpoch: Int
-    let date: Date
+    let date: Date?
 }
 
 struct DayData {
@@ -156,7 +156,7 @@ struct ForecastHourData {
     let windchillF: Double
     let chanceOfRain: Int
     let willItSnow: Int
-    let time: String
+    let time: Date?
     let pressureMB: Double
     let willItRain: Int
     let visKM: Double
@@ -164,11 +164,11 @@ struct ForecastHourData {
 
 struct AstroData {
     let isSunUp: Int
-    let sunrise: Date
-    let sunset: Date
+    let sunrise: Date?
+    let sunset: Date?
     let isMoonUp: Int
-    let moonrise: Date
-    let moonset: Date
+    let moonrise: Date?
+    let moonset: Date?
     let moonIllumination: Int
     let moonPhase: String
 }

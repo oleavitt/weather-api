@@ -163,6 +163,11 @@ private extension WeatherApiComDataSource {
     func mapForecastData(_ sourceData: WeatherApiModel) -> ForecastData? {
         guard let srcForecast = sourceData.forecast else { return nil }
 
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        let dateTimeFormatter = DateFormatter()
+        dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+
         let forecastDays = srcForecast.forecastDay.map { srcForecastDay in
             let forecastHours = srcForecastDay.hour.map { srcHour in
                 ForecastHourData(visMiles: srcHour.visMiles,
@@ -198,7 +203,7 @@ private extension WeatherApiComDataSource {
                                  windchillF: srcHour.windchillF,
                                  chanceOfRain: srcHour.chanceOfRain,
                                  willItSnow: srcHour.willItSnow,
-                                 time: srcHour.time,
+                                 time: dateTimeFormatter.date(from: srcHour.time),
                                  pressureMB: srcHour.pressureMB,
                                  willItRain: srcHour.willItRain,
                                  visKM: srcHour.visKM)
@@ -231,9 +236,6 @@ private extension WeatherApiComDataSource {
                                     code: day.condition.code),
                                   maxwindMph: day.maxwindMph, maxwindKph: day.maxwindKph,
                                   uv: day.uv)
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd"
 
             return ForecastDayData(astro: astroData,
                                    forecastHours: forecastHours,
@@ -255,17 +257,17 @@ private extension WeatherApiComDataSource {
                             message: srcError.message)
     }
     
-    func riseSetDate(date: String, time: String) -> Date {
+    func riseSetDate(date: String, time: String) -> Date? {
         let riseSetInputFormatter = DateFormatter()
         riseSetInputFormatter.dateFormat = "yyyy-MM-dd h:mm a"
-        return riseSetInputFormatter.date(from: "\(date) \(time)") ?? Date()
+        return riseSetInputFormatter.date(from: "\(date) \(time)")
     }
     
-    func localDateTime(_ dateTime: String?) -> Date {
+    func localDateTime(_ dateTime: String?) -> Date? {
         guard let dateTime else { return Date() }
         let riseSetInputFormatter = DateFormatter()
         riseSetInputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        return riseSetInputFormatter.date(from: dateTime) ?? Date()
+        return riseSetInputFormatter.date(from: dateTime)
     }
 }
                                      

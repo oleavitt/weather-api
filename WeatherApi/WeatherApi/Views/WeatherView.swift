@@ -28,19 +28,19 @@ struct WeatherView: View {
             VStack {
                 switch viewModel.state {
                 case .startup:
-                    loadingView()
+                    loadingView
                 case .empty:
-                    emptyView()
+                    emptyView
                 case .loading:
-                    loadingView()
-                case .success(let current):
+                    loadingView
+                case .success:
                     if isForecast {
-                        forecastView(current: current)
+                        forecastView
                     } else {
-                        currentView(current: current)
+                        currentView
                     }
-                case .failure(let error):
-                    errorView(error: error)
+                case .failure:
+                    errorView
                 }
             }
             .navigationTitle(isForecast ? "forecast" : "current")
@@ -68,7 +68,7 @@ struct WeatherView: View {
     }
     
     /// Content shown when Current tab is selected.
-    func currentView(current: ApiModel) -> some View {
+    var currentView: some View {
         VStack {
             ScrollView {
                 HStack {
@@ -90,7 +90,7 @@ struct WeatherView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
-                temperatureView(current: current)
+                temperatureView
                 HStack {
                     Text(viewModel.condition)
                         .font(.system(size: 18))
@@ -112,7 +112,7 @@ struct WeatherView: View {
     }
     
     /// Content shown when Forecast tab is selected.
-    func forecastView(current: ApiModel) -> some View {
+    var forecastView: some View {
         VStack {
             ScrollView {
                 CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
@@ -134,7 +134,7 @@ struct WeatherView: View {
     }
     
     /// Temperature subview
-    func temperatureView(current: ApiModel) -> some View {
+    var temperatureView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
             Text(viewModel.tempString)
                 .font(.system(size: 80))
@@ -156,7 +156,7 @@ struct WeatherView: View {
     }
 
     /// Content shown while data is loading.
-    func loadingView() -> some View {
+    var loadingView: some View {
         VStack {
             ProgressView() {
                 Text("loading-one-moment-please")
@@ -166,12 +166,12 @@ struct WeatherView: View {
     }
 
     /// Content shown when there is an error.
-    func errorView(error: Error) -> some View {
+    var errorView: some View {
         VStack {
             HStack(alignment: .top) {
                 Image(systemName: "xmark.circle.fill")
                     .foregroundColor(.red)
-                Text(error.localizedDescription)
+                Text(viewModel.getErrorMessage())
             }
             .padding(.top)
             Spacer()
@@ -180,7 +180,7 @@ struct WeatherView: View {
     }
     
     /// Content shown when there is nothing to show.
-    func emptyView() -> some View {
+    var emptyView: some View {
         VStack {
             HStack(alignment: .top) {
                 Image(systemName: "magnifyingglass")
@@ -215,9 +215,7 @@ private extension WeatherView {
     }
     
     func loadData() {
-        Task {
-            await viewModel.getCurrentAndForecastWeather()
-        }
+        viewModel.getCurrentAndForecastWeather()
     }
 
     func saveToHistory() {

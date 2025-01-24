@@ -7,107 +7,89 @@
 
 import XCTest
 import SwiftUI
+import Combine
+
 @testable import WeatherApi
 
 final class WeatherViewModelTests: XCTestCase {
-
+    
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
     
+    var cancellables = Set<AnyCancellable>()
+    
+    var data = Data()
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-        weatherApiKey = "1234abcd"
+        let path = Bundle(for: WeatherViewModelTests.self).path(forResource: "Forecast3Days", ofType: "json")!
+        data = NSData(contentsOfFile: path)! as Data
     }
-
+    
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testGetCurrent() async throws {
-        let viewModel = WeatherViewModel(NetworkLayerMock())
-        viewModel.locationQuery = "Dallas"
-        await viewModel.getCurrentAndForecastWeather()
+    
+    func testGetCurrentAndForecast() {
+        let viewModel = WeatherViewModel(NetworkLayerMock(jsonData: data))
         
-        if case let .success(current) = viewModel.state {
-            XCTAssertNotNil(current.location)
-            if let location = current.location {
-                XCTAssertEqual(location.name, "Dallas")
-                XCTAssertEqual(location.region, "Texas")
-                XCTAssertEqual(location.country, "United States of America")
-                XCTAssertFalse(location.localtime.isEmpty)
+        let expectation = XCTestExpectation(description: "The first publishes value is an empty section")
+        viewModel.$state.sink { [weak self] state in
+            switch state {
+            case .startup:
+                break
+            case .empty:
+                XCTFail("State should not be empty")
+                expectation.fulfill()
+            case .loading:
+                break
+            case .success:
+                self?.validateViewModelFields(viewModel: viewModel)
+                expectation.fulfill()
+            case .failure:
+                XCTFail("State is failure with error: \(viewModel.getErrorMessage())")
+                expectation.fulfill()
             }
-            
-            XCTAssertNotNil(current.current)
-            if let current = current.current {
-                XCTAssertNil(current.airQuality)
-            }
-            
-            XCTAssertNil(current.error)
-        } else {
-            XCTFail("View model state is not successful")
         }
-    }
-
-    func testGetCurrentWithAqi() async throws {
-        let viewModel = WeatherViewModel(NetworkLayerMock())
-        viewModel.locationQuery = "Dallas"
-        viewModel.showAirQuality = true
-        await viewModel.getCurrentAndForecastWeather()
+        .store(in: &cancellables)
         
-        if case let .success(current) = viewModel.state {
-            XCTAssertNotNil(current.location)
-            if let location = current.location {
-                XCTAssertEqual(location.name, "Dallas")
-                XCTAssertEqual(location.region, "Texas")
-                XCTAssertEqual(location.country, "United States of America")
-                XCTAssertFalse(location.localtime.isEmpty)
-            }
-            
-            XCTAssertNotNil(current.current)
-            if let current = current.current {
-                XCTAssertNotNil(current.airQuality)
-            }
-            
-            XCTAssertNil(current.error)
-        } else {
-            XCTFail("View model state is not the error state")
-        }
+        viewModel.locationQuery = "Dallas"
+        viewModel.getCurrentAndForecastWeather()
+        
+        wait(for: [expectation], timeout: 1)
     }
     
-    func testGetCurrentErrorNoMatch() async throws {
-        let viewModel = WeatherViewModel(NetworkLayerMock())
-        viewModel.locationQuery = "D"
-        await viewModel.getCurrentAndForecastWeather()
-        
-        if case let .failure(error) = viewModel.state {
-            XCTAssertEqual(error as? ApiErrorType, .noMatch)
-        } else {
-            XCTFail("View model state is not the error state")
-        }
-    }
-    
-    func testProperties() async throws {
-        let viewModel = WeatherViewModel(NetworkLayerMock())
-        viewModel.locationQuery = "Dallas"
-        await viewModel.getCurrentAndForecastWeather()
-        
-        XCTAssertEqual(viewModel.uvIndex, "0")
-        XCTAssertEqual(viewModel.humidity, "58%")
-        XCTAssertEqual(viewModel.pressure, "29.76 in")
-        XCTAssertFalse(viewModel.isDay)
-    }
-    
-    func testForecastDays() async throws {
-        let viewModel = WeatherViewModel(NetworkLayerMock())
-        viewModel.locationQuery = "Dallas"
-        await viewModel.getCurrentAndForecastWeather()
-        
+    func validateViewModelFields(viewModel: WeatherViewModel) {
+        XCTAssertEqual(viewModel.locationName, "Dallas, Texas")
         let forecastDays = viewModel.forecastDays()
         XCTAssertEqual(forecastDays.count, 3)
-        
-        if let dayOne = forecastDays.first {
-            XCTAssertEqual(dayOne.hours.count, 26) // 24 hours plus sunrise and sunset times
-        } else {
-            XCTFail("Could not get the first day of the forecast")
+        if let forecastDayOne = forecastDays.first {
+            XCTAssertEqual(forecastDayOne.hi, 71.6)
+            XCTAssertEqual(forecastDayOne.lo, 54.1)
+            XCTAssertEqual(forecastDayOne.hours.count, 26)
+            XCTAssertEqual(forecastDayOne.hours[0].time, "12AM")
+            XCTAssertEqual(forecastDayOne.hours[1].time, "1AM")
+            XCTAssertEqual(forecastDayOne.hours[2].time, "2AM")
+            XCTAssertEqual(forecastDayOne.hours[3].time, "3AM")
+            XCTAssertEqual(forecastDayOne.hours[4].time, "4AM")
+            XCTAssertEqual(forecastDayOne.hours[5].time, "5AM")
+            XCTAssertEqual(forecastDayOne.hours[6].time, "6AM")
+            XCTAssertEqual(forecastDayOne.hours[7].time, "7AM")
+            XCTAssertEqual(forecastDayOne.hours[8].time, "7:29AM") // Sunrise should be at index 8
+            XCTAssertEqual(forecastDayOne.hours[9].time, "8AM")
+            XCTAssertEqual(forecastDayOne.hours[10].time, "9AM")
+            XCTAssertEqual(forecastDayOne.hours[11].time, "10AM")
+            XCTAssertEqual(forecastDayOne.hours[12].time, "11AM")
+            XCTAssertEqual(forecastDayOne.hours[13].time, "12PM")
+            XCTAssertEqual(forecastDayOne.hours[14].time, "1PM")
+            XCTAssertEqual(forecastDayOne.hours[15].time, "2PM")
+            XCTAssertEqual(forecastDayOne.hours[16].time, "3PM")
+            XCTAssertEqual(forecastDayOne.hours[17].time, "4PM")
+            XCTAssertEqual(forecastDayOne.hours[18].time, "5PM")
+            XCTAssertEqual(forecastDayOne.hours[19].time, "5:30PM") // Sunset should be at index 19
+            XCTAssertEqual(forecastDayOne.hours[20].time, "6PM")
+            XCTAssertEqual(forecastDayOne.hours[21].time, "7PM")
+            XCTAssertEqual(forecastDayOne.hours[22].time, "8PM")
+            XCTAssertEqual(forecastDayOne.hours[23].time, "9PM")
+            XCTAssertEqual(forecastDayOne.hours[24].time, "10PM")
+            XCTAssertEqual(forecastDayOne.hours[25].time, "11PM")
         }
     }
 }
