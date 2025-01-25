@@ -222,12 +222,12 @@ private extension WeatherView {
         let current = viewModel.currentWeatherModel()
 
         if !history.contains(where: {
-            $0.epochUpdated == current.epochUpdated &&
+            $0.dateTime == current.dateTime &&
             $0.location == current.location
            }) {
             context.insert(viewModel.currentWeatherModel())
 #if DEBUG
-            print("History saved for epoch: \(current.epochUpdated)")
+            print("History saved for epoch: \(current.dateTime)")
             print("History count: \(history.count)")
 #endif
         }

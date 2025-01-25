@@ -29,8 +29,9 @@ final class WeatherApiComDataSourceTests: XCTestCase {
             switch result {
             case .success(let weatherData):
                 XCTAssertNotNil(weatherData)
-                XCTAssertEqual(weatherData.location?.name, "Dallas")
-                XCTAssertEqual(weatherData.current?.tempC, 17.8)
+                XCTAssertEqual(dataSource.locationData?.name, "Dallas")
+                XCTAssertEqual(dataSource.currentTemp(units: .celsius), 17.8)
+                XCTAssertEqual(dataSource.currentTemp(units: .fahrenheit), 64)
                 XCTAssertEqual(weatherData.forecast?.forecastDays.count, 3)
                 
             case .failure(let error):

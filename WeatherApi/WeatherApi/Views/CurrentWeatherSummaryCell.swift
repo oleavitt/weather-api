@@ -51,7 +51,6 @@ struct CurrentWeatherSummaryCell: View {
     ScrollView {
         CurrentWeatherSummaryCell(data: CurrentWeatherModel(
             location: "Dallas, Texas",
-            epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
             tempF: 64,
@@ -61,7 +60,6 @@ struct CurrentWeatherSummaryCell: View {
             isDay: false))
         CurrentWeatherSummaryCell(data:CurrentWeatherModel(
             location: "Dallas, Texas",
-            epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
             tempF: -23,
@@ -71,7 +69,6 @@ struct CurrentWeatherSummaryCell: View {
             isDay: false))
         CurrentWeatherSummaryCell(data: CurrentWeatherModel(
             location: "Dallas, Texas",
-            epochUpdated: 1234,
             dateTime: Date(),
             tempC: 17.8,
             tempF: 108.6,

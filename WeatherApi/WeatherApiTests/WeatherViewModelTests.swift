@@ -14,14 +14,21 @@ import Combine
 final class WeatherViewModelTests: XCTestCase {
     
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
-    
+    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+    @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
+    @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inches
+
     var cancellables = Set<AnyCancellable>()
     
     var data = Data()
     override func setUpWithError() throws {
         let path = Bundle(for: WeatherViewModelTests.self).path(forResource: "Forecast3Days", ofType: "json")!
         data = NSData(contentsOfFile: path)! as Data
-    }
+        weatherApiKey = "abcd1234"
+        tempUnitsSetting = .fahrenheit
+        speedUnitsSetting = .mph
+        pressureUnitsSetting = .inches
+   }
     
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
@@ -30,7 +37,7 @@ final class WeatherViewModelTests: XCTestCase {
     func testGetCurrentAndForecast() {
         let viewModel = WeatherViewModel(NetworkLayerMock(jsonData: data))
         
-        let expectation = XCTestExpectation(description: "The first publishes value is an empty section")
+        let expectation = XCTestExpectation(description: "Fulfill when we reach empty, failure or success")
         viewModel.$state.sink { [weak self] state in
             switch state {
             case .startup:

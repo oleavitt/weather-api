@@ -16,6 +16,7 @@ class WeatherApiComDataSource: WeatherDataSource {
     private var apiKey = ""
     private var networkLayer: NetworkLayer?
     private var cancellable: AnyCancellable?
+    private var apiModel: WeatherApiModel?
     
     /// Sets up data source to be ready to make API calls
     /// - Parameters:
@@ -45,14 +46,30 @@ class WeatherApiComDataSource: WeatherDataSource {
                     switch error {
                     case let decodingError as DecodingError:
                         completion(.failure(decodingError))
-//                    case let apiError as NetworkError:
-//                        completion(.failure(apiError))
                     default:
                         completion(.failure(ApiErrorType.genericError))
                     }
                 }
             },
                   receiveValue: { completion(.success($0)) })
+    }
+    
+    var dateTimeLastUpdated: Date? {
+        guard let current = apiModel?.current else { return nil }
+        return localDateTime(current.lastUpdated)
+    }
+    
+    var locationData: LocationData? {
+        guard let location = apiModel?.location else { return nil }
+        return LocationData(name: location.name,
+                            region: location.region,
+                            country: location.country,
+                            latitude: location.lat,
+                            longitude: location.lon)
+    }
+    
+    func currentTemp(units: TempUnits) -> Double? {
+        (units == .fahrenheit) ? apiModel?.current?.tempF : apiModel?.current?.tempC
     }
 }
 
@@ -87,28 +104,14 @@ private extension WeatherApiComDataSource {
     func mapResponseData(_ sourceData: WeatherApiModel) -> WeatherData {
         var weatherData = WeatherData()
 
-        weatherData.location = mapLocationData(sourceData)
+        // Save a local copy of the source data
+        apiModel = sourceData
+        
         weatherData.current = mapCurrentData(sourceData)
         weatherData.forecast = mapForecastData(sourceData)
         weatherData.error = mapApiErrorData(sourceData)
         
         return weatherData
-    }
-
-    /// Map any location information returned from the API to a LocationData struct
-    /// - Parameter sourceData: API specific root response model
-    /// - Returns: `LocationData` with location info or nil if none
-    func mapLocationData(_ sourceData: WeatherApiModel) -> LocationData? {
-        guard let srcLocation = sourceData.location else { return nil }
-        
-        return LocationData(name: srcLocation.name,
-                            region: srcLocation.region,
-                            country: srcLocation.country,
-                            localtime: localDateTime(srcLocation.localtime),
-                            localtimeEpoch: srcLocation.localtimeEpoch,
-                            lon: srcLocation.lon,
-                            lat: srcLocation.lat,
-                            tzID: srcLocation.tzID)
     }
     
     /// Map any current weather information returned from the API to a CurrentData struct
@@ -131,9 +134,6 @@ private extension WeatherApiComDataSource {
         }
         
         let current = CurrentData(
-            dateTimeLastUpdated: localDateTime(srcCurrent.lastUpdated),
-            lastUpdatedEpoch: srcCurrent.lastUpdatedEpoch ?? 0,
-            tempC: srcCurrent.tempC, tempF: srcCurrent.tempF,
             isDay: srcCurrent.isDay,
             condition: ConditionData(
                 text: srcCurrent.condition.text,
@@ -265,9 +265,9 @@ private extension WeatherApiComDataSource {
     
     func localDateTime(_ dateTime: String?) -> Date? {
         guard let dateTime else { return Date() }
-        let riseSetInputFormatter = DateFormatter()
-        riseSetInputFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        return riseSetInputFormatter.date(from: dateTime)
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        return dateFormatter.date(from: dateTime)
     }
 }
                                      

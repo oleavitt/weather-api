@@ -106,7 +106,7 @@ extension WeatherViewModel {
     }
     
     var tempString: String {
-        if let temp = (tempUnitsSetting == .fahrenheit) ? weatherData?.current?.tempF : weatherData?.current?.tempC {
+        if let temp = weatherDataSource.currentTemp(units: tempUnitsSetting) {
             return temp.formatted() + "°"
         }
         return "--"
@@ -117,7 +117,7 @@ extension WeatherViewModel {
     }
     
     var timeLastUpdatedDate: Date {
-        return weatherData?.current?.dateTimeLastUpdated ?? Date()
+        return weatherDataSource.dateTimeLastUpdated ?? Date()
     }
         
     var timeLastUpdatedFormatted: String {
@@ -130,14 +130,8 @@ extension WeatherViewModel {
     }
 
     var locationName: String {
-        if let city = weatherData?.location?.name {
-            var locationName = city
-            if let state = weatherData?.location?.region {
-                locationName += ", " + state
-            }
-            return locationName
-        }
-        return "--"
+        guard let location = weatherDataSource.locationData else { return "--" }
+        return "\(location.name), \(location.region)"
     }
     
     var condition: String {
@@ -267,94 +261,14 @@ extension WeatherViewModel {
         
         return hoursList
     }
-    /// Parse out the Forecast days/hours list from the response data
-    /// - Returns: Array of forecast day structures for the forecast days list
-/*    func forecastDays_old() -> [ForcastDayViewModel] {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateTimeFormatter = DateFormatter()
-        dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
-        let riseSetInputFormatter = DateFormatter()
-        riseSetInputFormatter.dateFormat = "yyyy-MM-dd h:mm a"
-        let hourFormatter = DateFormatter()
-        hourFormatter.dateFormat = "ha"
-        let hourMinFormatter = DateFormatter()
-        hourMinFormatter.dateFormat = "h:mma"
-
-        return apiModel?.forecast?.forecastDay.map { day in
-            let date = dateFormatter.date(from: day.date)
-            let maxTemp: Double
-            let minTemp: Double
-            if tempUnitsSetting == .fahrenheit {
-                maxTemp = day.day.maxtempF
-                minTemp = day.day.mintempF
-            } else {
-                maxTemp = day.day.maxtempC
-                minTemp = day.day.mintempC
-            }
-            var hours: [ForecastHour] = day.hour.map { hour in
-                let timeString: String
-                if let time = dateTimeFormatter.date(from: hour.time) {
-                    timeString = hourFormatter.string(from: time)
-                } else {
-                    timeString = "--"
-                }
-                let temp: Double
-                if tempUnitsSetting == .fahrenheit {
-                    temp = hour.tempF
-                } else {
-                    temp = hour.tempC
-                }
-                return ForecastHour(epoch: hour.timeEpoch,
-                                    time: timeString,
-                                    temp: temp,
-                                    conditionIconURL: URL.httpsURL(hour.condition.icon),
-                                    chanceOfPrecip: hour.chanceOfRain)
-            }
-            if let sunriseTime = riseSetInputFormatter.date(from: "\(day.date) \(day.astro.sunrise)") {
-                let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
-                                           time: hourMinFormatter.string(from: sunriseTime),
-                                           temp: 0.0,
-                                           conditionIconURL: nil,
-                                           chanceOfPrecip: 0,
-                                           sunRiseSetImage: "sunrise.fill",
-                                           isSunset: false)
-                hours.append(sunrise)
-            }
-            if let sunsetTime = riseSetInputFormatter.date(from: "\(day.date) \(day.astro.sunset)") {
-                let sunset = ForecastHour(epoch: Int(sunsetTime.timeIntervalSince1970),
-                                          time: hourMinFormatter.string(from: sunsetTime),
-                                          temp: 0.0,
-                                          conditionIconURL: nil,
-                                          chanceOfPrecip: 0,
-                                          sunRiseSetImage: "sunset.fill",
-                                          isSunset: true)
-                hours.append(sunset)
-            }
-            hours = hours.sorted {
-                $0.epoch < $1.epoch
-            }
-            return ForcastDayViewModel(epoch: day.dateEpoch,
-                                       date: date,
-                                       hi: maxTemp,
-                                       lo: minTemp,
-                                       conditionIconURL: URL.httpsURL(day.day.condition.icon),
-                                       condition: day.day.condition.text,
-                                       chanceOfPrecip: day.day.dailyChanceOfRain,
-                                       chanceOfSnow: day.day.dailyChanceOfSnow,
-                                       hours: hours)
-        } ?? []
-    }
-    */
     
     /// Get a condensed version of current weather for the `CurrentWeatherSummaryCell` Forecast and History list
     /// - Returns: CurrentWeatherModel populated with data
     func currentWeatherModel() -> CurrentWeatherModel {
         CurrentWeatherModel(location: locationName,
-                            epochUpdated: weatherData?.current?.lastUpdatedEpoch ?? 0,
                             dateTime: timeLastUpdatedDate,
-                            tempC: weatherData?.current?.tempC ?? 0.0,
-                            tempF: weatherData?.current?.tempF ?? 0.0,
+                            tempC: weatherDataSource.currentTemp(units: .celsius) ?? 0.0,
+                            tempF: weatherDataSource.currentTemp(units: .fahrenheit) ?? 0.0,
                             icon: weatherData?.current?.condition.icon ?? "",
                             code: weatherData?.current?.condition.code ?? 0,
                             uv: weatherData?.current?.uv ?? 0.0,

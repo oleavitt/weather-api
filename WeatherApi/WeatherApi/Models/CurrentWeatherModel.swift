@@ -12,7 +12,6 @@ import SwiftData
 final class CurrentWeatherModel {
     @Attribute(.unique) var id: UUID
     var location: String
-    var epochUpdated: Int
     var dateTime: Date
     var tempC: Double
     var tempF: Double
@@ -22,7 +21,6 @@ final class CurrentWeatherModel {
     var isDay: Bool
     
     init(location: String,
-         epochUpdated: Int,
          dateTime: Date,
          tempC: Double,
          tempF: Double,
@@ -32,7 +30,6 @@ final class CurrentWeatherModel {
          isDay: Bool) {
         id = UUID()
         self.location = location
-        self.epochUpdated = epochUpdated
         self.dateTime = dateTime
         self.tempC = tempC
         self.tempF = tempF

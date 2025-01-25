@@ -15,7 +15,6 @@ final class CurrentWeatherSummaryCellViewModelTests: XCTestCase {
 
     let viewModel = CurrentWeatherSummaryCellViewModel(data: CurrentWeatherModel(
         location: "Dallas, Texas",
-        epochUpdated: 1234,
         dateTime: Date(),
         tempC: 17.8,
         tempF: 64,

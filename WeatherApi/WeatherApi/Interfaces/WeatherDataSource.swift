@@ -12,6 +12,9 @@ import Combine
 protocol WeatherDataSource {
     func setup(networkLayer: NetworkLayer, apiKey: String)
     func getForecast(locationQuery: String, includeAqi: Bool, completion: @escaping (Result<WeatherData, Error>)->Void)
+    var dateTimeLastUpdated: Date? { get }
+    var locationData: LocationData? { get }
+    func currentTemp(units: TempUnits) -> Double?
 }
 
 // MARK: Top level API structure
@@ -29,20 +32,13 @@ struct LocationData {
     let name: String
     let region: String
     let country: String
-    let localtime: Date?
-    let localtimeEpoch: Int
-    let lon: Double
-    let lat: Double
-    let tzID: String
+    let latitude: Double
+    let longitude: Double
 }
 
 // MARK: API Current
 
 struct CurrentData {
-    let dateTimeLastUpdated: Date?
-    let lastUpdatedEpoch: Int
-    let tempC: Double
-    let tempF: Double
     let isDay: Int
     let condition: ConditionData
     let windMph: Double
