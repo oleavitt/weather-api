@@ -55,6 +55,7 @@ class WeatherViewModel: ObservableObject {
         
         // Make sure we have our API key.
         if weatherApiKey.isEmpty {
+            error = ApiErrorType.noApiKey
             state = .failure
             return
         }
