@@ -18,8 +18,9 @@ struct ForecastDayView: View {
                     Text(date)
                         .font(.custom(
                             currentTheme.fontFamily, fixedSize: 30))
+                        .foregroundStyle(.primary)
                     BasicCachedAsyncImage(url: day.conditionIconURL)
-                        .frame(width: 64, height: 64)
+                        .frame(width: 64, height: 1)
                     hiloView
                     VStack {
                         Text("precip")

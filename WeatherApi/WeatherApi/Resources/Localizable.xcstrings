@@ -225,6 +225,16 @@
         }
       }
     },
+    "direction %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Direction: %@"
+          }
+        }
+      }
+    },
     "done" : {
       "localizations" : {
         "en" : {
@@ -530,12 +540,12 @@
         }
       }
     },
-    "speed %@ %@ %@" : {
+    "speed %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Speed: %1$@ %2$@ %3$@"
+            "value" : "Speed: %1$@ %2$@"
           }
         }
       }

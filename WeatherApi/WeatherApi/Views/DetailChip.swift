@@ -20,10 +20,13 @@ struct DetailChip: View {
         VStack(alignment: .leading) {
             Text(title)
                 .font(.custom(
-                    currentTheme.fontFamily, fixedSize: 12))
+                    currentTheme.fontFamily, fixedSize: 14))
             Text(value)
-        }
-        .frame(minHeight: 40)
+                .font(.custom(
+                    currentTheme.fontFamily, fixedSize: 16))
+                .foregroundStyle(.primary)
+      }
+        .frame(minHeight: 30)
         .cardStyle()
     }
 }

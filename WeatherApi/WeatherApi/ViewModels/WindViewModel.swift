@@ -24,11 +24,15 @@ class WindViewModel: ObservableObject {
     }
     
     var windSummary: String {
-        String(localized: "speed \(direction) \(speed) \(speedUnits)")
+        String(localized: "speed \(speed) \(speedUnits)")
     }
     
     var direction: String {
         windModel?.direction ?? "--"
+    }
+    
+    var directionSummary: String {
+        String(localized: "direction \(direction)")
     }
     
     var gust: String {

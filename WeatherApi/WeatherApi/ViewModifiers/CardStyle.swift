@@ -12,7 +12,7 @@ import SwiftUI
 struct CardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
-            .padding([.horizontal, .bottom])
+            .padding()
             .background {
                 currentTheme.backgroundColor
             }

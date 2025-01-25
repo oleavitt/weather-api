@@ -11,14 +11,19 @@ struct WindView: View {
     @StateObject var viewModel: WindViewModel
     
     var body: some View {
-        VStack {
+        VStack(alignment: .leading) {
             Text("wind")
                 .font(.custom(
                     currentTheme.fontFamily, fixedSize: 24))
+                .foregroundStyle(.primary)
             VStack(alignment: .leading) {
+                Text(viewModel.directionSummary)
                 Text(viewModel.windSummary)
                 Text(viewModel.gustsSummary)
             }
+            .padding(.top, 1)
+            .font(.custom(
+                currentTheme.fontFamily, fixedSize: 16))
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .cardStyle()
