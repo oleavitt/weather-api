@@ -57,12 +57,12 @@ enum SpeedUnits: String, Codable, CaseIterable {
 
 /// Barametric pressure units
 enum PressureUnits: String, Codable, CaseIterable {
-    case inches
+    case inchesHg
     case milliBars
     
     var symbol: String {
         switch self {
-        case .inches: return String(localized: "in")
+        case .inchesHg: return String(localized: "inhg")
         case .milliBars: return String(localized: "mb")
         }
     }
@@ -73,7 +73,7 @@ enum PressureUnits: String, Codable, CaseIterable {
     
     var description: String {
         switch self {
-        case .inches: return String(localized: "description-inches")
+        case .inchesHg: return String(localized: "description-incheshg")
         case .milliBars: return String(localized: "description-millibars")
         }
     }

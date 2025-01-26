@@ -185,12 +185,12 @@
         }
       }
     },
-    "description-inches" : {
+    "description-incheshg" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Inches (in)"
+            "value" : "Inches mercury (inHg)"
           }
         }
       }
@@ -395,12 +395,12 @@
         }
       }
     },
-    "in" : {
+    "inhg" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "in"
+            "value" : "inHg"
           }
         }
       }
