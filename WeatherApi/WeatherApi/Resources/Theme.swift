@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-var currentTheme = WeatherAppTheme.default
+@MainActor var currentTheme = WeatherAppTheme.default
 
 /// A shared collection of app theming constants.
 struct WeatherAppTheme {
