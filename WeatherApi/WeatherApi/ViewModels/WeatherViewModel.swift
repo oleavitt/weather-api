@@ -256,7 +256,11 @@ extension WeatherViewModel {
             hoursList.append(sunset)
         }
         hoursList = hoursList.sorted {
-            $0.epoch < $1.epoch
+            if $0.epoch == $1.epoch {
+                // Case where sunrise/sunset is exactly on the hour
+                return $0.isSunset
+            }
+            return $0.epoch < $1.epoch
         }
         
         return hoursList
