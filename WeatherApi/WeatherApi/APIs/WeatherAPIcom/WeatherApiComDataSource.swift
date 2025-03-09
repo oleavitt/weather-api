@@ -88,6 +88,7 @@ private extension WeatherApiComDataSource {
             URLQueryItem(name: "key", value: apiKey),
             URLQueryItem(name: "q", value: query),
             URLQueryItem(name: "days", value: "14"),
+            URLQueryItem(name: "alerts", value: "yes"),
             URLQueryItem(name: "aqi", value: aqi ? "yes" : "no")
         ]
         
