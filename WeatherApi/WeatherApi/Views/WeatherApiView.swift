@@ -24,12 +24,12 @@ struct WeatherApiView: View {
     
     var body: some View {
         TabView(selection: $tabSelection) {
-            WeatherView(isForecast: false)
+            CurrentForecastView(isForecast: false)
                 .tag(TabSelection.current)
                 .tabItem {
                     Label("here-and-now", systemImage: "house")
                 }
-            WeatherView(isForecast: true)
+            CurrentForecastView(isForecast: true)
                 .tag(TabSelection.forecast)
                 .tabItem {
                     Label("forecast", systemImage: "clock")

@@ -1,5 +1,5 @@
 //
-//  WeatherView.swift
+//  CurrentForecastView.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 10/22/24.
@@ -9,7 +9,8 @@ import SwiftUI
 import SwiftData
 import CoreLocationUI
 
-struct WeatherView: View {
+/// This view represents both the "Current" and "Forecast" view tabs in the app
+struct CurrentForecastView: View {
     
     @State var isForecast: Bool
 
@@ -195,7 +196,7 @@ struct WeatherView: View {
 }
 
 /// Helpers for loading data from location or search, and saving to History
-private extension WeatherView {
+private extension CurrentForecastView {
     func loadDataFromLocation() {
         locationManager.requestAuthorization() {
             locationManager.requestLocation() {
