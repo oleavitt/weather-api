@@ -117,6 +117,8 @@ private extension SettingsView {
         }
 
         do {
+            // Known Swift issue: The expanded macro of #Predicate issues a "ReferenceWritableKeyPath<CurrentWeatherModel, Date>' does not conform to the 'Sendable' protocol..." warning with Swift 6 concurrency checking set to "complete"
+            // See: https://github.com/swiftlang/swift/issues/68943
             try context.delete(model: CurrentWeatherModel.self, where: #Predicate { $0.dateTime < cutoffDate })
         } catch {
 #if DEBUG
