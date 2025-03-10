@@ -119,8 +119,6 @@ struct CurrentForecastView: View {
     var forecastView: some View {
         VStack {
             ScrollView {
-                CurrentWeatherSummaryCell(data: viewModel.currentWeatherModel())
-                    .padding([.bottom, .horizontal])
                 ForEach(viewModel.forecastDays(), id: \.self) { day in
                     ForecastDayView(day: day)
                         .padding(.horizontal)
