@@ -121,14 +121,9 @@ extension WeatherViewModel {
     }
         
     var timeLastUpdatedFormatted: String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        dateFormatter.amSymbol = String(localized: "am")
-        dateFormatter.pmSymbol = String(localized: "pm")
-        return dateFormatter.string(from: timeLastUpdatedDate)
+        timeLastUpdatedDate.formatted(date: .abbreviated, time: .shortened)
     }
-
+    
     var locationName: String {
         guard let location = weatherDataSource.locationData else { return "--" }
         return "\(location.name), \(location.region)"

@@ -82,6 +82,7 @@ struct CurrentForecastView: View {
                     .clipShape(.capsule)
                 }
                 BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
+                    .accessibilityLabel(viewModel.condition)
                 HStack {
                     Text(viewModel.locationName)
                         .font(.system(size: 24))
@@ -91,6 +92,8 @@ struct CurrentForecastView: View {
                     }
                 }
                 .frame(maxWidth: .infinity)
+                .accessibilityHint(viewModel.isUserLocation ? "a11y-this-is-your-current-location" : "")
+
                 temperatureView
                 HStack {
                     Text(viewModel.condition)
@@ -147,9 +150,9 @@ struct CurrentForecastView: View {
     var detailsView: some View {
         VStack {
             HStack {
-                DetailChip("humidity", viewModel.humidity)
-                DetailChip("uv", viewModel.uvIndex)
-                DetailChip("pressure", viewModel.pressure)
+                DetailChip("humidity", viewModel.humidity, a11yLabel: "humidity \(viewModel.humidity)")
+                DetailChip("uv", viewModel.uvIndex, a11yLabel: "uv-index \(viewModel.uvIndex)")
+                DetailChip("pressure", viewModel.pressure, a11yLabel: "pressure \(viewModel.pressure)")
             }
             WindView(viewModel: WindViewModel(windModel: viewModel.windModel))
         }
@@ -178,6 +181,8 @@ struct CurrentForecastView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement()
+        .accessibilityLabel("error: \(viewModel.getErrorMessage())")
     }
     
     /// Content shown when there is nothing to show.
@@ -192,6 +197,8 @@ struct CurrentForecastView: View {
             Spacer()
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .accessibilityElement()
+        .accessibilityLabel("empty-search-message")
     }
 }
 

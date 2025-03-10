@@ -42,4 +42,27 @@ class WindViewModel: ObservableObject {
     var gustsSummary: String {
         String(localized: "gusts \(gust) \(speedUnits)")
     }
+    
+    var hasWind: Bool {
+        let speedValue = windModel?.speedMph ?? 0.0
+        return speedValue > 0.01
+    }
+    
+    var hasGusts: Bool {
+        let gustsValue = windModel?.gustMph ?? 0.0
+        let speedValue = windModel?.speedMph ?? 0.0
+        // Let's consider gusts if they are greater than speed by at least a half mile per hour
+        return gustsValue > (speedValue + 0.5)
+    }
+    
+    var a11yWindSummary: String {
+        if hasWind {
+            if hasGusts {
+                return String(localized: "wind direction \(direction), speed \(speed) \(speedUnits) with gusts of \(gust) \(speedUnits)")
+            }
+            return String(localized: "wind direction \(direction), speed \(speed) \(speedUnits)")
+        }
+        return String(localized: "no wind")
+    }
+    
 }

@@ -1,6 +1,9 @@
 {
   "sourceLanguage" : "en",
   "strings" : {
+    "" : {
+
+    },
     "%@" : {
       "localizations" : {
         "en" : {
@@ -17,6 +20,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "%lld%%"
+          }
+        }
+      }
+    },
+    "a11y-this-is-your-current-location" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "This is your current location"
           }
         }
       }
@@ -315,6 +328,16 @@
         }
       }
     },
+    "error: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Error: %@"
+          }
+        }
+      }
+    },
     "feels_like %@" : {
       "localizations" : {
         "en" : {
@@ -395,6 +418,16 @@
         }
       }
     },
+    "humidity %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Humidity %@"
+          }
+        }
+      }
+    },
     "inhg" : {
       "localizations" : {
         "en" : {
@@ -427,17 +460,6 @@
         }
       }
     },
-    "map" : {
-      "extractionState" : "stale",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Map"
-          }
-        }
-      }
-    },
     "mb" : {
       "localizations" : {
         "en" : {
@@ -456,6 +478,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "mph"
+          }
+        }
+      }
+    },
+    "no wind" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No wind"
           }
         }
       }
@@ -486,6 +518,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Pressure"
+          }
+        }
+      }
+    },
+    "pressure %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Pressure %@"
           }
         }
       }
@@ -610,6 +652,16 @@
         }
       }
     },
+    "uv-index %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "UV index %@"
+          }
+        }
+      }
+    },
     "Weather API" : {
       "localizations" : {
         "en" : {
@@ -636,6 +688,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Wind"
+          }
+        }
+      }
+    },
+    "wind direction %@, speed %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind direction %1$@, speed %2$@ %3$@"
+          }
+        }
+      }
+    },
+    "wind direction %@, speed %@ %@ with gusts of %@ %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wind direction %1$@, speed %2$@ %3$@ with gusts of %4$@ %5$@"
           }
         }
       }

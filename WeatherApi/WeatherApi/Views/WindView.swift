@@ -27,6 +27,8 @@ struct WindView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
         }
         .cardStyle()
+        .accessibilityElement()
+        .accessibilityLabel(viewModel.a11yWindSummary)
     }
 }
 
