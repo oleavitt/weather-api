@@ -48,4 +48,8 @@ class CurrentWeatherSummaryCellViewModel: ObservableObject {
     var iconURL: URL? {
         URL.httpsURL(data.icon)
     }
+    
+    var a11yCurrentWeatherSummary: String {
+        String(localized: "\(data.location), \(data.dateTime.formatted(date: .abbreviated, time: .shortened)), \(temperature), \(data.condition)")
+    }
 }

@@ -16,6 +16,7 @@ final class CurrentWeatherModel {
     var tempC: Double
     var tempF: Double
     var icon: String
+    var condition: String
     var code: Int
     var uv: Double
     var isDay: Bool
@@ -25,6 +26,7 @@ final class CurrentWeatherModel {
          tempC: Double,
          tempF: Double,
          icon: String,
+         condition: String,
          code: Int,
          uv: Double,
          isDay: Bool) {
@@ -34,6 +36,7 @@ final class CurrentWeatherModel {
         self.tempC = tempC
         self.tempF = tempF
         self.icon = icon
+        self.condition = condition
         self.code = code
         self.uv = uv
         self.isDay = isDay

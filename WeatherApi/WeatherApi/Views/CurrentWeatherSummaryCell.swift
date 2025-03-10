@@ -44,6 +44,8 @@ struct CurrentWeatherSummaryCell: View {
             viewModel.isDay ? Color.blue : Color.black
         }
         .cornerRadius(currentTheme.cornerRadius)
+        .accessibilityElement()
+        .accessibilityLabel(viewModel.a11yCurrentWeatherSummary)
     }
 }
 
@@ -55,6 +57,7 @@ struct CurrentWeatherSummaryCell: View {
             tempC: 17.8,
             tempF: 64,
             icon: "//cdn.weatherapi.com/weather/64x64/night/119.png",
+            condition: "Sunny",
             code: 1000,
             uv: 0,
             isDay: false))
@@ -64,6 +67,7 @@ struct CurrentWeatherSummaryCell: View {
             tempC: 17.8,
             tempF: -23,
             icon: "//cdn.weatherapi.com/weather/64x64/night/113.png",
+            condition: "Sunny",
             code: 1000,
             uv: 0,
             isDay: false))
@@ -73,6 +77,7 @@ struct CurrentWeatherSummaryCell: View {
             tempC: 17.8,
             tempF: 108.6,
             icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
+            condition: "Sunny",
             code: 1000,
             uv: 2,
             isDay: true))

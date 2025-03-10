@@ -78,18 +78,21 @@ private extension HistoryView {
                                                        dateTime: Date(),
                                                        tempC: 15.5, tempF: 65.4,
                                                        icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
+                                                       condition: "Sunny",
                                                        code: 1000,
                                                        uv: 3, isDay: true))
                     context.insert(CurrentWeatherModel(location: "Dallas, Texas",
                                                        dateTime: Date() + 900,
                                                        tempC: 14.5, tempF: 64.1,
                                                        icon: "//cdn.weatherapi.com/weather/64x64/day/296.png",
+                                                       condition: "Sunny",
                                                        code: 1000,
                                                        uv: 3, isDay: true))
                     context.insert(CurrentWeatherModel(location: "Dallas, Texas",
                                                        dateTime: Date() + 1800,
                                                        tempC: 10.5, tempF: 55,
                                                        icon: "//cdn.weatherapi.com/weather/64x64/night/116.png",
+                                                       condition: "Sunny",
                                                        code: 1000,
                                                        uv: 3, isDay: false))
                 case .failure(let error):

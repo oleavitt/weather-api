@@ -269,6 +269,7 @@ extension WeatherViewModel {
                             tempC: weatherDataSource.currentTemp(units: .celsius) ?? 0.0,
                             tempF: weatherDataSource.currentTemp(units: .fahrenheit) ?? 0.0,
                             icon: weatherData?.current?.condition.icon ?? "",
+                            condition: weatherData?.current?.condition.text ?? "",
                             code: weatherData?.current?.condition.code ?? 0,
                             uv: weatherData?.current?.uv ?? 0.0,
                             isDay: isDay)

@@ -14,6 +14,17 @@
         }
       }
     },
+    "%@, %@, %@, %@" : {
+      "comment" : "Accessibility label for the history weather summary row content",
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "new",
+            "value" : "%1$@, %2$@, %3$@, %4$@"
+          }
+        }
+      }
+    },
     "%lld%%" : {
       "localizations" : {
         "en" : {
