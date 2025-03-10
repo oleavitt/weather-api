@@ -47,7 +47,7 @@ struct CurrentForecastView: View {
             .navigationTitle(isForecast ? "forecast" : "current")
             .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
             .onSubmit(of: .search, {
-                viewModel.isSearchQuery = true
+                viewModel.isUserLocation = false
                 loadData()
             })
             .onChange(of: scenePhase) { oldValue, newValue in
@@ -86,7 +86,7 @@ struct CurrentForecastView: View {
                     Text(viewModel.locationName)
                         .font(.system(size: 24))
                         .fontWeight(.light)
-                    if !viewModel.isSearchQuery {
+                    if viewModel.isUserLocation {
                         Image(systemName: "location.fill")
                     }
                 }
@@ -200,7 +200,7 @@ private extension CurrentForecastView {
     func loadDataFromLocation() {
         locationManager.requestAuthorization() {
             locationManager.requestLocation() {
-                viewModel.isSearchQuery = false
+                viewModel.isUserLocation = true
                 viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
                 loadData()
             }
@@ -208,10 +208,10 @@ private extension CurrentForecastView {
     }
     
     func reloadData() {
-        if viewModel.isSearchQuery && !viewModel.locationQuery.isEmpty {
-            loadData()
-        } else {
+        if viewModel.isUserLocation || viewModel.locationQuery.isEmpty {
             loadDataFromLocation()
+        } else {
+            loadData()
         }
     }
     

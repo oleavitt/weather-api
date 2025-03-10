@@ -18,8 +18,8 @@ class WeatherViewModel: ObservableObject {
     /// Location search query that is passed to the API.
     var locationQuery = ""
     
-    /// Indicator set from view to indicate a search is active.
-    var isSearchQuery = false
+    /// Indicator set from view to indicate we are using user's location for search.
+    var isUserLocation = true
     
     /// Set true to include air quality (AQI) results in API response
     var showAirQuality = false
