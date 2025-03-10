@@ -210,12 +210,6 @@ extension WeatherViewModel {
     private func forecastHours(forecastDay: ForecastDayData) -> [ForecastHour] {
         // Build the 24 hour list
         var hoursList: [ForecastHour] = forecastDay.forecastHours.map { hour in
-            let timeString: String
-            if let time = hour.time {
-                timeString = hourFormatter.string(from: time)
-            } else {
-                timeString = "--"
-            }
             let temp: Double
             if tempUnitsSetting == .fahrenheit {
                 temp = hour.tempF
@@ -223,18 +217,20 @@ extension WeatherViewModel {
                 temp = hour.tempC
             }
             return ForecastHour(epoch: hour.timeEpoch,
-                                time: timeString,
+                                time: hour.time,
                                 temp: temp,
                                 conditionIconURL: URL.httpsURL(hour.condition.icon),
+                                condition: hour.condition.text,
                                 chanceOfPrecip: hour.chanceOfRain)
         }
         
         // Insert the sunrise and sunset times
         if let sunriseTime = forecastDay.astro.sunrise {
             let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
-                                       time: hourMinFormatter.string(from: sunriseTime),
+                                       time: sunriseTime,
                                        temp: 0.0,
                                        conditionIconURL: nil,
+                                       condition: "",
                                        chanceOfPrecip: 0,
                                        sunRiseSetImage: "sunrise.fill",
                                        isSunset: false)
@@ -242,9 +238,10 @@ extension WeatherViewModel {
         }
         if let sunsetTime = forecastDay.astro.sunset {
             let sunset = ForecastHour(epoch: Int(sunsetTime.timeIntervalSince1970),
-                                      time: hourMinFormatter.string(from: sunsetTime),
+                                      time: sunsetTime,
                                       temp: 0.0,
                                       conditionIconURL: nil,
+                                      condition: "",
                                       chanceOfPrecip: 0,
                                       sunRiseSetImage: "sunset.fill",
                                       isSunset: true)

@@ -39,11 +39,18 @@ struct ForecastDayView: View {
                 Text(day.condition)
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .accessibilityElement()
+            .accessibilityLabel(day.a11yLabel)
+            .accessibilityHint(day.a11yDaySummary)
+            
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(day.hours, id: \.self) { hour in
                         forecastHourView(hour: hour)
                             .padding(.bottom, 4)
+                            .accessibilityElement()
+                            .accessibilityLabel(hour.a11yLabel)
+                            .accessibilityHint(hour.a11yHourSummary)
                     }
                 }
             }
@@ -80,7 +87,7 @@ struct ForecastDayView: View {
     
     private func forecastHourView(hour: ForecastHour) -> some View {
         VStack {
-            Text(hour.time)
+            Text(hour.displayTime)
                 .font(.custom(
                     currentTheme.fontFamily, fixedSize: 12))
             if let sunRiseSetImageName = hour.sunRiseSetImage {
@@ -124,6 +131,8 @@ struct ForecastDayView: View {
 }
 
 #Preview {
+    let hourFormatter = DateFormatter()
+
     let mockDay = ForcastDayViewModel(epoch: 1733100385,
                                       date: Date(),
                                       hi: 70,
@@ -134,30 +143,35 @@ struct ForecastDayView: View {
                                       chanceOfSnow: 5,
                                       hours: [
                                         ForecastHour(epoch: 1733032800,
-                                                     time: "12am",
+                                                     time: hourFormatter.date(from: "12am"),
                                                      temp: 65.1,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/night/113.png"),
+                                                     condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
-                                                     time: "1am",
+                                                     time: hourFormatter.date(from: "1am"),
                                                      temp: 66.2,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/night/113.png"),
+                                                     condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
-                                                     time: "1:45am",
+                                                     time: hourFormatter.date(from: "1:45am"),
                                                      temp: 0,
                                                      conditionIconURL: nil,
+                                                     condition: "Sunny",
                                                      chanceOfPrecip: 0,
                                                      sunRiseSetImage: "sunrise.fill"),
                                         ForecastHour(epoch: 1733040000,
-                                                     time: "2am",
+                                                     time: hourFormatter.date(from: "2am"),
                                                      temp: 67.5,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
+                                                     condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
-                                                     time: "3:45am",
+                                                     time: hourFormatter.date(from: "3:45am"),
                                                      temp: 0,
                                                      conditionIconURL: nil,
+                                                     condition: "Sunny",
                                                      chanceOfPrecip: 0,
                                                      sunRiseSetImage: "sunset.fill",
                                                      isSunset: true)
