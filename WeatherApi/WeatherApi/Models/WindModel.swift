@@ -14,13 +14,4 @@ struct WindModel {
     let direction: String
     let gustKph: Double
     let gustMph: Double
-    
-    init(speedKph: Double, speedMph: Double, degree: Double, direction: String, gustKph: Double, gustMph: Double) {
-        self.speedKph = speedKph
-        self.speedMph = speedMph
-        self.degree = degree
-        self.direction = direction
-        self.gustKph = gustKph
-        self.gustMph = gustMph
-    }
 }

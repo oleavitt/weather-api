@@ -9,7 +9,7 @@ import SwiftUI
 
 struct WindView: View {
     @StateObject var viewModel: WindViewModel
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text("wind")

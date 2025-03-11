@@ -12,7 +12,7 @@ import CoreLocationUI
 struct CurrentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @ObservedObject var locationManager: LocationManager
-    
+
     var body: some View {
         VStack {
             ScrollView {
@@ -37,7 +37,7 @@ struct CurrentView: View {
                 }
                 .frame(maxWidth: .infinity)
                 .accessibilityHint(viewModel.isUserLocation ? "a11y-this-is-your-current-location" : "")
-                
+
                 temperatureView
                 HStack {
                     Text(viewModel.condition)
@@ -52,13 +52,13 @@ struct CurrentView: View {
         .padding(.top)
         .background {
             let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: colors), startPoint: .top, endPoint: .bottom)
         }
         .foregroundColor(.white)
         .font(.system(size: 18))
         .fontWeight(.light)
     }
-    
+
     /// Temperature subview
     var temperatureView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
@@ -67,7 +67,7 @@ struct CurrentView: View {
                 .fontWeight(.ultraLight)
         }
     }
-    
+
     /// Details subviews
     var detailsView: some View {
         VStack {

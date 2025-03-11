@@ -11,35 +11,35 @@ import CoreLocation
 /// An interface to CoreLocation for authorization and querying location.
 /// This handles the delegation and returns results via completion handlers.
 class LocationManager: NSObject, ObservableObject {
-    
+
     @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
     @Published var location: CLLocationCoordinate2D?
-    
+
     private let locationManager = CLLocationManager()
-    private var completion: (()->Void)?
-    private var authReqCompletion: (()->Void)?
+    private var completion: (() -> Void)?
+    private var authReqCompletion: (() -> Void)?
 
     override init() {
         super.init()
         self.locationManager.delegate = self
     }
-    
+
     /// Get location and return result in a completion block.
-    func requestLocation(completion: @escaping ()->Void) {
+    func requestLocation(completion: @escaping () -> Void) {
         self.completion = completion
         locationManager.requestLocation()
     }
-    
+
     /// Request authorization and return result in a completion block.
-    public func requestAuthorization(always: Bool = false, completion: @escaping ()->Void) {
+    public func requestAuthorization(always: Bool = false, completion: @escaping () -> Void) {
         self.authReqCompletion = completion
-        
+
         switch locationManager.authorizationStatus {
-        
+
         case .authorizedAlways, .authorizedWhenInUse:
             completion()
             return
-            
+
         default:
             if always {
                 locationManager.requestAlwaysAuthorization()
@@ -48,7 +48,7 @@ class LocationManager: NSObject, ObservableObject {
             }
         }
     }
-    
+
     /// The last queried location as a string in "lat, long" format.
     /// Nil is returned if no location is available.
     var locationString: String? {
@@ -60,12 +60,12 @@ class LocationManager: NSObject, ObservableObject {
 }
 
 extension LocationManager: CLLocationManagerDelegate {
-    
+
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         authorizationStatus = status
         authReqCompletion?()
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         location = locations.first?.coordinate
         completion?()
@@ -75,7 +75,7 @@ extension LocationManager: CLLocationManagerDelegate {
 #endif
         }
     }
-    
+
     func locationManager(_ manager: CLLocationManager, didFailWithError error: any Error) {
         completion?()
 #if DEBUG
@@ -83,4 +83,3 @@ extension LocationManager: CLLocationManagerDelegate {
 #endif
     }
 }
-

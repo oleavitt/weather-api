@@ -23,7 +23,7 @@ struct ForecastView: View {
         .padding(.top)
         .background {
             let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+            LinearGradient(gradient: Gradient(colors: colors), startPoint: .top, endPoint: .bottom)
         }
         .foregroundColor(.white)
         .font(.system(size: 18))

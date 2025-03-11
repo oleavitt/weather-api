@@ -9,7 +9,7 @@ import SwiftUI
 
 struct CurrentWeatherSummaryCell: View {
     @StateObject private var viewModel: CurrentWeatherSummaryCellViewModel
-    
+
     init(data: CurrentWeatherModel) {
         _viewModel = StateObject(wrappedValue: CurrentWeatherSummaryCellViewModel(data: data))
     }
@@ -61,7 +61,7 @@ struct CurrentWeatherSummaryCell: View {
             code: 1000,
             uv: 0,
             isDay: false))
-        CurrentWeatherSummaryCell(data:CurrentWeatherModel(
+        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
             location: "Dallas, Texas",
             dateTime: Date(),
             tempC: 17.8,

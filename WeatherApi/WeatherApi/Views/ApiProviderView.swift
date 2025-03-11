@@ -10,7 +10,7 @@ import SwiftUI
 struct ApiProviderView: View {
     @State var apiKeyInput: String = ""
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
-    
+
     var body: some View {
         Form {
             Section("provider") {
@@ -34,7 +34,7 @@ struct ApiProviderView: View {
         }
         .navigationTitle("api-providers")
     }
-    
+
     func saveChanges() {
         weatherApiKey = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
     }

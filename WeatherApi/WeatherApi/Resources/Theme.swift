@@ -16,7 +16,7 @@ struct WeatherAppTheme {
         backgroundColor: .cellBackground,
         cornerRadius: 8
     )
-    
+
     let fontFamily: String
     let backgroundColor: Color
     let cornerRadius: Double

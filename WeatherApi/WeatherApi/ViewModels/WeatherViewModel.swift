@@ -16,16 +16,16 @@ class WeatherViewModel: ObservableObject {
 
     /// Location search query that is passed to the API.
     var locationQuery = ""
-    
+
     /// Indicator set from view to indicate we are using user's location for search.
     var isUserLocation = true
-    
+
     /// Set true to include air quality (AQI) results in API response
     var showAirQuality = false
 
     /// Weather data source interface
     var weatherDataSource: WeatherDataSource = WeatherApiComDataSource()
-    
+
     @Published var state: LoadingState = .startup
     @Published var isLoaded = false
 
@@ -43,32 +43,32 @@ class WeatherViewModel: ObservableObject {
     public init(_ networkLayer: NetworkLayer) {
         self.networkLayer = networkLayer
     }
-    
+
     /// Top level data returned from the data source after fetching data
     private var weatherData: WeatherData?
-    
+
     /// Make a request to the combined current and forecast API endpoint and update view model state with result.
     func getCurrentAndForecastWeather() {
         isLoaded = false
         error = nil
-        
+
         // Make sure we have our API key.
         if weatherApiKey.isEmpty {
             error = ApiErrorType.noApiKey
             state = .failure
             return
         }
-        
+
         // Make sure we have the required query parameter to send to the API.
         locationQuery = locationQuery.trimmingCharacters(in: .whitespacesAndNewlines)
         if locationQuery.isEmpty {
             state = .empty
             return
         }
-        
+
         // Return if we are already loading or refreshing.
         if state == .loading { return }
-        
+
         // Don't update/refresh too soon if location did not change.
         if let lastUpdated {
             let timeElapsed = abs(lastUpdated.timeIntervalSinceNow)
@@ -80,7 +80,7 @@ class WeatherViewModel: ObservableObject {
                 return
             }
         }
-        
+
         // Indicate that we are loading and awaiting response...
         state = .loading
 
@@ -89,7 +89,7 @@ class WeatherViewModel: ObservableObject {
 
         // Now we can fetch the weather data and update final state based on result.
         weatherDataSource.getForecast(locationQuery: locationQuery,
-                                                    includeAqi: showAirQuality, completion: { [weak self] result in
+                                      includeAqi: showAirQuality, completion: { [weak self] result in
             self?.handleForcastCompletion(result: result)
         })
     }
@@ -103,42 +103,44 @@ extension WeatherViewModel {
     var conditionsIconUrl: URL? {
         URL.httpsURL(weatherData?.current?.condition.icon)
     }
-    
+
     var tempString: String {
         if let temp = weatherDataSource.currentTemp(units: tempUnitsSetting) {
             return temp.formatted() + "°"
         }
         return "--"
     }
-    
+
     var tempUnits: String {
         tempUnitsSetting.symbol
     }
-    
+
     var timeLastUpdatedDate: Date {
         return weatherDataSource.dateTimeLastUpdated ?? Date()
     }
-        
+
     var timeLastUpdatedFormatted: String {
         timeLastUpdatedDate.formatted(date: .abbreviated, time: .shortened)
     }
-    
+
     var locationName: String {
         guard let location = weatherDataSource.locationData else { return "--" }
         return "\(location.name), \(location.region)"
     }
-    
+
     var condition: String {
         weatherData?.current?.condition.text ?? "--"
     }
-    
+
     var feelsLike: String {
-        if let temp = (tempUnitsSetting == .fahrenheit) ? weatherData?.current?.feelslikeF : weatherData?.current?.feelslikeC {
+        if let temp = (tempUnitsSetting == .fahrenheit)
+            ? weatherData?.current?.feelslikeF
+            : weatherData?.current?.feelslikeC {
             return String(localized: "feels_like \(temp.formatted())")
         }
         return "--"
     }
-    
+
     var uvIndex: String {
         if let current = weatherData?.current {
             return String(localized: "\(current.uv.formatted())")
@@ -152,18 +154,20 @@ extension WeatherViewModel {
         }
         return "--%"
     }
-    
+
     var pressure: String {
-        if let pressure = (pressureUnitsSetting == .inchesHg) ? weatherData?.current?.pressureIn : weatherData?.current?.pressureMb {
+        if let pressure = (pressureUnitsSetting == .inchesHg)
+            ? weatherData?.current?.pressureIn
+            : weatherData?.current?.pressureMb {
             return "\(pressure.formatted()) \(pressureUnitsSetting.symbol)"
         }
         return "--"
     }
-    
+
     var isDay: Bool {
         (weatherData?.current?.isDay ?? 0) > 0
     }
-    
+
     var windModel: WindModel? {
         WindModel(speedKph: weatherData?.current?.windKph ?? 0.0,
                   speedMph: weatherData?.current?.windMph ?? 0.0,
@@ -189,12 +193,11 @@ extension WeatherViewModel {
                 maxTemp = forecastDay.day.maxtempC
                 minTemp = forecastDay.day.mintempC
             }
-            
-            
+
             return ForcastDayViewModel(epoch: forecastDay.dateEpoch,
                                        date: forecastDay.date,
-                                       hi: maxTemp,
-                                       lo: minTemp,
+                                       highTemp: maxTemp,
+                                       lowTemp: minTemp,
                                        conditionIconURL: URL.httpsURL(forecastDay.day.condition.icon),
                                        condition: forecastDay.day.condition.text,
                                        chanceOfPrecip: forecastDay.day.dailyChanceOfRain,
@@ -202,8 +205,9 @@ extension WeatherViewModel {
                                        hours: forecastHours(forecastDay: forecastDay))
         } ?? []
     }
-    
-    /// Parse out the hours list for the given day from the response data ans insert the sunrise/set times if theye are there
+
+    /// Parse out the hours list for the given day from
+    /// the response data ans insert the sunrise/set times if theye are there
     /// - Parameter forecastDay: The forecast day
     /// - Returns: The hours list including sunrise and sunset times
     private func forecastHours(forecastDay: ForecastDayData) -> [ForecastHour] {
@@ -222,7 +226,7 @@ extension WeatherViewModel {
                                 condition: hour.condition.text,
                                 chanceOfPrecip: hour.chanceOfRain)
         }
-        
+
         // Insert the sunrise and sunset times
         if let sunriseTime = forecastDay.astro.sunrise {
             let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
@@ -253,10 +257,10 @@ extension WeatherViewModel {
             }
             return $0.epoch < $1.epoch
         }
-        
+
         return hoursList
     }
-    
+
     /// Get a condensed version of current weather for the `CurrentWeatherSummaryCell` Forecast and History list
     /// - Returns: CurrentWeatherModel populated with data
     func currentWeatherModel() -> CurrentWeatherModel {
@@ -270,7 +274,7 @@ extension WeatherViewModel {
                             uv: weatherData?.current?.uv ?? 0.0,
                             isDay: isDay)
     }
-    
+
     /// Get the message for error if there is one.
     /// - Returns: Error message string
     func getErrorMessage() -> String {
@@ -282,15 +286,15 @@ extension WeatherViewModel {
 
 extension WeatherViewModel {
     func loadDataFromLocation(locationManager: LocationManager) {
-        locationManager.requestAuthorization() { [weak self] in
-            locationManager.requestLocation() {
+        locationManager.requestAuthorization { [weak self] in
+            locationManager.requestLocation {
                 self?.isUserLocation = true
                 self?.locationQuery = locationManager.locationString ?? "auto:ip"
                 self?.loadData()
             }
         }
     }
-    
+
     func reloadData(locationManager: LocationManager) {
         if isUserLocation || locationQuery.isEmpty {
             loadDataFromLocation(locationManager: locationManager)
@@ -298,7 +302,7 @@ extension WeatherViewModel {
             loadData()
         }
     }
-    
+
     func loadData() {
         getCurrentAndForecastWeather()
     }
@@ -307,7 +311,7 @@ extension WeatherViewModel {
 // MARK: Private
 
 private extension WeatherViewModel {
-    
+
     /// Process the result of the `WeatherDataSource.getForecast()`call and update view model state as needed.
     /// - Parameter result: The `Result<WeatherData, Error>` to be processed`
     func handleForcastCompletion(result: Result<WeatherData, Error>) {

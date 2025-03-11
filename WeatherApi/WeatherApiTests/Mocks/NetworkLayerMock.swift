@@ -5,7 +5,6 @@
 //  Created by Oren Leavitt on 11/12/24.
 //
 
-
 import Foundation
 import Combine
 @testable import WeatherApi
@@ -17,7 +16,7 @@ class NetworkLayerMock: NetworkLayer {
     init(jsonData: Data) {
         self.data = jsonData
     }
-    
+
     func fetchJsonDataPublisher<T: Decodable>(request: URLRequest, type: T.Type) -> AnyPublisher<T, Error> {
         return Just(data)
             .decode(type: T.self, decoder: JSONDecoder())

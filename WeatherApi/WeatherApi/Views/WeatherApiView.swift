@@ -9,19 +9,19 @@ import SwiftUI
 import SwiftData
 
 struct WeatherApiView: View {
-    
+
     @StateObject var viewModel = WeatherViewModel(NetworkLayerImpl())
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
-    
+
     enum TabSelection: Int {
         case current
         case forecast
         case history
         case settings
     }
-    
+
     @State private var tabSelection: TabSelection = .current
-    
+
     var body: some View {
         TabView(selection: $tabSelection) {
             CurrentForecastView(isForecast: false)
@@ -39,10 +39,10 @@ struct WeatherApiView: View {
                 .tabItem {
                     Label("history", systemImage: "list.bullet")
                 }
-//            MapView()
-//                .tabItem {
-//                    Label("map", systemImage: "mappin.and.ellipse")
-//                }
+            //            MapView()
+            //                .tabItem {
+            //                    Label("map", systemImage: "mappin.and.ellipse")
+            //                }
             SettingsView()
                 .tag(TabSelection.settings)
                 .tabItem {

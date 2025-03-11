@@ -11,13 +11,13 @@ import Combine
 /// Implements a `WeatherDataSource` interface to get weather data from WeatherAPI.com
 /// See https://www.weatherapi.com/
 class WeatherApiComDataSource: WeatherDataSource {
-    
+
     private let apiHost = "api.weatherapi.com"
     private var apiKey = ""
     private var networkLayer: NetworkLayer?
     private var cancellable: AnyCancellable?
     private var apiModel: WeatherApiModel?
-    
+
     /// Sets up data source to be ready to make API calls
     /// - Parameters:
     ///   - networkLayer: `NetworkLayer` to handle the networking
@@ -26,19 +26,24 @@ class WeatherApiComDataSource: WeatherDataSource {
         self.networkLayer = networkLayer
         self.apiKey = apiKey
     }
-    
+
     /// Gets the current and forecast weather information from the API
     /// - Parameters:
     ///   - locationQuery: Required location query for API
     ///   - includeAqi: Set true to include air quality information
-    ///   - completion: Completion block to recieve a `WeatherData` struct if successful or an `Error` if API call was unsuccessful
-    func getForecast(locationQuery: String, includeAqi: Bool, completion: @escaping (Result<WeatherData, Error>)->Void) {
+    ///   - completion: Completion block to recieve a `WeatherData` struct if successful
+    ///    or an `Error` if API call was unsuccessful
+    func getForecast(
+        locationQuery: String,
+        includeAqi: Bool,
+        completion: @escaping (Result<WeatherData, Error>) -> Void
+    ) {
         guard let networkLayer,
               let request = createForcastRequest(query: locationQuery, aqi: includeAqi) else {
             completion(.failure(ApiErrorType.genericError))
             return
         }
-        
+
         cancellable = networkLayer.fetchJsonDataPublisher(request: request, type: WeatherApiModel.self)
             .map { self.mapResponseData($0) }
             .sink(receiveCompletion: {
@@ -53,12 +58,12 @@ class WeatherApiComDataSource: WeatherDataSource {
             },
                   receiveValue: { completion(.success($0)) })
     }
-    
+
     var dateTimeLastUpdated: Date? {
         guard let current = apiModel?.current else { return nil }
         return localDateTime(current.lastUpdated)
     }
-    
+
     var locationData: LocationData? {
         guard let location = apiModel?.location else { return nil }
         return LocationData(name: location.name,
@@ -67,7 +72,7 @@ class WeatherApiComDataSource: WeatherDataSource {
                             latitude: location.lat,
                             longitude: location.lon)
     }
-    
+
     func currentTemp(units: TempUnits) -> Double? {
         (units == .fahrenheit) ? apiModel?.current?.tempF : apiModel?.current?.tempC
     }
@@ -91,14 +96,14 @@ private extension WeatherApiComDataSource {
             URLQueryItem(name: "alerts", value: "yes"),
             URLQueryItem(name: "aqi", value: aqi ? "yes" : "no")
         ]
-        
+
         guard let url = components.url else {
             return nil
         }
-        
+
         return URLRequest(url: url, cachePolicy: .reloadIgnoringLocalCacheData)
     }
-    
+
     /// Map top level response model returned from the API to a WeatherData struct
     /// - Parameter sourceData: API specific root response model
     /// - Returns: `WeatherData` with weather info or error info if an API error occurred
@@ -107,14 +112,14 @@ private extension WeatherApiComDataSource {
 
         // Save a local copy of the source data
         apiModel = sourceData
-        
+
         weatherData.current = mapCurrentData(sourceData)
         weatherData.forecast = mapForecastData(sourceData)
         weatherData.error = mapApiErrorData(sourceData)
-        
+
         return weatherData
     }
-    
+
     /// Map any current weather information returned from the API to a CurrentData struct
     /// - Parameter sourceData: API specific root response model
     /// - Returns: `CurrentData` with current weather info or nil if none
@@ -133,7 +138,7 @@ private extension WeatherApiComDataSource {
                 usEpaIndex: srcAirQuality.usEpaIndex,
                 gbDefraIndex: srcAirQuality.gbDefraIndex)
         }
-        
+
         let current = CurrentData(
             isDay: srcCurrent.isDay,
             condition: ConditionData(
@@ -154,10 +159,11 @@ private extension WeatherApiComDataSource {
             uv: srcCurrent.uv,
             gustMph: srcCurrent.gustMph, gustKph: srcCurrent.gustKph,
             airQuality: airQuality)
-        
+
         return current
     }
-    
+
+    // swiftlint:disable function_body_length
     /// Map any forecast information returned from the API to a ForecastData struct
     /// - Parameter sourceData: API specific root response model
     /// - Returns: `ForecastData` with daily and hourly forecast info or nil if none
@@ -209,7 +215,7 @@ private extension WeatherApiComDataSource {
                                  willItRain: srcHour.willItRain,
                                  visKM: srcHour.visKM)
             }
-            
+
             let astro = srcForecastDay.astro
             let astroData = AstroData(isSunUp: astro.isSunUp,
                                       sunrise: riseSetDate(date: srcForecastDay.date, time: astro.sunrise),
@@ -219,7 +225,7 @@ private extension WeatherApiComDataSource {
                                       moonset: riseSetDate(date: srcForecastDay.date, time: astro.moonset),
                                       moonIllumination: astro.moonIllumination,
                                       moonPhase: astro.moonPhase)
-            
+
             let day = srcForecastDay.day
             let dayData = DayData(avgvisKM: day.avgvisKM, avgvisMiles: day.avgvisMiles,
                                   mintempF: day.mintempF, mintempC: day.mintempC,
@@ -244,26 +250,27 @@ private extension WeatherApiComDataSource {
                                    dateEpoch: srcForecastDay.dateEpoch,
                                    date: dateFormatter.date(from: srcForecastDay.date) ?? Date())
         }
-        
+
         return ForecastData(forecastDays: forecastDays)
     }
-    
+    // swiftlint:enable function_body_length
+
     /// Map any error returned from the API to a ApiErrorData struct
     /// - Parameter sourceData: API specific root response model
     /// - Returns: `ApiErrorData` with error info or nil if no error
     func mapApiErrorData(_ sourceData: WeatherApiModel) -> ApiErrorData? {
         guard let srcError = sourceData.error else { return nil }
-        
+
         return ApiErrorData(code: srcError.code,
                             message: srcError.message)
     }
-    
+
     func riseSetDate(date: String, time: String) -> Date? {
         let riseSetInputFormatter = DateFormatter()
         riseSetInputFormatter.dateFormat = "yyyy-MM-dd h:mm a"
         return riseSetInputFormatter.date(from: "\(date) \(time)")
     }
-    
+
     func localDateTime(_ dateTime: String?) -> Date? {
         guard let dateTime else { return Date() }
         let dateFormatter = DateFormatter()
@@ -271,4 +278,3 @@ private extension WeatherApiComDataSource {
         return dateFormatter.date(from: dateTime)
     }
 }
-                                     

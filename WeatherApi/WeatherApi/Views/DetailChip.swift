@@ -11,13 +11,13 @@ struct DetailChip: View {
     var title: LocalizedStringKey
     var value: String
     var a11yLabel: LocalizedStringKey
-    
+
     init(_ title: LocalizedStringKey, _ value: String, a11yLabel: LocalizedStringKey) {
         self.title = title
         self.value = value
         self.a11yLabel = a11yLabel
     }
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             Text(title)

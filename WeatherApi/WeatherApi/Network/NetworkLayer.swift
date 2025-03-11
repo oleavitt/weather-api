@@ -15,18 +15,23 @@ protocol NetworkLayer {
 
 /// Sends requests to the live API site and gets back live data.
 class NetworkLayerImpl: NetworkLayer {
-    
+
     func fetchJsonDataPublisher<T: Decodable>(request: URLRequest, type: T.Type) -> AnyPublisher<T, Error> {
 #if DEBUG
         print(request.url?.absoluteString ?? "")
 #endif
         return URLSession.shared.dataTaskPublisher(for: request)
             .retry(1)
-            .tryMap { (data, response) -> Data in
+            .tryMap { (data, _) -> Data in
 #if DEBUG
-                if let responseObject = try? JSONSerialization.jsonObject(with: data, options: .allowFragments) {
-                    if let jsonData = try? JSONSerialization.data(withJSONObject: responseObject, options: .prettyPrinted),
-                       let strData = String(data: jsonData, encoding: .utf8) {
+                if let responseObject = try? JSONSerialization.jsonObject(
+                    with: data,
+                    options: .allowFragments
+                ) {
+                    if let jsonData = try? JSONSerialization.data(
+                        withJSONObject: responseObject,
+                        options: .prettyPrinted
+                    ), let strData = String(data: jsonData, encoding: .utf8) {
                         print("RESPONSE (JSON): \(strData)")
                     } else {
                         print("RESPONSE (OBJECT): ", responseObject)

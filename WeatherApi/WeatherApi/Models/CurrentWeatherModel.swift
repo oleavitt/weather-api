@@ -8,6 +8,8 @@
 import Foundation
 import SwiftData
 
+// swiftlint:disable identifier_name
+
 @Model
 final class CurrentWeatherModel {
     @Attribute(.unique) var id: UUID
@@ -20,7 +22,7 @@ final class CurrentWeatherModel {
     var code: Int
     var uv: Double
     var isDay: Bool
-    
+
     init(location: String,
          dateTime: Date,
          tempC: Double,
@@ -42,7 +44,4 @@ final class CurrentWeatherModel {
         self.isDay = isDay
     }
 }
-
-
-
-
+// swiftlint:enable identifier_name

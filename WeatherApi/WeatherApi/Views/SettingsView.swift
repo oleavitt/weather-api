@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct SettingsView: View {
-    
+
     // TODO: Need to serparate database concerns out of View to an MVVM friendly container
     @Environment(\.modelContext) var context
 
@@ -21,7 +21,7 @@ struct SettingsView: View {
     @State var showDeleteOldHistoryConfirm = false
     @State var historyHours = "30"
     @FocusState var hoursInputFocused: Bool
-        
+
     var body: some View {
         NavigationStack {
             List {
@@ -97,7 +97,7 @@ private extension SettingsView {
         let descriptor = FetchDescriptor<CurrentWeatherModel>()
         return (try? context.fetchCount(descriptor)) ?? 0
     }
-    
+
     func deleteAllHistory() {
         hoursInputFocused = false
         do {
@@ -108,7 +108,7 @@ private extension SettingsView {
 #endif
         }
     }
-    
+
     func deleteOldHistory() {
         hoursInputFocused = false
         guard let maxAgeHours = Int(historyHours),
@@ -117,7 +117,10 @@ private extension SettingsView {
         }
 
         do {
-            // Known Swift issue: The expanded macro of #Predicate issues a "ReferenceWritableKeyPath<CurrentWeatherModel, Date>' does not conform to the 'Sendable' protocol..." warning with Swift 6 concurrency checking set to "complete"
+            // Known Swift issue:
+            // The expanded macro of #Predicate issues a
+            // "ReferenceWritableKeyPath<CurrentWeatherModel, Date>' does not conform to the 'Sendable' protocol..."
+            // warning with Swift 6 concurrency checking set to "complete"
             // See: https://github.com/swiftlang/swift/issues/68943
             try context.delete(model: CurrentWeatherModel.self, where: #Predicate { $0.dateTime < cutoffDate })
         } catch {

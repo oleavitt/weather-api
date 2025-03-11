@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-/// CachedAsyncImage creates a SwiftUI view that loads, caches and displays an image asynchronously, using AsyncImagePhase to split the view to be displayed depending on the state of the image.
+/// CachedAsyncImage creates a SwiftUI view that loads, caches and displays an image asynchronously,
+/// using AsyncImagePhase to split the view to be displayed depending on the state of the image.
 /// Switching also between the different views in an animated way.
 ///
 /// Using a custom cache to occupy as much memory as we need and avoiding the errors that URLCache.shared can give.
@@ -35,7 +36,11 @@ struct CachedAsyncImage<Content: View>: View {
 
     private let content: (AsyncImagePhase) -> Content
 
-    init(url: URL?, scale: CGFloat = 1, animation: Animation = .default, @ViewBuilder content: @escaping (AsyncImagePhase) -> Content) {
+    init(url: URL?,
+         scale: CGFloat = 1,
+         animation: Animation = .default,
+         @ViewBuilder content: @escaping (AsyncImagePhase) -> Content
+    ) {
         self.content = content
         _loader = StateObject(wrappedValue: ImageLoader(url: url))
     }
@@ -59,7 +64,9 @@ private class ImageLoader: ObservableObject {
 
     private let url: URL?
 
-    /// The default URLCache.shared has a very limited capacity, which prevents us from storing many images, so we use a custom URLCache that will not only work better, but will also be used only for caching images and will give us extra control over how much ram and disk memory we want our app to occupy.
+    /// The default URLCache.shared has a very limited capacity, which prevents us from storing many images,
+    /// so we use a custom URLCache that will not only work better, but will also be used only
+    /// for caching images and will give us extra control over how much ram and disk memory we want our app to occupy.
     /// Also URLCache.shared may not be configured to cache content on disk, limiting its effectiveness to memory only.
     private static let cache: URLCache = {
         let memoryCapacity = 100 * 1024 * 1024 // 100 MB
@@ -76,63 +83,63 @@ private class ImageLoader: ObservableObject {
     @MainActor
     func load() async {
         phase = .empty
-        
+
         guard let url else {
             return
         }
-        
+
         /// Check if the image is in cache
         if let cachedResponse = ImageLoader.cache.cachedResponse(for: URLRequest(url: url)),
            let cachedImage = UIImage(data: cachedResponse.data, scale: scale) {
-//            withAnimation(animation) {
-                phase = .success(Image(uiImage: cachedImage))
-//            }
+            //            withAnimation(animation) {
+            phase = .success(Image(uiImage: cachedImage))
+            //            }
 #if DEBUG
             print("CachedAsyncImage: Cache hit (\(url.absoluteString))")
 #endif
             return
         }
-        
+
         do {
             let (data, response) = try await URLSession.shared.data(for: URLRequest(url: url))
-            
+
             guard let httpResponse = response as? HTTPURLResponse, httpResponse.statusCode == 200 else {
                 throw URLError(.badServerResponse)
             }
-            
+
             if let image = UIImage(data: data, scale: scale) {
                 let cachedData = CachedURLResponse(response: response, data: data)
-                
+
                 /// Cache the response
                 ImageLoader.cache.storeCachedResponse(cachedData, for: URLRequest(url: url))
-                
+
 #if DEBUG
                 print("CachedAsyncImage: Downloaded (\(url.absoluteString))")
 #endif
-//                withAnimation(animation) {
-                    phase = .success(Image(uiImage: image))
-//                }
+                //                withAnimation(animation) {
+                phase = .success(Image(uiImage: image))
+                //                }
             } else {
 #if DEBUG
                 print("CachedAsyncImage: Decode Error (\(url.absoluteString))")
 #endif
                 throw URLError(.cannotDecodeContentData)
             }
-            
+
         } catch {
 #if DEBUG
             print("CachedAsyncImage: Error (\(url.absoluteString))")
 #endif
-//            withAnimation(animation) {
-                phase = .failure(error)
-//            }
+            //            withAnimation(animation) {
+            phase = .failure(error)
+            //            }
         }
     }
 }
 
 struct BasicCachedAsyncImage: View {
     var url: URL?
-    
+
     var body: some View {
         CachedAsyncImage(url: url) { phase in
             switch phase {
@@ -143,7 +150,7 @@ struct BasicCachedAsyncImage: View {
             }
         }
     }
-    
+
     var placeHolderImage: some View {
         Image(systemName: "photo")
             .font(.title)

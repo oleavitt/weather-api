@@ -10,7 +10,7 @@ import SwiftData
 
 /// This view represents both the "Current" and "Forecast" view tabs in the app
 struct CurrentForecastView: View {
-    
+
     @State var isForecast: Bool
 
     @EnvironmentObject var viewModel: WeatherViewModel
@@ -22,7 +22,7 @@ struct CurrentForecastView: View {
     @Query(
         sort: \CurrentWeatherModel.dateTime
     ) var history: [CurrentWeatherModel]
-    
+
     var body: some View {
         NavigationStack {
             VStack {
@@ -49,7 +49,7 @@ struct CurrentForecastView: View {
                 viewModel.isUserLocation = false
                 viewModel.loadData()
             })
-            .onChange(of: scenePhase) { oldValue, newValue in
+            .onChange(of: scenePhase) { _, newValue in
                 if newValue == .active {
                     // Refresh when app becomes active
                     viewModel.reloadData(locationManager: locationManager)
@@ -70,7 +70,7 @@ struct CurrentForecastView: View {
     /// Content shown while data is loading.
     var loadingView: some View {
         VStack {
-            ProgressView() {
+            ProgressView {
                 Text("loading-one-moment-please")
             }
         }
@@ -92,7 +92,7 @@ struct CurrentForecastView: View {
         .accessibilityElement()
         .accessibilityLabel("error: \(viewModel.getErrorMessage())")
     }
-    
+
     /// Content shown when there is nothing to show.
     var emptyView: some View {
         VStack {
@@ -119,7 +119,7 @@ private extension CurrentForecastView {
         if !history.contains(where: {
             $0.dateTime == current.dateTime &&
             $0.location == current.location
-           }) {
+        }) {
             context.insert(viewModel.currentWeatherModel())
 #if DEBUG
             print("History saved for epoch: \(current.dateTime)")

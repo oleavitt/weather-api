@@ -12,25 +12,27 @@ struct ForcastDayViewModel: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int
     let date: Date?
-    let hi: Double
-    let lo: Double
+    let highTemp: Double
+    let lowTemp: Double
     let conditionIconURL: URL?
     let condition: String
     let chanceOfPrecip: Int
     let chanceOfSnow: Int
     let hours: [ForecastHour]
-    
+
     /// Voice over label for forecast day
     var a11yLabel: String {
         (date ?? .now).formatted(date: .abbreviated, time: .omitted)
     }
-    
+
     /// Voice over summary of forecast day
     var a11yDaySummary: String {
         if chanceOfSnow > 0 {
-            return String(localized: "\(condition), high \(hi.formatted())°, low \(lo.formatted())°, rain \(chanceOfPrecip)% snow \(chanceOfSnow)%")
+            // swiftlint:disable:next line_length
+            return String(localized: "\(condition), high \(highTemp.formatted())°, low \(lowTemp.formatted())°, rain \(chanceOfPrecip)% snow \(chanceOfSnow)%")
         } else {
-            return String(localized: "\(condition), high \(hi.formatted())°, low \(lo.formatted())°, rain \(chanceOfPrecip)%")
+            // swiftlint:disable:next line_length
+            return String(localized: "\(condition), high \(highTemp.formatted())°, low \(lowTemp.formatted())°, rain \(chanceOfPrecip)%")
         }
     }
 }
@@ -46,13 +48,13 @@ struct ForecastHour: Identifiable, Hashable {
     let chanceOfPrecip: Int
     var sunRiseSetImage: String?
     var isSunset = false
-    
+
     var isSunRiseSet: Bool {
         sunRiseSetImage?.isEmpty == false
     }
-    
+
     private let hourFormatter = DateFormatter()
-    
+
     var displayTime: String {
         if isSunRiseSet {
             hourFormatter.dateFormat = "h:mma"
@@ -61,7 +63,7 @@ struct ForecastHour: Identifiable, Hashable {
         }
         return hourFormatter.string(from: time ?? .now)
     }
-    
+
     /// Voice over label for forecast hour
     var a11yLabel: String {
         if isSunset {

@@ -11,18 +11,18 @@ import Foundation
 enum TempUnits: String, Codable, CaseIterable {
     case fahrenheit
     case celsius
-    
+
     var symbol: String {
         switch self {
         case .fahrenheit: return String(localized: "deg_f")
         case .celsius: return String(localized: "deg_c")
         }
     }
-    
+
     static var title: String {
         String(localized: "temperature")
     }
-    
+
     var description: String {
         switch self {
         case .fahrenheit: return String(localized: "description-deg_f")
@@ -35,18 +35,18 @@ enum TempUnits: String, Codable, CaseIterable {
 enum SpeedUnits: String, Codable, CaseIterable {
     case mph
     case kph
-    
+
     var symbol: String {
         switch self {
         case .mph: return String(localized: "mph")
         case .kph: return String(localized: "kph")
         }
     }
-    
+
     static var title: String {
         String(localized: "speed")
     }
-    
+
     var description: String {
         switch self {
         case .mph: return String(localized: "description-mph")
@@ -59,18 +59,18 @@ enum SpeedUnits: String, Codable, CaseIterable {
 enum PressureUnits: String, Codable, CaseIterable {
     case inchesHg
     case milliBars
-    
+
     var symbol: String {
         switch self {
         case .inchesHg: return String(localized: "inhg")
         case .milliBars: return String(localized: "mb")
         }
     }
-    
+
     static var title: String {
         String(localized: "pressure")
     }
-    
+
     var description: String {
         switch self {
         case .inchesHg: return String(localized: "description-incheshg")

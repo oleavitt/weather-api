@@ -5,6 +5,8 @@
 //  Created by Oren Leavitt on 1/18/25.
 //
 
+// swiftlint:disable identifier_name
+
 import Foundation
 
 /// Universal top level response model returned by call to WeatherAPI endpoint
@@ -47,7 +49,7 @@ struct Current: Decodable {
     var gustMph: Double = 0.0
     var gustKph: Double = 0.0
     var airQuality: AirQuality?
-    
+
     enum CodingKeys: String, CodingKey {
         case lastUpdated = "last_updated"
         case lastUpdatedEpoch = "last_updated_epoch"
@@ -87,12 +89,6 @@ struct Condition: Decodable {
     var text: String = ""
     var icon: String = ""
     var code: Int = 0
-    
-    enum CodingKeys: String, CodingKey {
-        case text = "text"
-        case icon = "icon"
-        case code = "code"
-    }
 }
 
 struct AirQuality: Decodable {
@@ -104,7 +100,7 @@ struct AirQuality: Decodable {
     var pm10: Double
     var usEpaIndex: Int
     var gbDefraIndex: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case co = "co"
         case no2 = "no2"
@@ -132,7 +128,7 @@ struct ForecastDayModel: Decodable {
     let day: Day
     let dateEpoch: Int
     let date: String
-    
+
     enum CodingKeys: String, CodingKey {
         case astro, hour, day
         case dateEpoch = "date_epoch"
@@ -176,7 +172,7 @@ struct ForecastHourModel: Decodable {
     let pressureMB: Double
     let willItRain: Int
     let visKM: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case visMiles = "vis_miles"
         case isDay = "is_day"
@@ -224,7 +220,7 @@ struct Astro: Codable {
     let moonPhase: String
     let moonset: String
     let isMoonUp: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case sunset
         case isSunUp = "is_sun_up"
@@ -258,7 +254,7 @@ struct Day: Decodable {
     let maxwindMph: Double
     let maxwindKph: Double
     let uv: Double
-    
+
     enum CodingKeys: String, CodingKey {
         case avgvisKM = "avgvis_km"
         case mintempC = "mintemp_c"
@@ -289,7 +285,7 @@ struct Location: Codable {
     let lon, lat: Double
     let tzID, name: String
     let localtimeEpoch: Int
-    
+
     enum CodingKeys: String, CodingKey {
         case region, country, localtime, lon, lat
         case tzID = "tz_id"
@@ -302,3 +298,4 @@ struct ApiError: Decodable {
     var code: Int
     var message: String
 }
+// swiftlint:enable identifier_name

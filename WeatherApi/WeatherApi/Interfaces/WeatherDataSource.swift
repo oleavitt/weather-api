@@ -8,10 +8,19 @@
 import Foundation
 import Combine
 
+// swiftlint:disable identifier_name
+
 /// Abstract interface for fetching weather data from the actual source
 protocol WeatherDataSource {
-    func setup(networkLayer: NetworkLayer, apiKey: String)
-    func getForecast(locationQuery: String, includeAqi: Bool, completion: @escaping (Result<WeatherData, Error>)->Void)
+    func setup(
+        networkLayer: NetworkLayer,
+        apiKey: String
+    )
+    func getForecast(
+        locationQuery: String,
+        includeAqi: Bool,
+        completion: @escaping (Result<WeatherData, Error>) -> Void
+    )
     var dateTimeLastUpdated: Date? { get }
     var locationData: LocationData? { get }
     func currentTemp(units: TempUnits) -> Double?
@@ -175,3 +184,4 @@ struct ApiErrorData {
     var code: Int
     var message: String
 }
+// swiftlint:enable identifier_name

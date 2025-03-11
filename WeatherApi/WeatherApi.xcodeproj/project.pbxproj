@@ -108,6 +108,7 @@
 				8C52D48E2CC8B83400AA558C /* Sources */,
 				8C52D48F2CC8B83400AA558C /* Frameworks */,
 				8C52D4902CC8B83400AA558C /* Resources */,
+				8CA518C62D80B6260026602F /* Swiftlint */,
 			);
 			buildRules = (
 			);
@@ -237,6 +238,28 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		8CA518C62D80B6260026602F /* Swiftlint */ = {
+			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = Swiftlint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]\nthen\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif command -v swiftlint >/dev/null 2>&1\nthen\n    swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8C52D48E2CC8B83400AA558C /* Sources */ = {
@@ -409,6 +432,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApi/Preview Content\"";
 				DEVELOPMENT_TEAM = 2W2GK9ZGZC;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "WeatherApi would like to access your location so that it can get your local weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WeatherApi would like to access your location so that it can get your local weather";
@@ -441,6 +465,7 @@
 				DEVELOPMENT_ASSET_PATHS = "\"WeatherApi/Preview Content\"";
 				DEVELOPMENT_TEAM = 2W2GK9ZGZC;
 				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSLocationAlwaysUsageDescription = "WeatherApi would like to access your location so that it can get your local weather";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "WeatherApi would like to access your location so that it can get your local weather";

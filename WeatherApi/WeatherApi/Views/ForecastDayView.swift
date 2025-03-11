@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct ForecastDayView: View {
-    
+
     let day: ForcastDayViewModel
-    
+
     var body: some View {
         VStack {
             ScrollView(.horizontal) {
@@ -42,7 +42,7 @@ struct ForecastDayView: View {
             .accessibilityElement()
             .accessibilityLabel(day.a11yLabel)
             .accessibilityHint(day.a11yDaySummary)
-            
+
             ScrollView(.horizontal) {
                 HStack {
                     ForEach(day.hours, id: \.self) { hour in
@@ -65,7 +65,7 @@ struct ForecastDayView: View {
                     .resizable()
                     .frame(width: 6, height: 6)
                     .padding(.trailing, 4)
-                Text(day.hi.formatted() + "°")
+                Text(day.highTemp.formatted() + "°")
                     .font(.custom(
                         currentTheme.fontFamily, fixedSize: 16))
                     .fontWeight(.bold)
@@ -76,7 +76,7 @@ struct ForecastDayView: View {
                     .resizable()
                     .frame(width: 6, height: 6)
                     .padding(.trailing, 4)
-                Text(day.lo.formatted() + "°")
+                Text(day.lowTemp.formatted() + "°")
                     .font(.custom(
                         currentTheme.fontFamily, fixedSize: 16))
                     .fontWeight(.bold)
@@ -84,7 +84,7 @@ struct ForecastDayView: View {
             }
         }
     }
-    
+
     private func forecastHourView(hour: ForecastHour) -> some View {
         VStack {
             Text(hour.displayTime)
@@ -121,7 +121,7 @@ struct ForecastDayView: View {
             }
         }
     }
-    
+
     private var date: String {
         guard let date = day.date else { return "--" }
         let dateFormatter = DateFormatter()
@@ -130,13 +130,14 @@ struct ForecastDayView: View {
     }
 }
 
+// swiftlint:disable line_length
 #Preview {
     let hourFormatter = DateFormatter()
 
     let mockDay = ForcastDayViewModel(epoch: 1733100385,
                                       date: Date(),
-                                      hi: 70,
-                                      lo: 58.1,
+                                      highTemp: 70,
+                                      lowTemp: 58.1,
                                       conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
                                       condition: "Sunny",
                                       chanceOfPrecip: 0,
@@ -175,7 +176,7 @@ struct ForecastDayView: View {
                                                      chanceOfPrecip: 0,
                                                      sunRiseSetImage: "sunset.fill",
                                                      isSunset: true)
-                                     ])
+                                      ])
     VStack {
         ScrollView {
             ForecastDayView(day: mockDay)
@@ -184,8 +185,9 @@ struct ForecastDayView: View {
     }
     .background {
         let colors: [Color] = [.blue, .white]
-//        let colors: [Color] = [.black, .blue]
-        LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
+        //        let colors: [Color] = [.black, .blue]
+        LinearGradient(gradient: Gradient(colors: colors), startPoint: .top, endPoint: .bottom)
     }
     .foregroundColor(.white)
 }
+// swiftlint:enable line_length

@@ -19,10 +19,11 @@ final class CurrentWeatherSummaryCellViewModelTests: XCTestCase {
         tempC: 17.8,
         tempF: 64,
         icon: "//cdn.weatherapi.com/weather/64x64/night/119.png",
+        condition: "Sunny",
         code: 1000,
         uv: 0,
         isDay: false))
-    
+
     func testPropertiesFahrenheit() {
         tempUnitsSetting = .fahrenheit
         XCTAssertFalse(viewModel.isDay)
@@ -32,7 +33,7 @@ final class CurrentWeatherSummaryCellViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.temperature, "64°")
         XCTAssertNotNil(viewModel.iconURL)
     }
-    
+
     func testPropertiesTempCelsius() {
         tempUnitsSetting = .celsius
         XCTAssertFalse(viewModel.isDay)

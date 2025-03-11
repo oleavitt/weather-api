@@ -12,7 +12,7 @@ struct HistoryView: View {
 
     // TODO: Need to serparate database concerns out of View to an MVVM friendly container
     @Environment(\.modelContext) var context
-    
+
     @Query(
         sort: \CurrentWeatherModel.dateTime,
         order: .reverse
@@ -20,7 +20,7 @@ struct HistoryView: View {
 
     @State var showConfirmDelete = false
     @State var itemToDelete: CurrentWeatherModel?
-    
+
     var body: some View {
         NavigationStack {
             List {
@@ -56,7 +56,7 @@ struct HistoryView: View {
 }
 
 private extension HistoryView {
-    
+
     func deleteItem() {
         if let itemToDelete {
             context.delete(itemToDelete)
