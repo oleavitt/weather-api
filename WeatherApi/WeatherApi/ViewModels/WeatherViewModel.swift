@@ -11,7 +11,6 @@ import SwiftUI
 
 /// View model for the WeatherView which represents the Current and Forecast tabs of the app.
 class WeatherViewModel: ObservableObject {
-    
     /// Network layer interface that is injected into view model at the time of creation.
     let networkLayer: NetworkLayer
 
@@ -276,6 +275,32 @@ extension WeatherViewModel {
     /// - Returns: Error message string
     func getErrorMessage() -> String {
         error?.localizedDescription ?? ""
+    }
+}
+
+// MARK: Data loading
+
+extension WeatherViewModel {
+    func loadDataFromLocation(locationManager: LocationManager) {
+        locationManager.requestAuthorization() { [weak self] in
+            locationManager.requestLocation() {
+                self?.isUserLocation = true
+                self?.locationQuery = locationManager.locationString ?? "auto:ip"
+                self?.loadData()
+            }
+        }
+    }
+    
+    func reloadData(locationManager: LocationManager) {
+        if isUserLocation || locationQuery.isEmpty {
+            loadDataFromLocation(locationManager: locationManager)
+        } else {
+            loadData()
+        }
+    }
+    
+    func loadData() {
+        getCurrentAndForecastWeather()
     }
 }
 

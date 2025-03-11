@@ -7,7 +7,6 @@
 
 import SwiftUI
 import SwiftData
-import CoreLocationUI
 
 /// This view represents both the "Current" and "Forecast" view tabs in the app
 struct CurrentForecastView: View {
@@ -15,8 +14,8 @@ struct CurrentForecastView: View {
     @State var isForecast: Bool
 
     @EnvironmentObject var viewModel: WeatherViewModel
-
     @StateObject var locationManager = LocationManager()
+
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) var context
 
@@ -36,9 +35,9 @@ struct CurrentForecastView: View {
                     loadingView
                 case .success:
                     if isForecast {
-                        forecastView
+                        ForecastView()
                     } else {
-                        currentView
+                        CurrentView(locationManager: locationManager)
                     }
                 case .failure:
                     errorView
@@ -48,12 +47,12 @@ struct CurrentForecastView: View {
             .searchable(text: $viewModel.locationQuery, prompt: "search-prompt")
             .onSubmit(of: .search, {
                 viewModel.isUserLocation = false
-                loadData()
+                viewModel.loadData()
             })
             .onChange(of: scenePhase) { oldValue, newValue in
                 if newValue == .active {
                     // Refresh when app becomes active
-                    reloadData()
+                    viewModel.reloadData(locationManager: locationManager)
                 }
             }
             .onChange(of: viewModel.isLoaded) {
@@ -63,98 +62,9 @@ struct CurrentForecastView: View {
                 }
             }
             .onAppear {
-                reloadData()
+                viewModel.reloadData(locationManager: locationManager)
             }
         }
-    }
-    
-    /// Content shown when Current tab is selected.
-    var currentView: some View {
-        VStack {
-            ScrollView {
-                HStack {
-                    Text("time-last-updated \(viewModel.timeLastUpdatedFormatted)")
-                    LocationButton(.currentLocation) {
-                        loadDataFromLocation()
-                    }
-                    .symbolVariant(.fill)
-                    .labelStyle(.iconOnly)
-                    .clipShape(.capsule)
-                }
-                BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
-                    .accessibilityLabel(viewModel.condition)
-                HStack {
-                    Text(viewModel.locationName)
-                        .font(.system(size: 24))
-                        .fontWeight(.light)
-                    if viewModel.isUserLocation {
-                        Image(systemName: "location.fill")
-                    }
-                }
-                .frame(maxWidth: .infinity)
-                .accessibilityHint(viewModel.isUserLocation ? "a11y-this-is-your-current-location" : "")
-
-                temperatureView
-                HStack {
-                    Text(viewModel.condition)
-                        .font(.system(size: 18))
-                        .fontWeight(.medium)
-                }
-                .padding(.bottom)
-                Text(viewModel.feelsLike)
-                detailsView
-            }
-        }
-        .padding(.top)
-        .background {
-            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
-        }
-        .foregroundColor(.white)
-        .font(.system(size: 18))
-        .fontWeight(.light)
-    }
-    
-    /// Content shown when Forecast tab is selected.
-    var forecastView: some View {
-        VStack {
-            ScrollView {
-                ForEach(viewModel.forecastDays(), id: \.self) { day in
-                    ForecastDayView(day: day)
-                        .padding(.horizontal)
-                }
-            }
-        }
-        .padding(.top)
-        .background {
-            let colors: [Color] = viewModel.isDay ? [.blue, .white] : [.black, .blue]
-            LinearGradient(gradient: Gradient(colors:colors), startPoint: .top, endPoint: .bottom)
-        }
-        .foregroundColor(.white)
-        .font(.system(size: 18))
-        .fontWeight(.light)
-    }
-    
-    /// Temperature subview
-    var temperatureView: some View {
-        HStack(alignment: .lastTextBaseline, spacing: 0) {
-            Text(viewModel.tempString)
-                .font(.system(size: 80))
-                .fontWeight(.ultraLight)
-        }
-    }
-
-    /// Details subviews
-    var detailsView: some View {
-        VStack {
-            HStack {
-                DetailChip("humidity", viewModel.humidity, a11yLabel: "humidity \(viewModel.humidity)")
-                DetailChip("uv", viewModel.uvIndex, a11yLabel: "uv-index \(viewModel.uvIndex)")
-                DetailChip("pressure", viewModel.pressure, a11yLabel: "pressure \(viewModel.pressure)")
-            }
-            WindView(viewModel: WindViewModel(windModel: viewModel.windModel))
-        }
-        .padding([.horizontal, .top])
     }
 
     /// Content shown while data is loading.
@@ -202,27 +112,6 @@ struct CurrentForecastView: View {
 
 /// Helpers for loading data from location or search, and saving to History
 private extension CurrentForecastView {
-    func loadDataFromLocation() {
-        locationManager.requestAuthorization() {
-            locationManager.requestLocation() {
-                viewModel.isUserLocation = true
-                viewModel.locationQuery = locationManager.locationString ?? "auto:ip"
-                loadData()
-            }
-        }
-    }
-    
-    func reloadData() {
-        if viewModel.isUserLocation || viewModel.locationQuery.isEmpty {
-            loadDataFromLocation()
-        } else {
-            loadData()
-        }
-    }
-    
-    func loadData() {
-        viewModel.getCurrentAndForecastWeather()
-    }
 
     func saveToHistory() {
         let current = viewModel.currentWeatherModel()
