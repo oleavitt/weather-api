@@ -11,20 +11,11 @@ import SwiftUI
 
 /// View model for the WeatherView which represents the Current and Forecast tabs of the app.
 class WeatherViewModel: ObservableObject {
-    /// Network layer interface that is injected into view model at the time of creation.
-    let networkLayer: NetworkLayer
-
     /// Location search query that is passed to the API.
     var locationQuery = ""
 
     /// Indicator set from view to indicate we are using user's location for search.
     var isUserLocation = true
-
-    /// Set true to include air quality (AQI) results in API response
-    var showAirQuality = false
-
-    /// Weather data source interface
-    var weatherDataSource: WeatherDataSource = WeatherApiComDataSource()
 
     @Published var state: LoadingState = .startup
     @Published var isLoaded = false
@@ -33,6 +24,15 @@ class WeatherViewModel: ObservableObject {
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
     @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
     @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inchesHg
+
+    /// Network layer interface that is injected into view model at the time of creation.
+    private let networkLayer: NetworkLayer
+
+    /// Set true to include air quality (AQI) results in API response
+    private var showAirQuality = false
+
+    /// Weather data source interface
+    private var weatherDataSource: WeatherDataSource = WeatherApiComDataSource()
 
     private var lastUpdated: Date?
     private var lastLocationQuery: String?
@@ -95,7 +95,7 @@ class WeatherViewModel: ObservableObject {
     }
 }
 
-// MARK: Properties for views
+// MARK: Display content for views
 
 /// Computed properties that format response data using user's preferred units settings.
 extension WeatherViewModel {
@@ -109,14 +109,6 @@ extension WeatherViewModel {
             return temp.formatted() + "°"
         }
         return "--"
-    }
-
-    var tempUnits: String {
-        tempUnitsSetting.symbol
-    }
-
-    var timeLastUpdatedDate: Date {
-        return weatherDataSource.dateTimeLastUpdated ?? Date()
     }
 
     var timeLastUpdatedFormatted: String {
@@ -311,6 +303,13 @@ extension WeatherViewModel {
 // MARK: Private
 
 private extension WeatherViewModel {
+    var timeLastUpdatedDate: Date {
+        return weatherDataSource.dateTimeLastUpdated ?? Date()
+    }
+
+    var tempUnits: String {
+        tempUnitsSetting.symbol
+    }
 
     /// Process the result of the `WeatherDataSource.getForecast()`call and update view model state as needed.
     /// - Parameter result: The `Result<WeatherData, Error>` to be processed`

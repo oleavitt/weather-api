@@ -1,7 +1,7 @@
 # Weather API app
 
 ## Overview
-An iOS weather app developed using SwiftUI that displays current weather and forecasts for a given location or place. It uses the "weatherapi.com" API as its data source.
+An iOS weather app developed using SwiftUI that displays current weather and forecasts for a given location or place. It uses the "weatherapi.com" RESTful API as its data source.
 
 ### Requirements
 - iOS 17.6 or later

@@ -10,6 +10,7 @@ import SwiftData
 
 // swiftlint:disable identifier_name
 
+/// The Core Data model object used in the History view list
 @Model
 final class CurrentWeatherModel {
     @Attribute(.unique) var id: UUID

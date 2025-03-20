@@ -16,6 +16,9 @@ enum ApiErrorType: Error {
     case noApiKey
     case invalidApiKey
 
+    /// Construct an ApiErrorType from a given API error code.
+    /// - Parameter code: Error code from API
+    /// - Returns: A localized string for the error or a generic error of code is not recognized.
     static func fromErrorCode(code: Int) -> ApiErrorType {
         switch code {
         case 1003: return .emptySearch
@@ -27,6 +30,7 @@ enum ApiErrorType: Error {
 }
 
 extension ApiErrorType: LocalizedError {
+    /// The localized error message string for error type.
     var errorDescription: String? {
         switch self {
         case .noMatch:

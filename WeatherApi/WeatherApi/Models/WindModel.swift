@@ -7,6 +7,7 @@
 
 import Foundation
 
+/// A container to pass wind data with
 struct WindModel {
     let speedKph: Double
     let speedMph: Double

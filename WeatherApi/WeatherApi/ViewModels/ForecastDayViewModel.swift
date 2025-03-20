@@ -49,12 +49,14 @@ struct ForecastHour: Identifiable, Hashable {
     var sunRiseSetImage: String?
     var isSunset = false
 
-    var isSunRiseSet: Bool {
+    /// Indicates whether this hour is being used as a sunrise/set time
+    private var isSunRiseSet: Bool {
         sunRiseSetImage?.isEmpty == false
     }
 
     private let hourFormatter = DateFormatter()
 
+    /// The short formatted hour string
     var displayTime: String {
         if isSunRiseSet {
             hourFormatter.dateFormat = "h:mma"
@@ -74,7 +76,7 @@ struct ForecastHour: Identifiable, Hashable {
         return displayTime
     }
 
-    /// Voice over summary of forecast hour
+    /// A summary read-off of all items in this view for Voice Over.
     var a11yHourSummary: String {
         if isSunRiseSet {
             return displayTime
