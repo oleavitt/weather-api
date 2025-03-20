@@ -59,11 +59,13 @@ class WeatherApiComDataSource: WeatherDataSource {
                   receiveValue: { completion(.success($0)) })
     }
 
+    /// Date and time of last update on data source end.
     var dateTimeLastUpdated: Date? {
         guard let current = apiModel?.current else { return nil }
         return localDateTime(current.lastUpdated)
     }
 
+    /// Location details for this weather report.
     var locationData: LocationData? {
         guard let location = apiModel?.location else { return nil }
         return LocationData(name: location.name,
@@ -73,10 +75,13 @@ class WeatherApiComDataSource: WeatherDataSource {
                             longitude: location.lon)
     }
 
+    /// The current temperature in user's selected temperature units (F or C).
     func currentTemp(units: TempUnits) -> Double? {
         (units == .fahrenheit) ? apiModel?.current?.tempF : apiModel?.current?.tempC
     }
 }
+
+// MARK: - Private
 
 private extension WeatherApiComDataSource {
     /// Builds a URL request to get current and forecast weather information from the API

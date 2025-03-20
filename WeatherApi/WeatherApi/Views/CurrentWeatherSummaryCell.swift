@@ -10,6 +10,8 @@ import SwiftUI
 struct CurrentWeatherSummaryCell: View {
     @StateObject private var viewModel: CurrentWeatherSummaryCellViewModel
 
+    /// Displays one entry of current weather history in the History list.
+    /// - Parameter data: The Histpry data store object to display here.
     init(data: CurrentWeatherModel) {
         _viewModel = StateObject(wrappedValue: CurrentWeatherSummaryCellViewModel(data: data))
     }
@@ -48,6 +50,8 @@ struct CurrentWeatherSummaryCell: View {
         .accessibilityLabel(viewModel.a11yCurrentWeatherSummary)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     ScrollView {

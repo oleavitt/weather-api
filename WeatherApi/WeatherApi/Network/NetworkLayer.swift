@@ -16,6 +16,11 @@ protocol NetworkLayer {
 /// Sends requests to the live API site and gets back live data.
 class NetworkLayerImpl: NetworkLayer {
 
+    /// Data publisher to perform network request and decode JSON for any Decodable object type.
+    /// - Parameters:
+    ///   - request: URL request configured with endpoint and any needed headers.
+    ///   - type: Type of Decodable object we are to decode.
+    /// - Returns: A publisher from which to sink successful type object or Error result from.
     func fetchJsonDataPublisher<T: Decodable>(request: URLRequest, type: T.Type) -> AnyPublisher<T, Error> {
 #if DEBUG
         print(request.url?.absoluteString ?? "")

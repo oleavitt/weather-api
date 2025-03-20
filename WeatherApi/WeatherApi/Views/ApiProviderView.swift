@@ -35,10 +35,12 @@ struct ApiProviderView: View {
         .navigationTitle("api-providers")
     }
 
-    func saveChanges() {
+    private func saveChanges() {
         weatherApiKey = apiKeyInput.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     NavigationStack {

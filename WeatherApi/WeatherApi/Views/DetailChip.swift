@@ -7,11 +7,17 @@
 
 import SwiftUI
 
+/// Displays a simple title/value in view with rounded corners as set by the cardStyle view modifier.
 struct DetailChip: View {
     var title: LocalizedStringKey
     var value: String
     var a11yLabel: LocalizedStringKey
 
+    /// Creates a Detail chip.
+    /// - Parameters:
+    ///   - title: The title.
+    ///   - value: The details or value.
+    ///   - a11yLabel: Text for Voice Over read back.
     init(_ title: LocalizedStringKey, _ value: String, a11yLabel: LocalizedStringKey) {
         self.title = title
         self.value = value
@@ -34,6 +40,8 @@ struct DetailChip: View {
         .accessibilityLabel(a11yLabel)
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     DetailChip("Title", "Value", a11yLabel: "Title value")

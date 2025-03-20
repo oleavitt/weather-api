@@ -57,8 +57,12 @@ struct ForecastDayView: View {
         }
         .cardStyle()
     }
+}
 
-    private var hiloView: some View {
+// MARK: - Private
+
+private extension ForecastDayView {
+    var hiloView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
                 Image(systemName: "arrowtriangle.up.fill")
@@ -85,7 +89,7 @@ struct ForecastDayView: View {
         }
     }
 
-    private func forecastHourView(hour: ForecastHour) -> some View {
+    func forecastHourView(hour: ForecastHour) -> some View {
         VStack {
             Text(hour.displayTime)
                 .font(.custom(
@@ -122,13 +126,15 @@ struct ForecastDayView: View {
         }
     }
 
-    private var date: String {
+    var date: String {
         guard let date = day.date else { return "--" }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MMM d"
         return dateFormatter.string(from: date)
     }
 }
+
+// MARK: - Preview
 
 // swiftlint:disable line_length
 #Preview {

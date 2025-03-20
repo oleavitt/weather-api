@@ -66,7 +66,12 @@ struct CurrentForecastView: View {
             }
         }
     }
+}
 
+// MARK: - Private
+
+/// Helpers for loading data from location or search, and saving to History
+private extension CurrentForecastView {
     /// Content shown while data is loading.
     var loadingView: some View {
         VStack {
@@ -108,11 +113,8 @@ struct CurrentForecastView: View {
         .accessibilityElement()
         .accessibilityLabel("empty-search-message")
     }
-}
 
-/// Helpers for loading data from location or search, and saving to History
-private extension CurrentForecastView {
-
+    /// Save a summary of the the current weather to the History list
     func saveToHistory() {
         let current = viewModel.currentWeatherModel()
 

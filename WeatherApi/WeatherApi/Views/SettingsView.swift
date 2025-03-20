@@ -131,6 +131,8 @@ private extension SettingsView {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
     NavigationStack {
         SettingsView()

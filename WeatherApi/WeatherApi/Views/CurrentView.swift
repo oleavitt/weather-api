@@ -58,7 +58,11 @@ struct CurrentView: View {
         .font(.system(size: 18))
         .fontWeight(.light)
     }
+}
 
+// MARK: - Private
+
+private extension CurrentView {
     /// Temperature subview
     var temperatureView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
@@ -81,6 +85,8 @@ struct CurrentView: View {
         .padding([.horizontal, .top])
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     CurrentView(locationManager: LocationManager())

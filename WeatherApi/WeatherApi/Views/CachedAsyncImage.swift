@@ -137,8 +137,13 @@ private class ImageLoader: ObservableObject {
     }
 }
 
+// A simplified use of CachedAsyncImage with a preset placeholder image
 struct BasicCachedAsyncImage: View {
-    var url: URL?
+    private var url: URL?
+
+    init(url: URL?) {
+        self.url = url
+    }
 
     var body: some View {
         CachedAsyncImage(url: url) { phase in
@@ -151,7 +156,7 @@ struct BasicCachedAsyncImage: View {
         }
     }
 
-    var placeHolderImage: some View {
+    private var placeHolderImage: some View {
         Image(systemName: "photo")
             .font(.title)
             .foregroundStyle(.placeholder)

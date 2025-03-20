@@ -55,6 +55,8 @@ struct HistoryView: View {
     }
 }
 
+// MARK: - Private
+
 private extension HistoryView {
 
     func deleteItem() {
@@ -64,6 +66,8 @@ private extension HistoryView {
         itemToDelete = nil
     }
 }
+
+// MARK: - Preview
 
 #Preview {
     NavigationStack {

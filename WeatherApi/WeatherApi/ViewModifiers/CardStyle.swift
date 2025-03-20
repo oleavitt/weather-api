@@ -7,8 +7,7 @@
 
 import SwiftUI
 
-/// A style for cards.
-/// - Note: This style is used for cards in the app.
+/// A style with rouded corners and theme background color for card style views..
 struct CardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content

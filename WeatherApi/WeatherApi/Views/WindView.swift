@@ -32,6 +32,8 @@ struct WindView: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
     VStack {
         WindView(viewModel: WindViewModel(windModel: WindModel(speedKph: 8.3,
