@@ -8,7 +8,7 @@
 import SwiftUI
 import CoreLocationUI
 
-/// Content shown when Current tab is selected.
+/// Sub view content shown when Current tab is selected.
 struct CurrentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @ObservedObject var locationManager: LocationManager

@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherModel.swift
+//  HistoryItemModel.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 12/28/24.
@@ -12,7 +12,7 @@ import SwiftData
 
 /// The Core Data model object used in the History view list
 @Model
-final class CurrentWeatherModel {
+final class HistoryItemModel {
     @Attribute(.unique) var id: UUID
     var location: String
     var dateTime: Date

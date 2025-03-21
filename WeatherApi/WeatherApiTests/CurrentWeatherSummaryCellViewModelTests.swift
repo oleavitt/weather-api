@@ -13,7 +13,7 @@ final class CurrentWeatherSummaryCellViewModelTests: XCTestCase {
 
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
 
-    let viewModel = CurrentWeatherSummaryCellViewModel(data: CurrentWeatherModel(
+    let viewModel = HistoryRowViewModel(data: HistoryItemModel(
         location: "Dallas, Texas",
         dateTime: Date(),
         tempC: 17.8,

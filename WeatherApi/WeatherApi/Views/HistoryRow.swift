@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherSummaryCell.swift
+//  HistoryRow.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 12/28/24.
@@ -7,13 +7,13 @@
 
 import SwiftUI
 
-struct CurrentWeatherSummaryCell: View {
-    @StateObject private var viewModel: CurrentWeatherSummaryCellViewModel
+struct HistoryRow: View {
+    private var viewModel: HistoryRowViewModel
 
     /// Displays one entry of current weather history in the History list.
     /// - Parameter data: The Histpry data store object to display here.
-    init(data: CurrentWeatherModel) {
-        _viewModel = StateObject(wrappedValue: CurrentWeatherSummaryCellViewModel(data: data))
+    init(data: HistoryItemModel) {
+        viewModel = HistoryRowViewModel(data: data)
     }
 
     var body: some View {
@@ -47,7 +47,7 @@ struct CurrentWeatherSummaryCell: View {
         }
         .cornerRadius(currentTheme.cornerRadius)
         .accessibilityElement()
-        .accessibilityLabel(viewModel.a11yCurrentWeatherSummary)
+        .accessibilityLabel(viewModel.a11yHistoryRowSummary)
     }
 }
 
@@ -55,7 +55,7 @@ struct CurrentWeatherSummaryCell: View {
 
 #Preview {
     ScrollView {
-        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
+        HistoryRow(data: HistoryItemModel(
             location: "Dallas, Texas",
             dateTime: Date(),
             tempC: 17.8,
@@ -65,7 +65,7 @@ struct CurrentWeatherSummaryCell: View {
             code: 1000,
             uv: 0,
             isDay: false))
-        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
+        HistoryRow(data: HistoryItemModel(
             location: "Dallas, Texas",
             dateTime: Date(),
             tempC: 17.8,
@@ -75,7 +75,7 @@ struct CurrentWeatherSummaryCell: View {
             code: 1000,
             uv: 0,
             isDay: false))
-        CurrentWeatherSummaryCell(data: CurrentWeatherModel(
+        HistoryRow(data: HistoryItemModel(
             location: "Dallas, Texas",
             dateTime: Date(),
             tempC: 17.8,

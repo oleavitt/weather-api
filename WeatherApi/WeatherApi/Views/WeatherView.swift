@@ -1,5 +1,5 @@
 //
-//  CurrentForecastView.swift
+//  WeatherView.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 10/22/24.
@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftData
 
 /// This view represents both the "Current" and "Forecast" view tabs in the app
-struct CurrentForecastView: View {
+struct WeatherView: View {
 
     @State var isForecast: Bool
 
@@ -20,8 +20,8 @@ struct CurrentForecastView: View {
     @Environment(\.modelContext) var context
 
     @Query(
-        sort: \CurrentWeatherModel.dateTime
-    ) var history: [CurrentWeatherModel]
+        sort: \HistoryItemModel.dateTime
+    ) var history: [HistoryItemModel]
 
     var body: some View {
         NavigationStack {
@@ -71,7 +71,7 @@ struct CurrentForecastView: View {
 // MARK: - Private
 
 /// Helpers for loading data from location or search, and saving to History
-private extension CurrentForecastView {
+private extension WeatherView {
     /// Content shown while data is loading.
     var loadingView: some View {
         VStack {
@@ -116,13 +116,13 @@ private extension CurrentForecastView {
 
     /// Save a summary of the the current weather to the History list
     func saveToHistory() {
-        let current = viewModel.currentWeatherModel()
+        let current = viewModel.historyItemModel()
 
         if !history.contains(where: {
             $0.dateTime == current.dateTime &&
             $0.location == current.location
         }) {
-            context.insert(viewModel.currentWeatherModel())
+            context.insert(viewModel.historyItemModel())
 #if DEBUG
             print("History saved for epoch: \(current.dateTime)")
             print("History count: \(history.count)")

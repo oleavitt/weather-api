@@ -14,18 +14,18 @@ struct HistoryView: View {
     @Environment(\.modelContext) var context
 
     @Query(
-        sort: \CurrentWeatherModel.dateTime,
+        sort: \HistoryItemModel.dateTime,
         order: .reverse
-    ) var history: [CurrentWeatherModel]
+    ) var history: [HistoryItemModel]
 
     @State var showConfirmDelete = false
-    @State var itemToDelete: CurrentWeatherModel?
+    @State var itemToDelete: HistoryItemModel?
 
     var body: some View {
         NavigationStack {
             List {
                 ForEach(history, id: \.self) { item in
-                    CurrentWeatherSummaryCell(data: item)
+                    HistoryRow(data: item)
                         .listRowSeparator(.hidden)
                         .listRowInsets(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
                         .swipeActions(allowsFullSwipe: false) {
@@ -72,33 +72,33 @@ private extension HistoryView {
 #Preview {
     NavigationStack {
         HistoryView()
-            .modelContainer(for: CurrentWeatherModel.self) { result in
+            .modelContainer(for: HistoryItemModel.self) { result in
                 switch result {
                 case .success(let container):
                     // Load up the model with some mock content
                     let context = container.mainContext
-                    try? context.delete(model: CurrentWeatherModel.self)
-                    context.insert(CurrentWeatherModel(location: "Dallas, Texas",
-                                                       dateTime: Date(),
-                                                       tempC: 15.5, tempF: 65.4,
-                                                       icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
-                                                       condition: "Sunny",
-                                                       code: 1000,
-                                                       uv: 3, isDay: true))
-                    context.insert(CurrentWeatherModel(location: "Dallas, Texas",
-                                                       dateTime: Date() + 900,
-                                                       tempC: 14.5, tempF: 64.1,
-                                                       icon: "//cdn.weatherapi.com/weather/64x64/day/296.png",
-                                                       condition: "Sunny",
-                                                       code: 1000,
-                                                       uv: 3, isDay: true))
-                    context.insert(CurrentWeatherModel(location: "Dallas, Texas",
-                                                       dateTime: Date() + 1800,
-                                                       tempC: 10.5, tempF: 55,
-                                                       icon: "//cdn.weatherapi.com/weather/64x64/night/116.png",
-                                                       condition: "Sunny",
-                                                       code: 1000,
-                                                       uv: 3, isDay: false))
+                    try? context.delete(model: HistoryItemModel.self)
+                    context.insert(HistoryItemModel(location: "Dallas, Texas",
+                                                    dateTime: Date(),
+                                                    tempC: 15.5, tempF: 65.4,
+                                                    icon: "//cdn.weatherapi.com/weather/64x64/day/113.png",
+                                                    condition: "Sunny",
+                                                    code: 1000,
+                                                    uv: 3, isDay: true))
+                    context.insert(HistoryItemModel(location: "Dallas, Texas",
+                                                    dateTime: Date() + 900,
+                                                    tempC: 14.5, tempF: 64.1,
+                                                    icon: "//cdn.weatherapi.com/weather/64x64/day/296.png",
+                                                    condition: "Sunny",
+                                                    code: 1000,
+                                                    uv: 3, isDay: true))
+                    context.insert(HistoryItemModel(location: "Dallas, Texas",
+                                                    dateTime: Date() + 1800,
+                                                    tempC: 10.5, tempF: 55,
+                                                    icon: "//cdn.weatherapi.com/weather/64x64/night/116.png",
+                                                    condition: "Sunny",
+                                                    code: 1000,
+                                                    uv: 3, isDay: false))
                 case .failure(let error):
                     print(error.localizedDescription)
                 }

@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-/// Content shown when Forecast tab is selected.
+/// Sub view content shown when Forecast tab is selected.
 struct ForecastView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
 
@@ -15,7 +15,7 @@ struct ForecastView: View {
         VStack {
             ScrollView {
                 ForEach(viewModel.forecastDays(), id: \.self) { day in
-                    ForecastDayView(day: day)
+                    ForecastDayRow(day: day)
                         .padding(.horizontal)
                 }
             }

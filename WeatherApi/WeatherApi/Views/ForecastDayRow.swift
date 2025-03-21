@@ -1,5 +1,5 @@
 //
-//  ForecastDayView.swift
+//  ForecastDayRow.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 11/30/24.
@@ -7,9 +7,9 @@
 
 import SwiftUI
 
-struct ForecastDayView: View {
+struct ForecastDayRow: View {
 
-    let day: ForcastDayViewModel
+    let day: ForcastDayRowViewModel
 
     var body: some View {
         VStack {
@@ -61,7 +61,7 @@ struct ForecastDayView: View {
 
 // MARK: - Private
 
-private extension ForecastDayView {
+private extension ForecastDayRow {
     var hiloView: some View {
         VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 0) {
@@ -140,7 +140,7 @@ private extension ForecastDayView {
 #Preview {
     let hourFormatter = DateFormatter()
 
-    let mockDay = ForcastDayViewModel(epoch: 1733100385,
+    let mockDay = ForcastDayRowViewModel(epoch: 1733100385,
                                       date: Date(),
                                       highTemp: 70,
                                       lowTemp: 58.1,
@@ -185,7 +185,7 @@ private extension ForecastDayView {
                                       ])
     VStack {
         ScrollView {
-            ForecastDayView(day: mockDay)
+            ForecastDayRow(day: mockDay)
                 .padding()
         }
     }

@@ -94,14 +94,14 @@ struct SettingsView: View {
 
 private extension SettingsView {
     var historyCount: Int {
-        let descriptor = FetchDescriptor<CurrentWeatherModel>()
+        let descriptor = FetchDescriptor<HistoryItemModel>()
         return (try? context.fetchCount(descriptor)) ?? 0
     }
 
     func deleteAllHistory() {
         hoursInputFocused = false
         do {
-            try context.delete(model: CurrentWeatherModel.self)
+            try context.delete(model: HistoryItemModel.self)
         } catch {
 #if DEBUG
             print("Error trying to delete all History. \(error.localizedDescription)")
@@ -122,7 +122,7 @@ private extension SettingsView {
             // "ReferenceWritableKeyPath<CurrentWeatherModel, Date>' does not conform to the 'Sendable' protocol..."
             // warning with Swift 6 concurrency checking set to "complete"
             // See: https://github.com/swiftlang/swift/issues/68943
-            try context.delete(model: CurrentWeatherModel.self, where: #Predicate { $0.dateTime < cutoffDate })
+            try context.delete(model: HistoryItemModel.self, where: #Predicate { $0.dateTime < cutoffDate })
         } catch {
 #if DEBUG
             print("Error trying to delete old History. \(error.localizedDescription)")

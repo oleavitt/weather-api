@@ -1,5 +1,5 @@
 //
-//  ForecastDayViewModel.swift
+//  ForecastDayRowViewModel.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 12/1/24.
@@ -7,8 +7,8 @@
 
 import Foundation
 
-/// A view model interface for the forecast days/hours views.
-struct ForcastDayViewModel: Identifiable, Hashable {
+/// A view model interface for the forecast days/hours row views.
+struct ForcastDayRowViewModel: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int
     let date: Date?
@@ -37,7 +37,7 @@ struct ForcastDayViewModel: Identifiable, Hashable {
     }
 }
 
-/// For the hours views.
+/// For each of the hours views and sunrise/set.
 struct ForecastHour: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int

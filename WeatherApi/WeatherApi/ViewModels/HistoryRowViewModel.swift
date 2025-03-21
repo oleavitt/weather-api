@@ -1,5 +1,5 @@
 //
-//  CurrentWeatherSummaryCellViewModel.swift
+//  HistoryRowViewModel.swift
 //  WeatherApi
 //
 //  Created by Oren Leavitt on 1/5/25.
@@ -8,14 +8,14 @@
 import SwiftUI
 
 /// A view model interface for the current summary and history cell views.
-class CurrentWeatherSummaryCellViewModel: ObservableObject {
-    private var data: CurrentWeatherModel
+struct HistoryRowViewModel {
+    private var data: HistoryItemModel
 
     @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
 
-    /// Initialize a new instance of CurrentWeatherSummaryCellViewModel.
-    /// - Parameter data: The parent view's CurrentWeatherModel from which this will get its data.
-    init(data: CurrentWeatherModel) {
+    /// Initialize a new instance of HistoryRowViewModel.
+    /// - Parameter data: A populated HistoryItemModel from which this will get its data.
+    init(data: HistoryItemModel) {
         self.data = data
     }
 
@@ -58,7 +58,7 @@ class CurrentWeatherSummaryCellViewModel: ObservableObject {
     }
 
     /// A summary read-off of all items in this view for Voice Over.
-    var a11yCurrentWeatherSummary: String {
+    var a11yHistoryRowSummary: String {
         // swiftlint:disable:next line_length
         String(localized: "\(data.location), \(data.dateTime.formatted(date: .abbreviated, time: .shortened)), \(temperature), \(data.condition)")
     }

@@ -171,7 +171,7 @@ extension WeatherViewModel {
 
     /// Parse out the Forecast days/hours list from the response data
     /// - Returns: Array of forecast day structures for the forecast days list
-    func forecastDays() -> [ForcastDayViewModel] {
+    func forecastDays() -> [ForcastDayRowViewModel] {
         hourFormatter.dateFormat = "ha"
         hourMinFormatter.dateFormat = "h:mma"
 
@@ -186,7 +186,7 @@ extension WeatherViewModel {
                 minTemp = forecastDay.day.mintempC
             }
 
-            return ForcastDayViewModel(epoch: forecastDay.dateEpoch,
+            return ForcastDayRowViewModel(epoch: forecastDay.dateEpoch,
                                        date: forecastDay.date,
                                        highTemp: maxTemp,
                                        lowTemp: minTemp,
@@ -253,18 +253,18 @@ extension WeatherViewModel {
         return hoursList
     }
 
-    /// Get a condensed version of current weather for the `CurrentWeatherSummaryCell` Forecast and History list
-    /// - Returns: CurrentWeatherModel populated with data
-    func currentWeatherModel() -> CurrentWeatherModel {
-        CurrentWeatherModel(location: locationName,
-                            dateTime: timeLastUpdatedDate,
-                            tempC: weatherDataSource.currentTemp(units: .celsius) ?? 0.0,
-                            tempF: weatherDataSource.currentTemp(units: .fahrenheit) ?? 0.0,
-                            icon: weatherData?.current?.condition.icon ?? "",
-                            condition: weatherData?.current?.condition.text ?? "",
-                            code: weatherData?.current?.condition.code ?? 0,
-                            uv: weatherData?.current?.uv ?? 0.0,
-                            isDay: isDay)
+    /// Gather current weather data to save to the History data store.
+    /// - Returns: HistoryItemModel populated with data.
+    func historyItemModel() -> HistoryItemModel {
+        HistoryItemModel(location: locationName,
+                         dateTime: timeLastUpdatedDate,
+                         tempC: weatherDataSource.currentTemp(units: .celsius) ?? 0.0,
+                         tempF: weatherDataSource.currentTemp(units: .fahrenheit) ?? 0.0,
+                         icon: weatherData?.current?.condition.icon ?? "",
+                         condition: weatherData?.current?.condition.text ?? "",
+                         code: weatherData?.current?.condition.code ?? 0,
+                         uv: weatherData?.current?.uv ?? 0.0,
+                         isDay: isDay)
     }
 
     /// Get the message for error if there is one.
