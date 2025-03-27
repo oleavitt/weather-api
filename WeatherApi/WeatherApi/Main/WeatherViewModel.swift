@@ -185,7 +185,6 @@ extension WeatherViewModel {
                 maxTemp = forecastDay.day.maxtempC
                 minTemp = forecastDay.day.mintempC
             }
-
             return ForcastDayRowViewModel(epoch: forecastDay.dateEpoch,
                                        date: forecastDay.date,
                                        highTemp: maxTemp,
@@ -211,8 +210,10 @@ extension WeatherViewModel {
             } else {
                 temp = hour.tempC
             }
+            let intHour = Calendar.current.component(.hour, from: hour.time ?? Date())
             return ForecastHour(epoch: hour.timeEpoch,
                                 time: hour.time,
+                                hour: intHour,
                                 temp: temp,
                                 conditionIconURL: URL.httpsURL(hour.condition.icon),
                                 condition: hour.condition.text,
@@ -220,26 +221,27 @@ extension WeatherViewModel {
         }
 
         // Insert the sunrise and sunset times
+        // Sunrise has an hour identifier of -1, sunset is -2
         if let sunriseTime = forecastDay.astro.sunrise {
             let sunrise = ForecastHour(epoch: Int(sunriseTime.timeIntervalSince1970),
                                        time: sunriseTime,
+                                       hour: ForecastHour.hourSunrise,
                                        temp: 0.0,
                                        conditionIconURL: nil,
                                        condition: "",
                                        chanceOfPrecip: 0,
-                                       sunRiseSetImage: "sunrise.fill",
-                                       isSunset: false)
+                                       sunRiseSetImage: "sunrise.fill")
             hoursList.append(sunrise)
         }
         if let sunsetTime = forecastDay.astro.sunset {
             let sunset = ForecastHour(epoch: Int(sunsetTime.timeIntervalSince1970),
                                       time: sunsetTime,
+                                      hour: ForecastHour.hourSunset,
                                       temp: 0.0,
                                       conditionIconURL: nil,
                                       condition: "",
                                       chanceOfPrecip: 0,
-                                      sunRiseSetImage: "sunset.fill",
-                                      isSunset: true)
+                                      sunRiseSetImage: "sunset.fill")
             hoursList.append(sunset)
         }
         hoursList = hoursList.sorted {
