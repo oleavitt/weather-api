@@ -28,9 +28,13 @@ When you have your key, set the API key in the app's Settings -> API Providers s
 
 | Here & Now (Current) | Forecast | Search Result |
 | -- | -- | -- |
-| ![Here & Now (Current)](https://github.com/user-attachments/assets/066151da-ca01-4f58-a128-27e0a3aa6c0b) | ![Forecast](https://github.com/user-attachments/assets/b1c37337-bb20-44ff-a13c-133e9c1b113d) | ![Search Result](https://github.com/user-attachments/assets/5368c4c9-d0b9-4eba-9099-478a84308d81) |
+| ![Here & Now (Current)](https://github.com/user-attachments/assets/393f9374-6844-4ce7-b8db-38cf17d53e62) | ![Forecast](https://github.com/user-attachments/assets/f451e377-9e2b-4f29-b23a-6f36e89caef3) | ![Search Result](https://github.com/user-attachments/assets/9d42f56f-458e-49ca-bc5b-3aaf005a6364) |
 
 | History | Settings | API Providers |
 | -- | -- | -- |
-| ![History](https://github.com/user-attachments/assets/6e8f6cff-86bf-4133-bffb-4205885104e9) | ![Settings](https://github.com/user-attachments/assets/58ef5908-2672-46de-8f34-9731d1768518) | ![API Providers](https://github.com/user-attachments/assets/84838337-0d38-4832-aef1-6a81d06284ae) |
+| ![History](https://github.com/user-attachments/assets/0d3e9b7d-b1ed-4b06-aa32-bcd08f07867f) | ![Settings](https://github.com/user-attachments/assets/fd9589e3-ac74-416a-b658-dbfda0916bac) | ![API Providers](https://github.com/user-attachments/assets/84838337-0d38-4832-aef1-6a81d06284ae) |
+
+
+
+
 
