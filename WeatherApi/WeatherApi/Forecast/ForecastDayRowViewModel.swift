@@ -20,6 +20,12 @@ struct ForcastDayRowViewModel: Identifiable, Hashable {
     let chanceOfSnow: Int
     let hours: [ForecastHour]
 
+    /// This day is today
+    var isToday: Bool {
+        let calendar = Calendar.current
+        return calendar.component(.day, from: .now) == calendar.component(.day, from: date ?? .now)
+    }
+
     /// Voice over label for forecast day
     var a11yLabel: String {
         (date ?? .now).formatted(date: .abbreviated, time: .omitted)
@@ -42,12 +48,20 @@ struct ForecastHour: Identifiable, Hashable {
     var id: Int { epoch }
     let epoch: Int
     let time: Date?
+    let hour: Int
     let temp: Double
     let conditionIconURL: URL?
     let condition: String
     let chanceOfPrecip: Int
     var sunRiseSetImage: String?
-    var isSunset = false
+
+    var isSunset: Bool {
+        hour == ForecastHour.hourSunset
+    }
+
+    // Distinct hour identifier codes for sunrise set in the hours list.
+    static let hourSunrise = -1
+    static let hourSunset = -2
 
     /// Indicates whether this hour is being used as a sunrise/set time
     private var isSunRiseSet: Bool {

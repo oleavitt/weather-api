@@ -43,14 +43,26 @@ struct ForecastDayRow: View {
             .accessibilityLabel(day.a11yLabel)
             .accessibilityHint(day.a11yDaySummary)
 
-            ScrollView(.horizontal) {
-                HStack {
-                    ForEach(day.hours, id: \.self) { hour in
-                        forecastHourView(hour: hour)
-                            .padding(.bottom, 4)
-                            .accessibilityElement()
-                            .accessibilityLabel(hour.a11yLabel)
-                            .accessibilityHint(hour.a11yHourSummary)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal) {
+                    HStack {
+                        ForEach(day.hours, id: \.self) { hour in
+                            forecastHourView(hour: hour)
+                                .id(hour.hour)
+                                .padding(.bottom, 4)
+                                .accessibilityElement()
+                                .accessibilityLabel(hour.a11yLabel)
+                                .accessibilityHint(hour.a11yHourSummary)
+                        }
+                    }
+                }
+                .onAppear {
+                    if day.isToday {
+                        // Scroll hours to the current hour
+                        proxy.scrollTo(Calendar.current.component(.hour, from: .now), anchor: .leading)
+                    } else {
+                        // Scroll to sunrise
+                        proxy.scrollTo(ForecastHour.hourSunrise, anchor: .leading)
                     }
                 }
             }
@@ -151,18 +163,21 @@ private extension ForecastDayRow {
                                       hours: [
                                         ForecastHour(epoch: 1733032800,
                                                      time: hourFormatter.date(from: "12am"),
+                                                     hour: 0,
                                                      temp: 65.1,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/night/113.png"),
                                                      condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
                                                      time: hourFormatter.date(from: "1am"),
+                                                     hour: 1,
                                                      temp: 66.2,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/night/113.png"),
                                                      condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
                                                      time: hourFormatter.date(from: "1:45am"),
+                                                     hour: ForecastHour.hourSunrise,
                                                      temp: 0,
                                                      conditionIconURL: nil,
                                                      condition: "Sunny",
@@ -170,18 +185,19 @@ private extension ForecastDayRow {
                                                      sunRiseSetImage: "sunrise.fill"),
                                         ForecastHour(epoch: 1733040000,
                                                      time: hourFormatter.date(from: "2am"),
+                                                     hour: 2,
                                                      temp: 67.5,
                                                      conditionIconURL: URL.httpsURL("/cdn.weatherapi.com/weather/64x64/day/113.png"),
                                                      condition: "Sunny",
                                                      chanceOfPrecip: 0),
                                         ForecastHour(epoch: 1733036400,
                                                      time: hourFormatter.date(from: "3:45am"),
+                                                     hour: ForecastHour.hourSunset,
                                                      temp: 0,
                                                      conditionIconURL: nil,
                                                      condition: "Sunny",
                                                      chanceOfPrecip: 0,
-                                                     sunRiseSetImage: "sunset.fill",
-                                                     isSunset: true)
+                                                     sunRiseSetImage: "sunset.fill")
                                       ])
     VStack {
         ScrollView {

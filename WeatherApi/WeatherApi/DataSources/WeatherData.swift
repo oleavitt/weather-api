@@ -168,4 +168,3 @@ struct ApiErrorData {
     var message: String
 }
 // swiftlint:enable identifier_name
-
