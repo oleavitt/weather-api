@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8C1708932D9F22F20019D77B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C1708922D9F22F20019D77B /* Colors.xcassets */; };
 		8C52D4C02CC8C0A300AA558C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8C52D4BF2CC8C0A300AA558C /* README.md */; };
 		8CE07B272D8E6809002950DC /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF32D8E6809002950DC /* AppSettings.swift */; };
 		8CE07B282D8E6809002950DC /* Bundle+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */; };
@@ -67,6 +68,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C1708922D9F22F20019D77B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8C52D4922CC8B83400AA558C /* WeatherApi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C52D4A22CC8B83600AA558C /* WeatherApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C52D4AC2CC8B83600AA558C /* WeatherApiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherApiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +230,7 @@
 				8CE07B0A2D8E6809002950DC /* Assets.xcassets */,
 				8CE07B0B2D8E6809002950DC /* Localizable.xcstrings */,
 				8CE07B0C2D8E6809002950DC /* Theme.swift */,
+				8C1708922D9F22F20019D77B /* Colors.xcassets */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -447,6 +450,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8C1708932D9F22F20019D77B /* Colors.xcassets in Resources */,
 				8CE07B4B2D8E6809002950DC /* Preview Assets.xcassets in Resources */,
 				8CE07B4C2D8E6809002950DC /* Assets.xcassets in Resources */,
 				8CE07B4D2D8E6809002950DC /* Localizable.xcstrings in Resources */,
