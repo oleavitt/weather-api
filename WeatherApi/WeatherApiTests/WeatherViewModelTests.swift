@@ -64,20 +64,20 @@ final class WeatherViewModelTests: XCTestCase {
     }
 
     func validateViewModelFields(viewModel: WeatherViewModel) {
-        XCTAssertEqual(viewModel.locationName, "Dallas, Texas")
-        XCTAssertEqual(viewModel.tempString, "64°")
+        XCTAssertEqual(viewModel.locationName, "Highland Park, Texas")
+        XCTAssertEqual(viewModel.tempString, "54°")
         XCTAssertEqual(viewModel.conditionsIconUrl?.absoluteString,
-                       "https://cdn.weatherapi.com/weather/64x64/night/122.png")
+                       "https://cdn.weatherapi.com/weather/64x64/day/122.png")
         XCTAssertEqual(viewModel.condition, "Overcast")
-        XCTAssertEqual(viewModel.feelsLike, "Feels like 64°")
-        XCTAssertEqual(viewModel.humidity, "58%")
-        XCTAssertEqual(viewModel.pressure, "29.76 inHg")
+        XCTAssertEqual(viewModel.feelsLike, "Feels like 49.9°")
+        XCTAssertEqual(viewModel.humidity, "88%")
+        XCTAssertEqual(viewModel.pressure, "29.94 inHg")
 
         let forecastDays = viewModel.forecastDays()
         XCTAssertEqual(forecastDays.count, 3)
         if let forecastDayOne = forecastDays.first {
-            XCTAssertEqual(forecastDayOne.highTemp, 71.6)
-            XCTAssertEqual(forecastDayOne.lowTemp, 54.1)
+            XCTAssertEqual(forecastDayOne.highTemp, 53.8)
+            XCTAssertEqual(forecastDayOne.lowTemp, 44.4)
             XCTAssertEqual(forecastDayOne.hours.count, 26)
 //            XCTAssertEqual(forecastDayOne.hours[0].time, "12AM")
 //            XCTAssertEqual(forecastDayOne.hours[1].time, "1AM")
