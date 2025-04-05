@@ -75,6 +75,30 @@ class WeatherApiComDataSource: WeatherDataSource {
                             longitude: location.lon)
     }
 
+    /// Alerts for this weather report if any.
+    ///
+    /// This will contain one or more alerts if any are active in the forecast area.
+    /// Empty or nil if none.
+    var alerts: WeatherDataAlerts? {
+        guard let wapiAlerts = apiModel?.alerts?.alert else { return nil }
+        let alerts = wapiAlerts.compactMap { wapiAlert in
+            WeatherDataAlert(category: wapiAlert.category,
+                             msgtype: wapiAlert.msgtype,
+                             note: wapiAlert.note,
+                             headline: wapiAlert.headline,
+                             effective: wapiAlert.effective,
+                             event: wapiAlert.event,
+                             expires: wapiAlert.expires,
+                             desc: wapiAlert.desc,
+                             instruction: wapiAlert.instruction,
+                             urgency: wapiAlert.urgency,
+                             severity: wapiAlert.severity,
+                             areas: wapiAlert.areas,
+                             certainty: wapiAlert.certainty)
+        }
+        return WeatherDataAlerts(alerts: alerts)
+    }
+
     /// The current temperature in user's selected temperature units (F or C).
     func currentTemp(units: TempUnits) -> Double? {
         (units == .fahrenheit) ? apiModel?.current?.tempF : apiModel?.current?.tempC

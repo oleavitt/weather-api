@@ -16,6 +16,7 @@ struct WeatherData {
     var current: CurrentData?
     var forecast: ForecastData?
     var error: ApiErrorData?
+    var alerts: WeatherDataAlerts?
 }
 
 // MARK: API Location
@@ -166,5 +167,26 @@ struct AstroData {
 struct ApiErrorData {
     var code: Int
     var message: String
+}
+
+// MARK: API Alerts
+struct WeatherDataAlerts {
+    let alerts: [WeatherDataAlert]
+}
+
+struct WeatherDataAlert {
+    let category: String?
+    let msgtype: String?
+    let note: String?
+    let headline: String?
+    let effective: String?
+    let event: String?
+    let expires: String?
+    let desc: String?
+    let instruction: String?
+    let urgency: String?
+    let severity: String?
+    let areas: String?
+    let certainty: String?
 }
 // swiftlint:enable identifier_name

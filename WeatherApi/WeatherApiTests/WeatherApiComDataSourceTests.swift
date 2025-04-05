@@ -34,6 +34,17 @@ final class WeatherApiComDataSourceTests: XCTestCase {
                 XCTAssertEqual(dataSource.currentTemp(units: .fahrenheit), 54)
                 XCTAssertEqual(weatherData.forecast?.forecastDays.count, 3)
 
+                // This should have 4 alerts
+                XCTAssertNotNil(dataSource.alerts)
+                XCTAssertEqual(dataSource.alerts?.alerts.count, 4)
+
+                let alert1 = dataSource.alerts?.alerts.first
+
+                XCTAssertEqual(alert1?.category, "Met")
+                XCTAssertEqual(alert1?.msgtype, "Alert")
+                XCTAssertEqual(alert1?.note, "")
+                XCTAssertEqual(alert1?.event, "Flood Warning")
+
             case .failure(let error):
                 XCTFail("Error: \(error)")
             }

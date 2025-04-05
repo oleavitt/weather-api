@@ -15,6 +15,7 @@ struct WeatherApiModel: Decodable {
     var current: Current?
     var forecast: Forecast?
     var error: ApiError?
+    var alerts: WAPIAlerts?
 }
 
 struct Current: Decodable {
@@ -294,8 +295,30 @@ struct Location: Codable {
     }
 }
 
+// MARK: - Errors
 struct ApiError: Decodable {
     var code: Int
     var message: String
+}
+
+// MARK: - Alerts
+struct WAPIAlerts: Decodable {
+    let alert: [WAPIAlert]
+}
+
+struct WAPIAlert: Decodable {
+    let category: String?
+    let msgtype: String?
+    let note: String?
+    let headline: String?
+    let effective: String?
+    let event: String?
+    let expires: String?
+    let desc: String?
+    let instruction: String?
+    let urgency: String?
+    let severity: String?
+    let areas: String?
+    let certainty: String?
 }
 // swiftlint:enable identifier_name
