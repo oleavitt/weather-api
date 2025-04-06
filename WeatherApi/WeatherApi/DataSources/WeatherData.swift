@@ -16,6 +16,7 @@ struct WeatherData {
     var current: CurrentData?
     var forecast: ForecastData?
     var error: ApiErrorData?
+    var alerts: WeatherDataAlerts?
 }
 
 // MARK: API Location

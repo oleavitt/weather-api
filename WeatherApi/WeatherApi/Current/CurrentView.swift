@@ -13,6 +13,8 @@ struct CurrentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @ObservedObject var locationManager: LocationManager
 
+    @State private var selectedAlert: WeatherDataAlert?
+
     var body: some View {
         VStack {
             ScrollView {
@@ -24,6 +26,9 @@ struct CurrentView: View {
                     .symbolVariant(.fill)
                     .labelStyle(.iconOnly)
                     .clipShape(.capsule)
+                }
+                if viewModel.hasAlerts {
+                    alertsView
                 }
                 BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
                     .accessibilityLabel(viewModel.condition)
@@ -57,12 +62,36 @@ struct CurrentView: View {
         .foregroundColor(.white)
         .font(.system(size: 18))
         .fontWeight(.light)
+        .sheet(item: $selectedAlert, content: { alert in
+            if let allAlerts = viewModel.alerts {
+                AlertsView(alert.id, alerts: allAlerts)
+            }
+        })
     }
 }
 
 // MARK: - Private
 
 private extension CurrentView {
+    /// Alerts indicator view
+    var alertsView: some View {
+        VStack {
+            ForEach(viewModel.alertsList) { alert in
+                Button {
+                    selectedAlert = alert
+                } label: {
+                    Label("Alert: \(alert.event ?? "")", systemImage: "exclamationmark.triangle.fill")
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                }
+                .padding(.vertical, 4)
+                .background(alert.level.color)
+                .clipShape(Capsule())
+            }
+        }
+        .padding(.horizontal)
+    }
+
     /// Temperature subview
     var temperatureView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {

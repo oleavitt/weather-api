@@ -29,10 +29,22 @@ final class WeatherApiComDataSourceTests: XCTestCase {
             switch result {
             case .success(let weatherData):
                 XCTAssertNotNil(weatherData)
-                XCTAssertEqual(dataSource.locationData?.name, "Dallas")
-                XCTAssertEqual(dataSource.currentTemp(units: .celsius), 17.8)
-                XCTAssertEqual(dataSource.currentTemp(units: .fahrenheit), 64)
+                XCTAssertEqual(dataSource.locationData?.name, "Highland Park")
+                XCTAssertEqual(dataSource.currentTemp(units: .celsius), 12.2)
+                XCTAssertEqual(dataSource.currentTemp(units: .fahrenheit), 54)
                 XCTAssertEqual(weatherData.forecast?.forecastDays.count, 3)
+
+                // This should have 4 alerts
+                XCTAssertNotNil(weatherData.alerts)
+                XCTAssertEqual(weatherData.alerts?.alerts.count, 4)
+
+                let alert1 = weatherData.alerts?.alerts.first
+
+                // Make sure we have some expected content in the first alert
+                XCTAssertEqual(alert1?.category, "Met")
+                XCTAssertEqual(alert1?.msgtype, "Alert")
+                XCTAssertEqual(alert1?.note, "")
+                XCTAssertEqual(alert1?.event, "Flood Warning")
 
             case .failure(let error):
                 XCTFail("Error: \(error)")

@@ -65,6 +65,26 @@
         }
       }
     },
+    "alert %lld of %lld" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert %1$lld of %2$lld"
+          }
+        }
+      }
+    },
+    "Alert: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert: %@"
+          }
+        }
+      }
+    },
     "am" : {
       "localizations" : {
         "en" : {
@@ -91,6 +111,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "API Providers"
+          }
+        }
+      }
+    },
+    "areas-affected" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Areas affected"
+          }
+        }
+      }
+    },
+    "close" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Close"
           }
         }
       }
@@ -205,6 +245,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Delete this item?"
+          }
+        }
+      }
+    },
+    "description" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Description"
           }
         }
       }
@@ -469,6 +519,16 @@
         }
       }
     },
+    "instructions" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Instructions"
+          }
+        }
+      }
+    },
     "kph" : {
       "comment" : "Units kilometers per hour",
       "extractionState" : "manual",
@@ -519,6 +579,26 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "No wind"
+          }
+        }
+      }
+    },
+    "no-alerts" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "No alerts to show."
+          }
+        }
+      }
+    },
+    "note" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
           }
         }
       }

@@ -121,6 +121,7 @@ private extension WeatherApiComDataSource {
         weatherData.current = mapCurrentData(sourceData)
         weatherData.forecast = mapForecastData(sourceData)
         weatherData.error = mapApiErrorData(sourceData)
+        weatherData.alerts = mapAlertsData(sourceData)
 
         return weatherData
     }
@@ -268,6 +269,27 @@ private extension WeatherApiComDataSource {
 
         return ApiErrorData(code: srcError.code,
                             message: srcError.message)
+    }
+
+    func mapAlertsData(_ sourceData: WeatherApiModel) -> WeatherDataAlerts? {
+        guard let wapiAlerts = sourceData.alerts?.alert else { return nil }
+        let alerts = wapiAlerts.compactMap { wapiAlert in
+            WeatherDataAlert(id: UUID(),
+                             category: wapiAlert.category,
+                             msgtype: wapiAlert.msgtype,
+                             note: wapiAlert.note,
+                             headline: wapiAlert.headline,
+                             effective: wapiAlert.effective,
+                             event: wapiAlert.event,
+                             expires: wapiAlert.expires,
+                             desc: wapiAlert.desc,
+                             instruction: wapiAlert.instruction,
+                             urgency: wapiAlert.urgency,
+                             severity: wapiAlert.severity,
+                             areas: wapiAlert.areas,
+                             certainty: wapiAlert.certainty)
+        }
+        return WeatherDataAlerts(alerts: alerts)
     }
 
     func riseSetDate(date: String, time: String) -> Date? {
