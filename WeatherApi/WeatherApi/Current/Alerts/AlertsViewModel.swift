@@ -77,12 +77,16 @@ final class AlertsViewModel: ObservableObject {
         alert.desc ?? ""
     }
 
+    var hasNote: Bool {
+        !note.isEmpty
+    }
+
     var note: String {
         alert.note ?? ""
     }
 
-    var hasNote: Bool {
-        !note.isEmpty
+    var hasInstructions: Bool {
+        !instructions.isEmpty
     }
 
     var instructions: String {

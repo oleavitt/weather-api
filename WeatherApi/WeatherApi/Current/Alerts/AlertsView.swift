@@ -57,8 +57,10 @@ struct AlertsView: View {
                 Divider()
                 alertContentSection("note", details: viewModel.note)
             }
-            Divider()
-            alertContentSection("instructions", details: viewModel.instructions)
+            if viewModel.hasInstructions {
+                Divider()
+                alertContentSection("instructions", details: viewModel.instructions)
+            }
         }
     }
 
