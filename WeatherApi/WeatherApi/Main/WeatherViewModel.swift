@@ -255,6 +255,16 @@ extension WeatherViewModel {
         return hoursList
     }
 
+    /// Any active alerts for this forecast area.
+    var alerts: [WeatherDataAlert] {
+        weatherDataSource.alerts?.alerts ?? []
+    }
+
+    /// Return true if there are alerts to show.
+    var hasAlerts: Bool {
+        !alerts.isEmpty
+    }
+
     /// Gather current weather data to save to the History data store.
     /// - Returns: HistoryItemModel populated with data.
     func historyItemModel() -> HistoryItemModel {

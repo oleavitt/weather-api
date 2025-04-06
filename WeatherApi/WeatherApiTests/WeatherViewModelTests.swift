@@ -72,6 +72,8 @@ final class WeatherViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.feelsLike, "Feels like 49.9°")
         XCTAssertEqual(viewModel.humidity, "88%")
         XCTAssertEqual(viewModel.pressure, "29.94 inHg")
+        XCTAssertTrue(viewModel.hasAlerts)
+        XCTAssertEqual(viewModel.alerts.count, 4)
 
         let forecastDays = viewModel.forecastDays()
         XCTAssertEqual(forecastDays.count, 3)

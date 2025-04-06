@@ -65,6 +65,16 @@
         }
       }
     },
+    "Alert: %@" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Alert: %@"
+          }
+        }
+      }
+    },
     "am" : {
       "localizations" : {
         "en" : {

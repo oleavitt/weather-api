@@ -25,6 +25,9 @@ struct CurrentView: View {
                     .labelStyle(.iconOnly)
                     .clipShape(.capsule)
                 }
+                if viewModel.hasAlerts {
+                    alertsView
+                }
                 BasicCachedAsyncImage(url: viewModel.conditionsIconUrl)
                     .accessibilityLabel(viewModel.condition)
                 HStack {
@@ -63,6 +66,25 @@ struct CurrentView: View {
 // MARK: - Private
 
 private extension CurrentView {
+    /// Alerts indicator view
+    var alertsView: some View {
+        VStack {
+            ForEach(viewModel.alerts) { alert in
+                Button {
+                    print("Alerts selected: Show alert details")
+                } label: {
+                    Label("Alert: \(alert.event ?? "")", systemImage: "exclamationmark.triangle.fill")
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity)
+                }
+                .padding(.vertical, 4)
+                .background(Color.red)
+                .clipShape(Capsule())
+            }
+        }
+        .padding(.horizontal)
+    }
+
     /// Temperature subview
     var temperatureView: some View {
         HStack(alignment: .lastTextBaseline, spacing: 0) {

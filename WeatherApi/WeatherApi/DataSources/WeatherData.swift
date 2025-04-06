@@ -174,7 +174,8 @@ struct WeatherDataAlerts {
     let alerts: [WeatherDataAlert]
 }
 
-struct WeatherDataAlert {
+struct WeatherDataAlert: Identifiable {
+    let id = UUID()
     let category: String?
     let msgtype: String?
     let note: String?

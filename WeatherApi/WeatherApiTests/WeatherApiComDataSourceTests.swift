@@ -40,6 +40,7 @@ final class WeatherApiComDataSourceTests: XCTestCase {
 
                 let alert1 = dataSource.alerts?.alerts.first
 
+                // Make sure we have some expected content in the first alert
                 XCTAssertEqual(alert1?.category, "Met")
                 XCTAssertEqual(alert1?.msgtype, "Alert")
                 XCTAssertEqual(alert1?.note, "")
