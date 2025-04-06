@@ -1,7 +1,7 @@
 # Weather API app
 
 ## Overview
-An iOS weather app developed using SwiftUI that displays current weather and forecasts for a given location or place. It uses the "weatherapi.com" RESTful API as its data source.
+An iOS weather app developed using SwiftUI that displays current weather and forecasts for a given location or place. It uses the "weatherapi.com" RESTful API as its data source. Any active alerts for the region will be shown.
 
 ### Requirements
 - iOS 17.6 or later
@@ -34,7 +34,7 @@ When you have your key, set the API key in the app's Settings -> API Providers s
 | -- | -- | -- |
 | ![History](https://github.com/user-attachments/assets/0d3e9b7d-b1ed-4b06-aa32-bcd08f07867f) | ![Settings](https://github.com/user-attachments/assets/fd9589e3-ac74-416a-b658-dbfda0916bac) | ![API Providers](https://github.com/user-attachments/assets/84838337-0d38-4832-aef1-6a81d06284ae) |
 
-
-
-
+| Current w/Alerts | Alert Details |
+| -- | -- |
+| ![Screenshot 2025-04-06 at 3 19 59 PM](https://github.com/user-attachments/assets/a6d204d1-86c4-4912-96f4-912d23f18a1b) | ![Screenshot 2025-04-06 at 3 20 13 PM](https://github.com/user-attachments/assets/80d6a6fb-5e8d-42af-af9c-e9924d2fecfa) |
 
