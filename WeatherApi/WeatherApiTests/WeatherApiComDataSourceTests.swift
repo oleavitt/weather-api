@@ -35,10 +35,10 @@ final class WeatherApiComDataSourceTests: XCTestCase {
                 XCTAssertEqual(weatherData.forecast?.forecastDays.count, 3)
 
                 // This should have 4 alerts
-                XCTAssertNotNil(dataSource.alerts)
-                XCTAssertEqual(dataSource.alerts?.alerts.count, 4)
+                XCTAssertNotNil(weatherData.alerts)
+                XCTAssertEqual(weatherData.alerts?.alerts.count, 4)
 
-                let alert1 = dataSource.alerts?.alerts.first
+                let alert1 = weatherData.alerts?.alerts.first
 
                 // Make sure we have some expected content in the first alert
                 XCTAssertEqual(alert1?.category, "Met")

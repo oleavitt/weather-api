@@ -63,7 +63,9 @@ struct CurrentView: View {
         .font(.system(size: 18))
         .fontWeight(.light)
         .sheet(item: $selectedAlert, content: { alert in
-            AlertsView(alert.id, alerts: viewModel.alerts)
+            if let allAlerts = viewModel.alerts {
+                AlertsView(alert.id, alerts: allAlerts)
+            }
         })
     }
 }
@@ -74,7 +76,7 @@ private extension CurrentView {
     /// Alerts indicator view
     var alertsView: some View {
         VStack {
-            ForEach(viewModel.alerts) { alert in
+            ForEach(viewModel.alertsList) { alert in
                 Button {
                     selectedAlert = alert
                 } label: {

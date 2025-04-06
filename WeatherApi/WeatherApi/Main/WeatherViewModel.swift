@@ -256,13 +256,18 @@ extension WeatherViewModel {
     }
 
     /// Any active alerts for this forecast area.
-    var alerts: [WeatherDataAlert] {
+    var alerts: WeatherDataAlerts? {
+        weatherData?.alerts
+    }
+
+    // The unwrapped list of alerts or an empty array
+    var alertsList: [WeatherDataAlert] {
         weatherData?.alerts?.alerts ?? []
     }
 
     /// Return true if there are alerts to show.
     var hasAlerts: Bool {
-        !alerts.isEmpty
+        !(alerts?.alerts.isEmpty ?? false)
     }
 
     /// Gather current weather data to save to the History data store.

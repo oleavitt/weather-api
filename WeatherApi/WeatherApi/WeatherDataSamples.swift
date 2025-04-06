@@ -12,8 +12,8 @@ import Foundation
 // Disable line_length in this file for the sample data below
 extension WeatherDataAlerts {
     /// Sample data for Previews
-    static var sample: [WeatherDataAlert] {
-        [
+    static var sample: WeatherDataAlerts {
+        WeatherDataAlerts(alerts: [
             WeatherDataAlert(id: UUID(), category: "Met",
                              msgtype: "Alert",
                              note: "",
@@ -53,7 +53,7 @@ extension WeatherDataAlerts {
                              severity: "Severe",
                              areas: "Hunt, TX; Rockwall, TX",
                              certainty: "Observed")
-        ]
+        ])
     }
 }
 // swiftlint:enable line_length

@@ -11,6 +11,7 @@
 		8C52D4C02CC8C0A300AA558C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8C52D4BF2CC8C0A300AA558C /* README.md */; };
 		8C5BE35D2DA2140E0001F16E /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35C2DA2140E0001F16E /* AlertsView.swift */; };
 		8C5BE35F2DA21B880001F16E /* WeatherDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */; };
+		8CC704C72DA2E7FF0039B1D0 /* AlertsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */; };
 		8CE07B272D8E6809002950DC /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF32D8E6809002950DC /* AppSettings.swift */; };
 		8CE07B282D8E6809002950DC /* Bundle+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */; };
 		8CE07B292D8E6809002950DC /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF52D8E6809002950DC /* Units.swift */; };
@@ -77,6 +78,7 @@
 		8C52D4BF2CC8C0A300AA558C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
 		8C5BE35C2DA2140E0001F16E /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
 		8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSamples.swift; sourceTree = "<group>"; };
+		8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewModel.swift; sourceTree = "<group>"; };
 		8CE07AF32D8E6809002950DC /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decodable.swift"; sourceTree = "<group>"; };
 		8CE07AF52D8E6809002950DC /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
@@ -175,6 +177,15 @@
 				8C52D4AC2CC8B83600AA558C /* WeatherApiUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		8CC704C52DA2E7D30039B1D0 /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				8C5BE35C2DA2140E0001F16E /* AlertsView.swift */,
+				8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 		8CE07AF72D8E6809002950DC /* Common */ = {
@@ -281,7 +292,7 @@
 			children = (
 				8CE07B192D8E6809002950DC /* CurrentView.swift */,
 				8CE07B1A2D8E6809002950DC /* DetailChip.swift */,
-				8C5BE35C2DA2140E0001F16E /* AlertsView.swift */,
+				8CC704C52DA2E7D30039B1D0 /* Alerts */,
 				8CE07B532D8E69FF002950DC /* Wind */,
 			);
 			path = Current;
@@ -530,6 +541,7 @@
 				8CE07B392D8E6809002950DC /* HistoryRowViewModel.swift in Sources */,
 				8CE07B3A2D8E6809002950DC /* WeatherViewModel.swift in Sources */,
 				8CE07B3B2D8E6809002950DC /* WindViewModel.swift in Sources */,
+				8CC704C72DA2E7FF0039B1D0 /* AlertsViewModel.swift in Sources */,
 				8CE07B3C2D8E6809002950DC /* CardStyle.swift in Sources */,
 				8CE07B3D2D8E6809002950DC /* ApiProviderView.swift in Sources */,
 				8CE07B3E2D8E6809002950DC /* CachedAsyncImage.swift in Sources */,

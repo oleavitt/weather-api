@@ -11,16 +11,10 @@ import SwiftUI
 struct AlertsView: View {
     @Environment(\.dismiss) var dismiss
 
-    private let alerts: [WeatherDataAlert]
-    @State private var selectedAlertIndex: Int
+    @StateObject private var viewModel: AlertsViewModel
 
-    init(_ selectedAlertId: UUID, alerts: [WeatherDataAlert]) {
-        self.alerts = alerts
-        _selectedAlertIndex = .init(initialValue: self.alerts.firstIndex(where: { $0.id == selectedAlertId }) ?? 0)
-    }
-
-    private var alert: WeatherDataAlert {
-        alerts[selectedAlertIndex]
+    init(_ selectedAlertId: UUID, alerts: WeatherDataAlerts) {
+        _viewModel = .init(wrappedValue: AlertsViewModel(allAlerts: alerts, selectedAlertId: selectedAlertId))
     }
 
     var body: some View {
@@ -33,15 +27,15 @@ struct AlertsView: View {
 
         NavigationStack {
             VStack {
-                if alerts.isEmpty {
-                    Text("no-alerts")
-                } else {
+                if viewModel.hasAlerts {
                     alertContent
                         .gesture(dragGesture)
+                } else {
+                    Text("no-alerts")
                 }
             }
             .padding(.horizontal)
-            .navigationTitle("alert \(selectedAlertIndex + 1) of \(alerts.count)")
+            .navigationTitle(viewModel.navigationTitle)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("close", systemImage: "xmark.circle.fill") {
@@ -54,36 +48,36 @@ struct AlertsView: View {
     @ViewBuilder
     private var alertContent: some View {
         HStack {
-            Text(alert.msgtype ?? "")
-            Text(alert.severity ?? "")
+            Text(viewModel.messageType)
+            Text(viewModel.severity)
                 .frame(maxWidth: .infinity, alignment: .center)
-            Text(alert.urgency ?? "")
+            Text(viewModel.urgency)
                 .frame(maxWidth: .infinity, alignment: .center)
-            Text(alert.certainty ?? "")
+            Text(viewModel.certainty)
                 .frame(alignment: .trailing)
         }
-        Text(alert.event ?? "")
+        Text(viewModel.event)
             .fontWeight(.bold)
-        Text(alert.headline ?? "")
+        Text(viewModel.headline)
         Divider()
         ScrollView {
             Text("areas-affected")
                 .fontWeight(.bold)
-            Text(alert.areas ?? "")
+            Text(viewModel.areas)
             Divider()
             Text("description")
                 .fontWeight(.bold)
-            Text(alert.desc ?? "")
-            if let note = alert.note, !note.isEmpty {
+            Text(viewModel.detailedDescription)
+            if viewModel.hasNote {
                 Divider()
                 Text("note")
                     .fontWeight(.bold)
-                Text(note)
+                Text(viewModel.note)
             }
             Divider()
             Text("instructions")
                 .fontWeight(.bold)
-            Text(alert.instruction ?? "")
+            Text(viewModel.instructions)
         }
     }
 }
@@ -101,23 +95,11 @@ private extension AlertsView {
         if abs(deltaY) < 30 {
             if deltaX < 150 {
                 // Swipe right
-                nextAlert()
+                viewModel.nextAlert()
             } else if deltaX > 150 {
                 // Swipe left
-                previousAlert()
+                viewModel.previousAlert()
             }
-        }
-    }
-
-    func nextAlert() {
-        if selectedAlertIndex + 1 < alerts.count {
-            selectedAlertIndex += 1
-        }
-    }
-
-    func previousAlert() {
-        if selectedAlertIndex > 0 {
-            selectedAlertIndex -= 1
         }
     }
 }
@@ -125,5 +107,5 @@ private extension AlertsView {
 // MARK: - Preview
 
 #Preview {
-    AlertsView(WeatherDataAlerts.sample[0].id, alerts: WeatherDataAlerts.sample)
+    AlertsView(WeatherDataAlerts.sample.alerts[0].id, alerts: WeatherDataAlerts.sample)
 }
