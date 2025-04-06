@@ -593,6 +593,16 @@
         }
       }
     },
+    "note" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Note"
+          }
+        }
+      }
+    },
     "pm" : {
       "localizations" : {
         "en" : {

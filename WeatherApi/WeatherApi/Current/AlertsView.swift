@@ -11,14 +11,13 @@ import SwiftUI
 struct AlertsView: View {
     @Environment(\.dismiss) var dismiss
 
-    init(_ selectedAlertId: UUID, alerts: [WeatherDataAlert]) {
-        self.selectedAlertId = selectedAlertId
-        self.alerts = alerts
-    }
-
-    private let selectedAlertId: UUID
     private let alerts: [WeatherDataAlert]
-    @State private var selectedAlertIndex = 0
+    @State private var selectedAlertIndex: Int
+
+    init(_ selectedAlertId: UUID, alerts: [WeatherDataAlert]) {
+        self.alerts = alerts
+        _selectedAlertIndex = .init(initialValue: self.alerts.firstIndex(where: { $0.id == selectedAlertId }) ?? 0)
+    }
 
     private var alert: WeatherDataAlert {
         alerts[selectedAlertIndex]
@@ -42,9 +41,8 @@ struct AlertsView: View {
                 }
             }
             .padding(.horizontal)
-            .onAppear {
-                selectedAlertIndex = self.alerts.firstIndex(where: { $0.id == selectedAlertId }) ?? 0
-            }
+            .navigationTitle("alert \(selectedAlertIndex + 1) of \(alerts.count)")
+            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("close", systemImage: "xmark.circle.fill") {
                     dismiss()
@@ -55,13 +53,12 @@ struct AlertsView: View {
 
     @ViewBuilder
     private var alertContent: some View {
-        Text("alert \(selectedAlertIndex + 1) of \(alerts.count)")
-            .fontWeight(.light)
-            .foregroundStyle(.secondary)
-        Divider()
         HStack {
             Text(alert.msgtype ?? "")
-            Spacer()
+            Text(alert.severity ?? "")
+                .frame(maxWidth: .infinity, alignment: .center)
+            Text(alert.urgency ?? "")
+                .frame(maxWidth: .infinity, alignment: .center)
             Text(alert.certainty ?? "")
                 .frame(alignment: .trailing)
         }
@@ -77,6 +74,12 @@ struct AlertsView: View {
             Text("description")
                 .fontWeight(.bold)
             Text(alert.desc ?? "")
+            if let note = alert.note, !note.isEmpty {
+                Divider()
+                Text("note")
+                    .fontWeight(.bold)
+                Text(note)
+            }
             Divider()
             Text("instructions")
                 .fontWeight(.bold)
