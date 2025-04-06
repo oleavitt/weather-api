@@ -46,8 +46,7 @@ struct AlertsView: View {
     @ViewBuilder
     private var alertContent: some View {
         alertBanner
-        Text(viewModel.event)
-            .fontWeight(.bold)
+        alertEvent
         Text(viewModel.headline)
         Divider()
         ScrollView {
@@ -73,6 +72,16 @@ struct AlertsView: View {
             Text(viewModel.certainty)
                 .frame(alignment: .trailing)
         }
+    }
+
+    private var alertEvent: some View {
+        Label(viewModel.event, systemImage: "exclamationmark.triangle.fill")
+            .fontWeight(.bold)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 4)
+            .background(viewModel.alertColor)
+            .clipShape(Capsule())
+            .foregroundColor(.white)
     }
 
     @ViewBuilder

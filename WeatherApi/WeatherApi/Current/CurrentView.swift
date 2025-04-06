@@ -85,7 +85,7 @@ private extension CurrentView {
                         .frame(maxWidth: .infinity)
                 }
                 .padding(.vertical, 4)
-                .background(Color.red)
+                .background(alert.level.color)
                 .clipShape(Capsule())
             }
         }

@@ -5,7 +5,7 @@
 //  Created by Oren Leavitt on 4/6/25.
 //
 
-import Foundation
+import SwiftUI
 
 final class AlertsViewModel: ObservableObject {
     @Published var selectedAlertIndex: Int
@@ -87,5 +87,9 @@ final class AlertsViewModel: ObservableObject {
 
     var instructions: String {
         alert.instruction ?? ""
+    }
+
+    var alertColor: Color {
+        alert.level.color
     }
 }

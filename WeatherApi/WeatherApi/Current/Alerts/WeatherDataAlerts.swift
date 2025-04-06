@@ -28,4 +28,8 @@ struct WeatherDataAlert: Identifiable {
     let severity: String?
     let areas: String?
     let certainty: String?
+
+    var level: AlertLevel {
+        AlertLevel(rawValue: severity?.lowercased() ?? "minor") ?? .minor
+    }
 }
