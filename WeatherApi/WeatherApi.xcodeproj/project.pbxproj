@@ -12,6 +12,7 @@
 		8C5BE35D2DA2140E0001F16E /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35C2DA2140E0001F16E /* AlertsView.swift */; };
 		8C5BE35F2DA21B880001F16E /* WeatherDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */; };
 		8CC704C72DA2E7FF0039B1D0 /* AlertsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */; };
+		8CC704C92DA2FBA70039B1D0 /* WeatherDataAlerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CC704C82DA2FBA70039B1D0 /* WeatherDataAlerts.swift */; };
 		8CE07B272D8E6809002950DC /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF32D8E6809002950DC /* AppSettings.swift */; };
 		8CE07B282D8E6809002950DC /* Bundle+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */; };
 		8CE07B292D8E6809002950DC /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF52D8E6809002950DC /* Units.swift */; };
@@ -79,6 +80,7 @@
 		8C5BE35C2DA2140E0001F16E /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
 		8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSamples.swift; sourceTree = "<group>"; };
 		8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsViewModel.swift; sourceTree = "<group>"; };
+		8CC704C82DA2FBA70039B1D0 /* WeatherDataAlerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataAlerts.swift; sourceTree = "<group>"; };
 		8CE07AF32D8E6809002950DC /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decodable.swift"; sourceTree = "<group>"; };
 		8CE07AF52D8E6809002950DC /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
@@ -184,6 +186,7 @@
 			children = (
 				8C5BE35C2DA2140E0001F16E /* AlertsView.swift */,
 				8CC704C62DA2E7FF0039B1D0 /* AlertsViewModel.swift */,
+				8CC704C82DA2FBA70039B1D0 /* WeatherDataAlerts.swift */,
 			);
 			path = Alerts;
 			sourceTree = "<group>";
@@ -541,6 +544,7 @@
 				8CE07B392D8E6809002950DC /* HistoryRowViewModel.swift in Sources */,
 				8CE07B3A2D8E6809002950DC /* WeatherViewModel.swift in Sources */,
 				8CE07B3B2D8E6809002950DC /* WindViewModel.swift in Sources */,
+				8CC704C92DA2FBA70039B1D0 /* WeatherDataAlerts.swift in Sources */,
 				8CC704C72DA2E7FF0039B1D0 /* AlertsViewModel.swift in Sources */,
 				8CE07B3C2D8E6809002950DC /* CardStyle.swift in Sources */,
 				8CE07B3D2D8E6809002950DC /* ApiProviderView.swift in Sources */,
