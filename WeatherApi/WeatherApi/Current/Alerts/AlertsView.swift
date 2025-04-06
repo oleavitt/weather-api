@@ -18,18 +18,16 @@ struct AlertsView: View {
     }
 
     var body: some View {
-        let dragGesture = DragGesture()
-            .onEnded { value in
-                withAnimation {
-                    handleSwipe(value)
-                }
-            }
-
         NavigationStack {
             VStack {
                 if viewModel.hasAlerts {
                     alertContent
-                        .gesture(dragGesture)
+                        .gesture(DragGesture()
+                            .onEnded { value in
+                                withAnimation {
+                                    handleSwipe(value)
+                                }
+                            })
                 } else {
                     Text("no-alerts")
                 }
@@ -47,6 +45,25 @@ struct AlertsView: View {
 
     @ViewBuilder
     private var alertContent: some View {
+        alertBanner
+        Text(viewModel.event)
+            .fontWeight(.bold)
+        Text(viewModel.headline)
+        Divider()
+        ScrollView {
+            alertContentSection("areas-affected", details: viewModel.areas)
+            Divider()
+            alertContentSection("description", details: viewModel.detailedDescription)
+            if viewModel.hasNote {
+                Divider()
+                alertContentSection("note", details: viewModel.note)
+            }
+            Divider()
+            alertContentSection("instructions", details: viewModel.instructions)
+        }
+    }
+
+    private var alertBanner: some View {
         HStack {
             Text(viewModel.messageType)
             Text(viewModel.severity)
@@ -56,29 +73,13 @@ struct AlertsView: View {
             Text(viewModel.certainty)
                 .frame(alignment: .trailing)
         }
-        Text(viewModel.event)
+    }
+
+    @ViewBuilder
+    private func alertContentSection(_ title: LocalizedStringKey, details: String) -> some View {
+        Text(title)
             .fontWeight(.bold)
-        Text(viewModel.headline)
-        Divider()
-        ScrollView {
-            Text("areas-affected")
-                .fontWeight(.bold)
-            Text(viewModel.areas)
-            Divider()
-            Text("description")
-                .fontWeight(.bold)
-            Text(viewModel.detailedDescription)
-            if viewModel.hasNote {
-                Divider()
-                Text("note")
-                    .fontWeight(.bold)
-                Text(viewModel.note)
-            }
-            Divider()
-            Text("instructions")
-                .fontWeight(.bold)
-            Text(viewModel.instructions)
-        }
+        Text(details)
     }
 }
 
