@@ -272,7 +272,7 @@ private extension WeatherApiComDataSource {
     }
 
     func mapAlertsData(_ sourceData: WeatherApiModel) -> WeatherDataAlerts? {
-        guard let wapiAlerts = apiModel?.alerts?.alert else { return nil }
+        guard let wapiAlerts = sourceData.alerts?.alert else { return nil }
         let alerts = wapiAlerts.compactMap { wapiAlert in
             WeatherDataAlert(id: UUID(),
                              category: wapiAlert.category,
