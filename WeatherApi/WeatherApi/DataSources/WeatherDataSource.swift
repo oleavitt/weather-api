@@ -37,12 +37,6 @@ protocol WeatherDataSource {
     /// Location details for this weather report.
     var locationData: LocationData? { get }
 
-    /// Alerts for this weather report if any.
-    ///
-    /// This will contain one or more alerts if any are active in the forecast area.
-    /// Empty or nil if none.
-    var alerts: WeatherDataAlerts? { get }
-
     /// The current temperature in user's selected temperature units.
     func currentTemp(units: TempUnits) -> Double?
 }

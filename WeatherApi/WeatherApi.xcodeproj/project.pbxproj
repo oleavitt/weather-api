@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		8C1708932D9F22F20019D77B /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8C1708922D9F22F20019D77B /* Colors.xcassets */; };
 		8C52D4C02CC8C0A300AA558C /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 8C52D4BF2CC8C0A300AA558C /* README.md */; };
+		8C5BE35D2DA2140E0001F16E /* AlertsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35C2DA2140E0001F16E /* AlertsView.swift */; };
+		8C5BE35F2DA21B880001F16E /* WeatherDataSamples.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */; };
 		8CE07B272D8E6809002950DC /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF32D8E6809002950DC /* AppSettings.swift */; };
 		8CE07B282D8E6809002950DC /* Bundle+Decodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */; };
 		8CE07B292D8E6809002950DC /* Units.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8CE07AF52D8E6809002950DC /* Units.swift */; };
@@ -73,6 +75,8 @@
 		8C52D4A22CC8B83600AA558C /* WeatherApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C52D4AC2CC8B83600AA558C /* WeatherApiUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherApiUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C52D4BF2CC8C0A300AA558C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = SOURCE_ROOT; };
+		8C5BE35C2DA2140E0001F16E /* AlertsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertsView.swift; sourceTree = "<group>"; };
+		8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherDataSamples.swift; sourceTree = "<group>"; };
 		8CE07AF32D8E6809002950DC /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		8CE07AF42D8E6809002950DC /* Bundle+Decodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Decodable.swift"; sourceTree = "<group>"; };
 		8CE07AF52D8E6809002950DC /* Units.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Units.swift; sourceTree = "<group>"; };
@@ -264,6 +268,7 @@
 				8CE07AF92D8E6809002950DC /* DataSources */,
 				8CE07B042D8E6809002950DC /* Network */,
 				8CE07B062D8E6809002950DC /* Preview Content */,
+				8C5BE35E2DA21B880001F16E /* WeatherDataSamples.swift */,
 				8CE07B0D2D8E6809002950DC /* Localization */,
 				8CE07B0F2D8E6809002950DC /* Location */,
 				8CE07B252D8E6809002950DC /* WeatherApiApp.swift */,
@@ -276,6 +281,7 @@
 			children = (
 				8CE07B192D8E6809002950DC /* CurrentView.swift */,
 				8CE07B1A2D8E6809002950DC /* DetailChip.swift */,
+				8C5BE35C2DA2140E0001F16E /* AlertsView.swift */,
 				8CE07B532D8E69FF002950DC /* Wind */,
 			);
 			path = Current;
@@ -503,6 +509,7 @@
 			files = (
 				8CE07B272D8E6809002950DC /* AppSettings.swift in Sources */,
 				8CE07B282D8E6809002950DC /* Bundle+Decodable.swift in Sources */,
+				8C5BE35F2DA21B880001F16E /* WeatherDataSamples.swift in Sources */,
 				8CE07B292D8E6809002950DC /* Units.swift in Sources */,
 				8CE07B2A2D8E6809002950DC /* URL+Ext.swift in Sources */,
 				8CE07B2B2D8E6809002950DC /* WeatherApiComDataSource.swift in Sources */,
@@ -516,6 +523,7 @@
 				8CE07B332D8E6809002950DC /* NetworkLayerImpl.swift in Sources */,
 				8CE07B342D8E6809002950DC /* NetworkLayer.swift in Sources */,
 				8CE07B352D8E6809002950DC /* WeatherDataSource.swift in Sources */,
+				8C5BE35D2DA2140E0001F16E /* AlertsView.swift in Sources */,
 				8CE07B362D8E6809002950DC /* Theme.swift in Sources */,
 				8CE07B372D8E6809002950DC /* LocationManager.swift in Sources */,
 				8CE07B382D8E6809002950DC /* ForecastDayRowViewModel.swift in Sources */,

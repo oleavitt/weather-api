@@ -9,10 +9,6 @@ import SwiftUI
 
 /// Displays a simple title/value in view with rounded corners as set by the cardStyle view modifier.
 struct DetailChip: View {
-    var title: LocalizedStringKey
-    var value: String
-    var a11yLabel: LocalizedStringKey
-
     /// Creates a Detail chip.
     /// - Parameters:
     ///   - title: The title.
@@ -23,6 +19,10 @@ struct DetailChip: View {
         self.value = value
         self.a11yLabel = a11yLabel
     }
+
+    private var title: LocalizedStringKey
+    private var value: String
+    private var a11yLabel: LocalizedStringKey
 
     var body: some View {
         VStack(alignment: .leading) {

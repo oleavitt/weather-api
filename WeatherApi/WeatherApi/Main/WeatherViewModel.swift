@@ -257,7 +257,7 @@ extension WeatherViewModel {
 
     /// Any active alerts for this forecast area.
     var alerts: [WeatherDataAlert] {
-        weatherDataSource.alerts?.alerts ?? []
+        weatherData?.alerts?.alerts ?? []
     }
 
     /// Return true if there are alerts to show.

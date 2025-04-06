@@ -13,6 +13,8 @@ struct CurrentView: View {
     @EnvironmentObject var viewModel: WeatherViewModel
     @ObservedObject var locationManager: LocationManager
 
+    @State private var selectedAlert: WeatherDataAlert?
+
     var body: some View {
         VStack {
             ScrollView {
@@ -60,6 +62,9 @@ struct CurrentView: View {
         .foregroundColor(.white)
         .font(.system(size: 18))
         .fontWeight(.light)
+        .sheet(item: $selectedAlert, content: { alert in
+            AlertsView(alert.id, alerts: viewModel.alerts)
+        })
     }
 }
 
@@ -71,7 +76,7 @@ private extension CurrentView {
         VStack {
             ForEach(viewModel.alerts) { alert in
                 Button {
-                    print("Alerts selected: Show alert details")
+                    selectedAlert = alert
                 } label: {
                     Label("Alert: \(alert.event ?? "")", systemImage: "exclamationmark.triangle.fill")
                         .fontWeight(.bold)
