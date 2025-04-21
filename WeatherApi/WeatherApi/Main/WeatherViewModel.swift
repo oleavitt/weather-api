@@ -10,7 +10,7 @@ import SwiftUI
 // MARK: WeatherViewModel
 
 /// View model for the WeatherView which represents the Current and Forecast tabs of the app.
-class WeatherViewModel: ObservableObject {
+final class WeatherViewModel: ObservableObject {
     /// Location search query that is passed to the API.
     var locationQuery = ""
 

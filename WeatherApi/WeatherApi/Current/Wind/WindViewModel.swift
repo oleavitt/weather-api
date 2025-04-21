@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// The niew model for the WindView which provides user facing display and Voice Over strings.
-class WindViewModel: ObservableObject {
+final class WindViewModel: ObservableObject {
     @AppStorage(AppSettings.unitsSpeed.rawValue) private var speedUnitsSetting: SpeedUnits = .mph
 
     private var windModel: WindModel?
