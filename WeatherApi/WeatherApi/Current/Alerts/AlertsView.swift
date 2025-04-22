@@ -47,6 +47,8 @@ struct AlertsView: View {
     private var alertContent: some View {
         alertBanner
         alertEvent
+        alertEffectiveDates
+        Divider()
         Text(viewModel.headline)
         Divider()
         ScrollView {
@@ -60,6 +62,23 @@ struct AlertsView: View {
             if viewModel.hasInstructions {
                 Divider()
                 alertContentSection("instructions", details: viewModel.instructions)
+            }
+        }
+    }
+
+    private var alertEffectiveDates: some View {
+        VStack {
+            HStack {
+                Text("effective")
+                    .fontWeight(.bold)
+                Text(viewModel.effectiveDateFormatted)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+            }
+            HStack {
+                Text("expires")
+                    .fontWeight(.bold)
+                Text(viewModel.expiresDateFormatted)
+                    .frame(maxWidth: .infinity, alignment: .trailing)
             }
         }
     }

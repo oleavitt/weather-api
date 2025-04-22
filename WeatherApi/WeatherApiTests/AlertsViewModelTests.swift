@@ -24,6 +24,9 @@ final class AlertsViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.areas, "Dallas, TX")
         XCTAssertEqual(viewModel.event, "Flood Warning")
 
+        XCTAssertFalse(viewModel.effectiveDateFormatted.isEmpty)
+        XCTAssertFalse(viewModel.expiresDateFormatted.isEmpty)
+
         XCTAssertFalse(viewModel.headline.isEmpty)
         XCTAssertFalse(viewModel.navigationTitle.isEmpty)
         XCTAssertFalse(viewModel.detailedDescription.isEmpty)

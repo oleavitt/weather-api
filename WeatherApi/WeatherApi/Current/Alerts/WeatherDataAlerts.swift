@@ -19,9 +19,9 @@ struct WeatherDataAlert: Identifiable {
     let msgtype: String?
     let note: String?
     let headline: String?
-    let effective: String?
+    let effective: Date?
     let event: String?
-    let expires: String?
+    let expires: Date?
     let desc: String?
     let instruction: String?
     let urgency: String?

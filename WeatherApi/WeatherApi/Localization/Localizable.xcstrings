@@ -339,6 +339,16 @@
         }
       }
     },
+    "effective" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Effective:"
+          }
+        }
+      }
+    },
     "empty-search-message" : {
       "localizations" : {
         "en" : {
@@ -415,6 +425,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Error: %@"
+          }
+        }
+      }
+    },
+    "expires" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Expires:"
           }
         }
       }
