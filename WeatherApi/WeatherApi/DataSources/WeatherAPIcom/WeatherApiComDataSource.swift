@@ -306,7 +306,7 @@ private extension WeatherApiComDataSource {
     }
 
     func alertDateTime(_ dateTime: String?) -> Date? {
-        guard let dateTime else { return Date() }
+        guard let dateTime else { return nil }
         let isoDateFormatter = ISO8601DateFormatter()
         isoDateFormatter.formatOptions = [.withFullDate, .withFullTime]
         return isoDateFormatter.date(from: dateTime)
