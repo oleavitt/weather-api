@@ -69,6 +69,16 @@ final class AlertsViewModel: ObservableObject {
         alert.headline ?? ""
     }
 
+    var effectiveDateFormatted: String {
+        guard let effectiveDate = alert.effective else { return "--" }
+        return effectiveDate.formatted()
+    }
+
+    var expiresDateFormatted: String {
+        guard let expiresDate = alert.expires else { return "--" }
+        return expiresDate.formatted()
+    }
+
     var areas: String {
         alert.areas ?? ""
     }

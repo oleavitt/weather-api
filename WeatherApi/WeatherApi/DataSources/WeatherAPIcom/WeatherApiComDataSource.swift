@@ -176,10 +176,10 @@ private extension WeatherApiComDataSource {
     func mapForecastData(_ sourceData: WeatherApiModel) -> ForecastData? {
         guard let srcForecast = sourceData.forecast else { return nil }
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        let dateTimeFormatter = DateFormatter()
-        dateTimeFormatter.dateFormat = "yyyy-MM-dd HH:mm"
+        let dateFromDayFormatter = DateFormatter()
+        dateFromDayFormatter.dateFormat = "yyyy-MM-dd"
+        let dateFromHourFormatter = DateFormatter()
+        dateFromHourFormatter.dateFormat = "yyyy-MM-dd HH:mm"
 
         let forecastDays = srcForecast.forecastDay.map { srcForecastDay in
             let forecastHours = srcForecastDay.hour.map { srcHour in
@@ -216,7 +216,7 @@ private extension WeatherApiComDataSource {
                                  windchillF: srcHour.windchillF,
                                  chanceOfRain: srcHour.chanceOfRain,
                                  willItSnow: srcHour.willItSnow,
-                                 time: dateTimeFormatter.date(from: srcHour.time),
+                                 time: dateFromHourFormatter.date(from: srcHour.time),
                                  pressureMB: srcHour.pressureMB,
                                  willItRain: srcHour.willItRain,
                                  visKM: srcHour.visKM)
@@ -254,7 +254,7 @@ private extension WeatherApiComDataSource {
                                    forecastHours: forecastHours,
                                    day: dayData,
                                    dateEpoch: srcForecastDay.dateEpoch,
-                                   date: dateFormatter.date(from: srcForecastDay.date) ?? Date())
+                                   date: dateFromDayFormatter.date(from: srcForecastDay.date) ?? Date())
         }
 
         return ForecastData(forecastDays: forecastDays)
@@ -279,9 +279,9 @@ private extension WeatherApiComDataSource {
                              msgtype: wapiAlert.msgtype,
                              note: wapiAlert.note,
                              headline: wapiAlert.headline,
-                             effective: wapiAlert.effective,
+                             effective: alertDateTime(wapiAlert.effective),
                              event: wapiAlert.event,
-                             expires: wapiAlert.expires,
+                             expires: alertDateTime(wapiAlert.expires),
                              desc: wapiAlert.desc,
                              instruction: wapiAlert.instruction,
                              urgency: wapiAlert.urgency,
@@ -303,5 +303,12 @@ private extension WeatherApiComDataSource {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm"
         return dateFormatter.date(from: dateTime)
+    }
+
+    func alertDateTime(_ dateTime: String?) -> Date? {
+        guard let dateTime else { return Date() }
+        let isoDateFormatter = ISO8601DateFormatter()
+        isoDateFormatter.formatOptions = [.withFullDate, .withFullTime]
+        return isoDateFormatter.date(from: dateTime)
     }
 }
