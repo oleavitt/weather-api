@@ -5,7 +5,7 @@ An iOS weather app developed using SwiftUI that displays current weather and for
 
 ### Requirements
 - iOS 17.6 or later
-- Xcode 16.0 or later
+- [![xcode-version](https://img.shields.io/badge/xcode-16.2-brightgreen)](https://developer.apple.com/xcode/)
 - SwiftUI and SwiftData
 - An API key from WeatherAPI.com
 
