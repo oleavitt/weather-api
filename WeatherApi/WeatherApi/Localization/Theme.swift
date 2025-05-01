@@ -14,10 +14,12 @@ struct WeatherAppTheme {
     static let `default` = WeatherAppTheme(
         fontFamily: "Arial",
         backgroundColor: .cellBackground,
+        borderColor: .cellBorder,
         cornerRadius: 8
     )
 
     let fontFamily: String
     let backgroundColor: Color
+    let borderColor: Color
     let cornerRadius: Double
 }
