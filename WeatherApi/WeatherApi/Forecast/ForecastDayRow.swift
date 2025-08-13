@@ -54,11 +54,9 @@ struct ForecastDayRow: View {
                                 .accessibilityLabel(hour.a11yLabel)
                                 .accessibilityHint(hour.a11yHourSummary)
                                 .scrollTransition { content, phase in
-                                    // Give hours a fading "roll on/off" effect as they scroll on/off day view
+                                    // Give hours a fading effect as they scroll on/off day view
                                     content
-                                        .opacity(phase.isIdentity ? 1.0 : 0.25)
-                                        .scaleEffect(phase.isIdentity ? 1.0 : 0.25)
-                                        .rotation3DEffect(.radians(phase.value * .pi), axis: (0, 1, 0))
+                                        .opacity(phase.isIdentity ? 1.0 : 0)
                                 }
                         }
                     }

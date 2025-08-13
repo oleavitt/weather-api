@@ -18,11 +18,9 @@ struct ForecastView: View {
                     ForecastDayRow(day: day)
                         .padding(.horizontal)
                         .scrollTransition { content, phase in
-                            // Give days a fading "roll on/off" effect as they scroll on/off screen
+                            // Give days a fading effect as they scroll on/off screen
                             content
                                 .opacity(phase.isIdentity ? 1.0 : 0.5)
-                                .scaleEffect(phase.isIdentity ? 1.0 : 0.75)
-                                .rotation3DEffect(.radians(phase.value), axis: (-1, 0, 0))
                         }
                 }
             }
@@ -40,6 +38,6 @@ struct ForecastView: View {
 
 // MARK: - Preview
 
-#Preview {
-    ForecastView()
-}
+// #Preview {
+//    ForecastView()
+// }
