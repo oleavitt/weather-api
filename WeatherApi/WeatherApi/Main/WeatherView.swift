@@ -14,7 +14,7 @@ struct WeatherView: View {
     @State var isForecast: Bool
 
     @EnvironmentObject var viewModel: WeatherViewModel
-    @StateObject var locationManager = LocationManager()
+    @State var locationManager = LocationManager()
 
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) var context
