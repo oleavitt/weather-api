@@ -10,7 +10,7 @@ import CoreLocationUI
 
 /// Sub view content shown when Current tab is selected.
 struct CurrentView: View {
-    @EnvironmentObject var viewModel: WeatherViewModel
+    @Environment(WeatherViewModel.self) private var viewModel
     var locationManager: LocationManager
 
     @State private var selectedAlert: WeatherDataAlert?

@@ -9,7 +9,7 @@ import SwiftUI
 
 /// Sub view content shown when Forecast tab is selected.
 struct ForecastView: View {
-    @EnvironmentObject var viewModel: WeatherViewModel
+    @Environment(WeatherViewModel.self) private var viewModel
 
     var body: some View {
         VStack {
