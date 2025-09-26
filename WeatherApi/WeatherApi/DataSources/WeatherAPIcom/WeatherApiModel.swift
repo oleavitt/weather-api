@@ -321,4 +321,22 @@ struct WAPIAlert: Decodable {
     let areas: String?
     let certainty: String?
 }
+
+extension WAPIAlert: Hashable {
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(category)
+        hasher.combine(msgtype)
+        hasher.combine(note)
+        hasher.combine(headline)
+        hasher.combine(effective)
+        hasher.combine(event)
+        hasher.combine(expires)
+        hasher.combine(desc)
+        hasher.combine(instruction)
+        hasher.combine(urgency)
+        hasher.combine(severity)
+        hasher.combine(areas)
+        hasher.combine(certainty)
+    }
+}
 // swiftlint:enable identifier_name
