@@ -273,7 +273,11 @@ private extension WeatherApiComDataSource {
 
     func mapAlertsData(_ sourceData: WeatherApiModel) -> WeatherDataAlerts? {
         guard let wapiAlerts = sourceData.alerts?.alert else { return nil }
-        let alerts = wapiAlerts.compactMap { wapiAlert in
+
+        // Weather API often returns duplicate alerts so we need to clean them up client side
+        let wapiAlertsNoDuplicates = Set<WAPIAlert>(wapiAlerts)
+
+        let alerts = wapiAlertsNoDuplicates.compactMap { wapiAlert in
             WeatherDataAlert(id: UUID(),
                              category: wapiAlert.category,
                              msgtype: wapiAlert.msgtype,
