@@ -10,10 +10,11 @@ import CoreLocation
 
 /// An interface to CoreLocation for authorization and querying location.
 /// This handles the delegation and returns results via completion handlers.
-class LocationManager: NSObject, ObservableObject {
+@Observable
+class LocationManager: NSObject {
 
-    @Published var authorizationStatus: CLAuthorizationStatus = .notDetermined
-    @Published var location: CLLocationCoordinate2D?
+    var authorizationStatus: CLAuthorizationStatus = .notDetermined
+    var location: CLLocationCoordinate2D?
 
     private let locationManager = CLLocationManager()
     private var completion: (() -> Void)?

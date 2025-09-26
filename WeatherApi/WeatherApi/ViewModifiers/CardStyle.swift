@@ -8,7 +8,7 @@
 import SwiftUI
 
 /// A style with rouded corners and theme background color for card style views..
-struct CardStyle: ViewModifier {
+private struct CardStyle: ViewModifier {
     func body(content: Content) -> some View {
         content
             .padding()
@@ -20,6 +20,10 @@ struct CardStyle: ViewModifier {
                 currentTheme.fontFamily, fixedSize: 14))
             .foregroundStyle(.secondary)
             .foregroundColor(.primary)
+            .overlay {
+                RoundedRectangle(cornerRadius: currentTheme.cornerRadius)
+                    .stroke(currentTheme.borderColor, lineWidth: 1)
+            }
     }
 }
 

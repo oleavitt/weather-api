@@ -10,20 +10,21 @@ import SwiftUI
 // MARK: WeatherViewModel
 
 /// View model for the WeatherView which represents the Current and Forecast tabs of the app.
-final class WeatherViewModel: ObservableObject {
+@Observable
+final class WeatherViewModel {
     /// Location search query that is passed to the API.
     var locationQuery = ""
 
     /// Indicator set from view to indicate we are using user's location for search.
     var isUserLocation = true
 
-    @Published var state: LoadingState = .startup
-    @Published var isLoaded = false
+    var state: LoadingState = .startup
+    var isLoaded = false
 
-    @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
-    @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
-    @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
-    @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inchesHg
+    @ObservationIgnored@AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
+    @ObservationIgnored @AppStorage(AppSettings.unitsTemp.rawValue) var tempUnitsSetting: TempUnits = .fahrenheit
+    @ObservationIgnored @AppStorage(AppSettings.unitsSpeed.rawValue) var speedUnitsSetting: SpeedUnits = .mph
+    @ObservationIgnored @AppStorage(AppSettings.unitsPressure.rawValue) var pressureUnitsSetting: PressureUnits = .inchesHg
 
     /// Network layer interface that is injected into view model at the time of creation.
     private let networkLayer: NetworkLayer

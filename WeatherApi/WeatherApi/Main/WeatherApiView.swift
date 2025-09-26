@@ -10,7 +10,7 @@ import SwiftData
 
 struct WeatherApiView: View {
 
-    @StateObject var viewModel = WeatherViewModel(NetworkLayerImpl())
+    @State var viewModel = WeatherViewModel(NetworkLayerImpl())
     @AppStorage(AppSettings.weatherApiKey.rawValue) var weatherApiKey = ""
 
     private enum TabSelection: Int {
@@ -49,7 +49,7 @@ struct WeatherApiView: View {
                     Label("settings", systemImage: "gearshape")
                 }
         }
-        .environmentObject(viewModel)
+        .environment(viewModel)
         .modelContainer(for: HistoryItemModel.self)
     }
 }

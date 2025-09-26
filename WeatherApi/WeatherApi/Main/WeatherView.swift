@@ -13,8 +13,8 @@ struct WeatherView: View {
 
     @State var isForecast: Bool
 
-    @EnvironmentObject var viewModel: WeatherViewModel
-    @StateObject var locationManager = LocationManager()
+    @Environment(WeatherViewModel.self) private var viewModel
+    @State var locationManager = LocationManager()
 
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.modelContext) var context
@@ -24,6 +24,9 @@ struct WeatherView: View {
     ) var history: [HistoryItemModel]
 
     var body: some View {
+        // Workaround so that .searchable can bind to @Observable viewModel.locationQuery, as of iOS 17/18 for now
+        @Bindable var viewModel = viewModel
+
         NavigationStack {
             VStack {
                 switch viewModel.state {
