@@ -1,6 +1,6 @@
 //
 //  CachedAsyncImage.swift
-//  FetchRecipes
+//  WeatherApi
 //
 //  Created by GonzaloMR on 26/8/24.
 //
@@ -16,6 +16,7 @@ import SwiftUI
 ///
 /// Way to use it:
 ///
+/// ```
 /// CachedAsyncImage(url: imageUrl) { phase in
 ///     switch phase {
 ///     case .empty:
@@ -29,6 +30,7 @@ import SwiftUI
 ///         Image(.error)
 ///     }
 /// }
+/// ```
 
 struct CachedAsyncImage<Content: View>: View {
 
