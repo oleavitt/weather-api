@@ -1,0 +1,38 @@
+{
+  "configurations" : [
+    {
+      "id" : "7B32EF47-E0F2-4863-BA7C-9E64122FF878",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "performanceAntipatternCheckerEnabled" : true,
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:WeatherApi.xcodeproj",
+      "identifier" : "8C52D4912CC8B83400AA558C",
+      "name" : "WeatherApi"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:WeatherApi.xcodeproj",
+        "identifier" : "8C52D4A12CC8B83600AA558C",
+        "name" : "WeatherApiTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:WeatherApi.xcodeproj",
+        "identifier" : "8C52D4AB2CC8B83600AA558C",
+        "name" : "WeatherApiUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

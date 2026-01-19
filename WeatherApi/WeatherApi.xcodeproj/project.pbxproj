@@ -73,6 +73,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		8C0B56892EE5508E0088919B /* WeatherApi.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = WeatherApi.xctestplan; sourceTree = "<group>"; };
 		8C1708922D9F22F20019D77B /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		8C52D4922CC8B83400AA558C /* WeatherApi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeatherApi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C52D4A22CC8B83600AA558C /* WeatherApiTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = WeatherApiTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -165,6 +166,7 @@
 		8C52D4892CC8B83400AA558C = {
 			isa = PBXGroup;
 			children = (
+				8C0B56892EE5508E0088919B /* WeatherApi.xctestplan */,
 				8C52D4BF2CC8C0A300AA558C /* README.md */,
 				8CE07B262D8E6809002950DC /* WeatherApi */,
 				8C52D4A52CC8B83600AA558C /* WeatherApiTests */,
