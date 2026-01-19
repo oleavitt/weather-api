@@ -22,6 +22,7 @@ class LocationManager: NSObject {
 
     override init() {
         super.init()
+        self.locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
         self.locationManager.delegate = self
     }
 
