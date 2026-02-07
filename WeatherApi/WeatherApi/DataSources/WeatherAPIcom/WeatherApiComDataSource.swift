@@ -152,11 +152,12 @@ private extension WeatherApiComDataSource {
                 icon: srcCurrent.condition.icon,
                 code: srcCurrent.condition.code),
             windMph: srcCurrent.windMph, windKph: srcCurrent.windKph,
-            windDegree: srcCurrent.windDegree, windDir: srcCurrent.windDir,
+            windDegree: Int(srcCurrent.windDegree.rounded()),
+            windDir: srcCurrent.windDir,
             pressureMb: srcCurrent.pressureMb, pressureIn: srcCurrent.pressureIn,
             precipMm: srcCurrent.precipMm, precipIn: srcCurrent.precipIn,
-            humidity: srcCurrent.humidity,
-            cloud: srcCurrent.cloud,
+            humidity: Int(srcCurrent.humidity.rounded()),
+            cloud: Int(srcCurrent.cloud.rounded()),
             feelslikeC: srcCurrent.feelslikeC, feelslikeF: srcCurrent.feelslikeF,
             windchillC: srcCurrent.windchillC, windchillF: srcCurrent.windchillF,
             heatindexC: srcCurrent.heatindexC, heatindexF: srcCurrent.heatindexF,
@@ -193,7 +194,7 @@ private extension WeatherApiComDataSource {
                                  gustMph: srcHour.gustMph,
                                  windKph: srcHour.windKph,
                                  windchillC: srcHour.windchillC,
-                                 chanceOfSnow: srcHour.chanceOfSnow,
+                                 chanceOfSnow: Int(srcHour.chanceOfSnow.rounded()),
                                  timeEpoch: srcHour.timeEpoch,
                                  tempF: srcHour.tempF,
                                  condition: ConditionData(
@@ -211,10 +212,10 @@ private extension WeatherApiComDataSource {
                                  heatindexF: srcHour.heatindexF,
                                  dewpointF: srcHour.dewpointF,
                                  windMph: srcHour.windMph,
-                                 windDegree: srcHour.windDegree,
+                                 windDegree: Int(srcHour.windDegree.rounded()),
                                  feelslikeC: srcHour.feelslikeC,
                                  windchillF: srcHour.windchillF,
-                                 chanceOfRain: srcHour.chanceOfRain,
+                                 chanceOfRain: Int(srcHour.chanceOfRain.rounded()),
                                  willItSnow: srcHour.willItSnow,
                                  time: dateFromHourFormatter.date(from: srcHour.time),
                                  pressureMB: srcHour.pressureMB,
@@ -223,13 +224,11 @@ private extension WeatherApiComDataSource {
             }
 
             let astro = srcForecastDay.astro
-            let astroData = AstroData(isSunUp: astro.isSunUp,
-                                      sunrise: riseSetDate(date: srcForecastDay.date, time: astro.sunrise),
+            let astroData = AstroData(sunrise: riseSetDate(date: srcForecastDay.date, time: astro.sunrise),
                                       sunset: riseSetDate(date: srcForecastDay.date, time: astro.sunset),
-                                      isMoonUp: astro.isMoonUp,
                                       moonrise: riseSetDate(date: srcForecastDay.date, time: astro.moonrise),
                                       moonset: riseSetDate(date: srcForecastDay.date, time: astro.moonset),
-                                      moonIllumination: astro.moonIllumination,
+                                      moonIllumination: Int(astro.moonIllumination.rounded()),
                                       moonPhase: astro.moonPhase)
 
             let day = srcForecastDay.day
@@ -239,8 +238,10 @@ private extension WeatherApiComDataSource {
                                   maxtempF: day.maxtempF, maxtempC: day.maxtempC,
                                   totalPrecipIn: day.totalPrecipIn,
                                   totalSnowCM: day.totalSnowCM,
-                                  dailyWillItRain: day.dailyWillItRain, dailyWillItSnow: day.dailyWillItSnow,
-                                  dailyChanceOfRain: day.dailyChanceOfRain, dailyChanceOfSnow: day.dailyChanceOfSnow,
+                                  dailyWillItRain: day.dailyWillItRain,
+                                  dailyWillItSnow: day.dailyWillItSnow,
+                                  dailyChanceOfRain: Int(day.dailyChanceOfRain.rounded()),
+                                  dailyChanceOfSnow: Int(day.dailyChanceOfSnow.rounded()),
                                   avghumidity: day.avghumidity,
                                   totalprecipMm: day.totalprecipMm,
                                   condition: ConditionData(

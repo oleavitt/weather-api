@@ -133,7 +133,7 @@ struct ForecastHourData {
     let dewpointC: Double
     let snowCM: Double
     let uv: Double
-    let cloud: Int
+    let cloud: Double
     let gustKph: Double
     let tempC: Double
     let precipIn: Double
@@ -152,10 +152,8 @@ struct ForecastHourData {
 }
 
 struct AstroData {
-    let isSunUp: Int
     let sunrise: Date?
     let sunset: Date?
-    let isMoonUp: Int
     let moonrise: Date?
     let moonset: Date?
     let moonIllumination: Int

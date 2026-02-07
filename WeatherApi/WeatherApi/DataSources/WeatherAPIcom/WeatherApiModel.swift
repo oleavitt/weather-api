@@ -18,6 +18,8 @@ struct WeatherApiModel: Decodable {
     var alerts: WAPIAlerts?
 }
 
+// MARK: Current
+
 struct Current: Decodable {
     var lastUpdated: String?
     var lastUpdatedEpoch: Int?
@@ -28,14 +30,14 @@ struct Current: Decodable {
     var condition: Condition
     var windMph: Double = 0.0
     var windKph: Double = 0.0
-    var windDegree: Int = 0
+    var windDegree: Double = 0.0
     var windDir: String = ""
     var pressureMb: Double = 0.0
     var pressureIn: Double = 0.0
     var precipMm: Double = 0.0
     var precipIn: Double = 0.0
-    var humidity: Int = 0
-    var cloud: Int = 0
+    var humidity: Double = 0.0
+    var cloud: Double = 0.0
     var feelslikeC: Double = 0.0
     var feelslikeF: Double = 0.0
     var windchillC: Double = 0.0
@@ -149,7 +151,7 @@ struct ForecastHourModel: Decodable {
     let gustMph: Double
     let windKph: Double
     let windchillC: Double
-    let chanceOfSnow: Int
+    let chanceOfSnow: Double
     let timeEpoch: Int
     let tempF: Double
     let condition: Condition
@@ -157,17 +159,17 @@ struct ForecastHourModel: Decodable {
     let dewpointC: Double
     let snowCM: Double
     let uv: Double
-    let cloud: Int
+    let cloud: Double
     let gustKph: Double
     let tempC: Double
     let precipIn: Double
     let heatindexF: Double
     let dewpointF: Double
     let windMph: Double
-    let windDegree: Int
+    let windDegree: Double
     let feelslikeC: Double
     let windchillF: Double
-    let chanceOfRain: Int
+    let chanceOfRain: Double
     let willItSnow: Int
     let time: String
     let pressureMB: Double
@@ -214,23 +216,19 @@ struct ForecastHourModel: Decodable {
 // MARK: - Astro
 struct Astro: Codable {
     let sunset: String
-    let isSunUp: Int
     let moonrise: String
-    let moonIllumination: Int
+    let moonIllumination: Double
     let sunrise: String
     let moonPhase: String
     let moonset: String
-    let isMoonUp: Int
 
     enum CodingKeys: String, CodingKey {
         case sunset
-        case isSunUp = "is_sun_up"
         case moonrise
         case moonIllumination = "moon_illumination"
         case sunrise
         case moonPhase = "moon_phase"
         case moonset
-        case isMoonUp = "is_moon_up"
     }
 }
 
@@ -248,8 +246,8 @@ struct Day: Decodable {
     let totalSnowCM: Double
     let dailyWillItRain: Int
     let dailyWillItSnow: Int
-    let dailyChanceOfRain: Int
-    let dailyChanceOfSnow: Int
+    let dailyChanceOfRain: Double
+    let dailyChanceOfSnow: Double
     let avghumidity, totalprecipMm: Double
     let condition: Condition
     let maxwindMph: Double
