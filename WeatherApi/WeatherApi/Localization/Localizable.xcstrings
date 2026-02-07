@@ -319,12 +319,12 @@
         }
       }
     },
-    "direction %@" : {
+    "direction %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Direction: %@"
+            "value" : "Direction %1$@° %2$@"
           }
         }
       }
@@ -823,22 +823,22 @@
         }
       }
     },
-    "wind direction %@, speed %@ %@" : {
+    "wind direction %@ degrees %@, speed %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wind direction %1$@, speed %2$@ %3$@"
+            "value" : "Wind direction %1$@ degrees %2$@, speed %3$@ %4$@"
           }
         }
       }
     },
-    "wind direction %@, speed %@ %@ with gusts of %@ %@" : {
+    "wind direction %@ degrees %@, speed %@ %@ with gusts of %@ %@" : {
       "localizations" : {
         "en" : {
           "stringUnit" : {
             "state" : "translated",
-            "value" : "Wind direction %1$@, speed %2$@ %3$@ with gusts of %4$@ %5$@"
+            "value" : "Wind direction %1$@ degrees %2$@, speed %3$@ %4$@ with gusts of %5$@ %6$@"
           }
         }
       }

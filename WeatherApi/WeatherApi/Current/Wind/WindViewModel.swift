@@ -26,7 +26,7 @@ final class WindViewModel: ObservableObject {
 
     /// Localized wind direction display string.
     var directionSummary: String {
-        String(localized: "direction \(direction)")
+        String(localized: "direction \(degree) \(direction)")
     }
 
     /// Localized wind gusts display string.
@@ -39,9 +39,9 @@ final class WindViewModel: ObservableObject {
         if hasWind {
             if hasGusts {
                 // swiftlint:disable:next line_length
-                return String(localized: "wind direction \(direction), speed \(speed) \(speedUnits) with gusts of \(gust) \(speedUnits)")
+                return String(localized: "wind direction \(degree) degrees \(direction), speed \(speed) \(speedUnits) with gusts of \(gust) \(speedUnits)")
             }
-            return String(localized: "wind direction \(direction), speed \(speed) \(speedUnits)")
+            return String(localized: "wind direction \(degree) degrees \(direction), speed \(speed) \(speedUnits)")
         }
         return String(localized: "no wind")
     }
@@ -64,6 +64,11 @@ private extension WindViewModel {
     /// Wind direction as a string if present or "--" if not.
     var direction: String {
         windModel?.direction ?? "--"
+    }
+
+    /// Wind direction angle in degrees as a string if present or "--" if not.
+    var degree: String {
+        windModel?.degree.rounded().formatted() ?? "--"
     }
 
     /// Gusts value as a formatted string in user's selected units.
