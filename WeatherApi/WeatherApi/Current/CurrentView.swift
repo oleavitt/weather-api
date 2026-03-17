@@ -97,7 +97,7 @@ private extension CurrentView {
         HStack(alignment: .lastTextBaseline, spacing: 0) {
             Text(viewModel.tempString)
                 .font(.system(size: 80))
-                .fontWeight(.ultraLight)
+                .fontWeight(.light)
         }
     }
 

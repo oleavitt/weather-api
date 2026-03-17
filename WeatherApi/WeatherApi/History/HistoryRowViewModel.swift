@@ -21,7 +21,7 @@ struct HistoryRowViewModel {
 
     /// The temperature in user's selected units.
     var temperature: String {
-        "\((tempUnitsSetting == .fahrenheit ? data.tempF : data.tempC).formatted())°"
+        "\((tempUnitsSetting == .fahrenheit ? data.tempF : data.tempC).rounded().formatted())°"
     }
 
     /// The date of this summary as a short format date string.

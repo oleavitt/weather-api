@@ -107,7 +107,7 @@ extension WeatherViewModel {
 
     var tempString: String {
         if let temp = weatherDataSource.currentTemp(units: tempUnitsSetting) {
-            return temp.formatted() + "°"
+            return temp.rounded().formatted() + "°"
         }
         return "--"
     }
@@ -129,7 +129,7 @@ extension WeatherViewModel {
         if let temp = (tempUnitsSetting == .fahrenheit)
             ? weatherData?.current?.feelslikeF
             : weatherData?.current?.feelslikeC {
-            return String(localized: "feels_like \(temp.formatted())")
+            return String(localized: "feels_like \(temp.rounded().formatted())")
         }
         return "--"
     }
@@ -188,8 +188,8 @@ extension WeatherViewModel {
             }
             return ForcastDayRowViewModel(epoch: forecastDay.dateEpoch,
                                        date: forecastDay.date,
-                                       highTemp: maxTemp,
-                                       lowTemp: minTemp,
+                                       highTemp: maxTemp.rounded(),
+                                       lowTemp: minTemp.rounded(),
                                        conditionIconURL: URL.httpsURL(forecastDay.day.condition.icon),
                                        condition: forecastDay.day.condition.text,
                                        chanceOfPrecip: forecastDay.day.dailyChanceOfRain,
@@ -215,7 +215,7 @@ extension WeatherViewModel {
             return ForecastHour(epoch: hour.timeEpoch,
                                 time: hour.time,
                                 hour: intHour,
-                                temp: temp,
+                                temp: temp.rounded(),
                                 conditionIconURL: URL.httpsURL(hour.condition.icon),
                                 condition: hour.condition.text,
                                 chanceOfPrecip: hour.chanceOfRain)
