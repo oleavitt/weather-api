@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "long-pointer-down.svg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

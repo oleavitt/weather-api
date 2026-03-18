@@ -9,23 +9,29 @@ import SwiftUI
 
 struct WindView: View {
     @StateObject var viewModel: WindViewModel
+    @StateObject private var directionViewModel = DirectionViewModel()
 
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("wind")
-                .font(.custom(
-                    currentTheme.fontFamily, fixedSize: 24))
-                .foregroundStyle(.primary)
+        HStack {
             VStack(alignment: .leading) {
-                Text(viewModel.directionSummary)
-                Text(viewModel.windSummary)
-                Text(viewModel.gustsSummary)
+                Text("wind")
+                    .font(.custom(
+                        currentTheme.fontFamily, fixedSize: 24))
+                    .foregroundStyle(.primary)
+                VStack(alignment: .leading) {
+                    Text(viewModel.directionSummary)
+                    Text(viewModel.windSummary)
+                    Text(viewModel.gustsSummary)
+                }
+                .padding(.top, 1)
+                .font(.custom(
+                    currentTheme.fontFamily, fixedSize: 16))
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .padding(.top, 1)
-            .font(.custom(
-                currentTheme.fontFamily, fixedSize: 16))
-            .frame(maxWidth: .infinity, alignment: .leading)
+            DirectionView(viewModel: directionViewModel)
+                .frame(height: 128)
         }
+        .onAppear { directionViewModel.direction = viewModel.directionAngle }
         .cardStyle()
         .accessibilityElement()
         .accessibilityLabel(viewModel.a11yWindSummary)

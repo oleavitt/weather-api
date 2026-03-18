@@ -29,6 +29,11 @@ final class WindViewModel: ObservableObject {
         String(localized: "direction \(degree) \(direction)")
     }
 
+    /// The direction wind is blowing from in degrees
+    var directionAngle: Double {
+        windModel?.degree ?? 0.0
+    }
+
     /// Localized wind gusts display string.
     var gustsSummary: String {
         String(localized: "gusts \(gust) \(speedUnits)")
